@@ -2,7 +2,9 @@
 </script>
 
 <template>
-	RecipeView
+	<section>
+		RecipeView
+	</section>
 </template>
 
 <style>

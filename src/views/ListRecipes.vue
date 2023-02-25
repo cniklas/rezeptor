@@ -2,7 +2,9 @@
 </script>
 
 <template>
-	ListRecipes
+	<section>
+		ListRecipes
+	</section>
 </template>
 
 <style>

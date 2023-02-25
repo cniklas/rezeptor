@@ -1,5 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { nextTick } from 'vue'
 import ListRecipes from './views/ListRecipes.vue'
+import { emitter } from './useMitt'
+
+let scrollPosition = null
+emitter.on('TriggerScroll', async () => {
+	await nextTick()
+	window.scrollTo(scrollPosition || { top: 0 })
+})
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
@@ -28,6 +36,11 @@ const router = createRouter({
 			component: () => import('./views/RecipeView.vue'),
 		},
 	],
+
+	// `savedPosition` is only available if this is a popstate navigation (triggered by the browser’s back/forward buttons)
+	scrollBehavior(to, from, savedPosition) {
+		scrollPosition = savedPosition
+	},
 })
 
 export default router

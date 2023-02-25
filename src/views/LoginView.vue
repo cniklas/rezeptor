@@ -2,5 +2,7 @@
 </script>
 
 <template>
-	LoginView
+	<section>
+		LoginView
+	</section>
 </template>

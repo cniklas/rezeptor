@@ -2,5 +2,7 @@
 </script>
 
 <template>
-	AddRecipe
+	<section>
+		AddRecipe
+	</section>
 </template>

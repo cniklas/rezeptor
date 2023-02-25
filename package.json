@@ -10,6 +10,8 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "hashids": "^2.2.11",
+    "mitt": "^3.0.0",
     "vue": "^3.2.47",
     "vue-router": "^4.1.6"
   },
@@ -19,6 +21,7 @@
     "@vue/eslint-config-prettier": "^7.1.0",
     "eslint": "^8.34.0",
     "eslint-plugin-vue": "^9.9.0",
+    "postcss-nesting": "^11.2.1",
     "prettier": "^2.8.4",
     "vite": "^4.1.3"
   },
