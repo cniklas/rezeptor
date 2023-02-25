@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { nextTick } from 'vue'
 import ListRecipes from './views/ListRecipes.vue'
 import { emitter } from './useMitt'
+import { auth } from './firebase'
 
 let scrollPosition = null
 emitter.on('TriggerScroll', async () => {
@@ -20,10 +21,16 @@ const router = createRouter({
 		{
 			path: '/add',
 			name: 'add-recipe',
-			// route level code-splitting
-			// this generates a separate chunk (About.[hash].js) for this route
-			// which is lazy-loaded when the route is visited.
 			component: () => import('./views/AddRecipe.vue'),
+			beforeEnter: to => {
+				if (!auth.currentUser)
+					return {
+						name: 'login',
+						query: {
+							redirectTo: to.fullPath,
+						},
+					}
+			},
 		},
 		{
 			path: '/login',

@@ -1,13 +1,15 @@
 <script setup>
-import { watch } from 'vue'
+import { ref, watch } from 'vue'
 import AppToast from './components/AppToast.vue'
-import { useRoute, RouterView } from 'vue-router'
+import { useRoute, useRouter, RouterView } from 'vue-router'
+import { auth } from './firebase'
+import { onAuthStateChanged /* signOut */ } from 'firebase/auth'
 import { useToast } from './useToast'
 import { emitter } from './useMitt'
 
 // const hashids = inject('hashids')
 const route = useRoute()
-// const router = useRouter()
+const router = useRouter()
 
 const { toasts, removeToast } = useToast()
 
@@ -25,6 +27,30 @@ watch(route, _setTitle)
 const onBeforeEnter = () => {
 	emitter.emit('TriggerScroll')
 }
+
+// const logout = () => {
+// 	try {
+// 		signOut(auth)
+// 	} catch (error) {
+// 		console.log(error)
+// 	}
+// }
+
+const isLoggedIn = ref(false)
+onAuthStateChanged(auth, user => {
+	isLoggedIn.value = !!user
+})
+watch(isLoggedIn, val => {
+	if (!val && route.name === 'add-recipe') {
+		router.push('/')
+		return
+	}
+
+	if (val && route.name === 'login') {
+		router.push(route.query.redirectTo ?? '/')
+		return
+	}
+})
 </script>
 
 <template>
