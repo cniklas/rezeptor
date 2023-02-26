@@ -47,7 +47,7 @@ watch(isLoggedIn, val => {
 	}
 
 	if (val && route.name === 'login') {
-		router.push(route.query.redirectTo ?? '/')
+		router.replace(route.query.redirectTo ?? '/')
 		return
 	}
 })
