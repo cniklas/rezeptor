@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { nextTick } from 'vue'
 import ListRecipes from './views/ListRecipes.vue'
-import { emitter } from './useMitt'
+import { emitter } from './use/emitter'
 import { auth } from './firebase'
 
 let scrollPosition = null

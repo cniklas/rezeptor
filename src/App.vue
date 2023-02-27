@@ -1,28 +1,30 @@
 <script setup>
-import { ref, watch } from 'vue'
+import { watch, inject } from 'vue'
 import AppToast from './components/AppToast.vue'
 import { useRoute, useRouter, RouterView } from 'vue-router'
 import { auth } from './firebase'
 import { onAuthStateChanged /* signOut */ } from 'firebase/auth'
-import { useToast } from './useToast'
-import { emitter } from './useMitt'
+import { useStore } from './use/store'
+import { useToast } from './use/toast'
+import { emitter } from './use/emitter'
 
-// const hashids = inject('hashids')
+const hashids = inject('hashids')
 const route = useRoute()
 const router = useRouter()
 
+const { state, setAuthState } = useStore()
 const { toasts, removeToast } = useToast()
 
-// const _defaultTitle = document.title
-// const _getNameById = (data, id) => data.find(item => item.id === id)?.name ?? ''
+const _getNameById = (data, id) => data.find(item => item.id === id)?.name ?? ''
+const _defaultTitle = document.title
 const _setTitle = () => {
-	// document.title =
-	// 	route.params.id && state.recipes.length
-	// 		? _getNameById(state.recipes, hashids.decode(route.params.id)[0])
-	// 		: _defaultTitle
+	document.title =
+		route.params.id && state.recipes.length
+			? _getNameById(state.recipes, hashids.decode(route.params.id)[0])
+			: _defaultTitle
 }
 watch(route, _setTitle)
-// watch(() => state.recipes, _setTitle)
+watch(() => state.recipes, _setTitle)
 
 const onBeforeEnter = () => {
 	emitter.emit('TriggerScroll')
@@ -36,21 +38,23 @@ const onBeforeEnter = () => {
 // 	}
 // }
 
-const isLoggedIn = ref(false)
 onAuthStateChanged(auth, user => {
-	isLoggedIn.value = !!user
+	setAuthState(user !== null)
 })
-watch(isLoggedIn, val => {
-	if (!val && route.name === 'add-recipe') {
-		router.push('/')
-		return
-	}
+watch(
+	() => state.hasAuthenticated,
+	val => {
+		if (!val && route.name === 'add-recipe') {
+			router.push('/')
+			return
+		}
 
-	if (val && route.name === 'login') {
-		router.replace(route.query.redirectTo ?? '/')
-		return
+		if (val && route.name === 'login') {
+			router.replace(route.query.redirectTo ?? '/')
+			return
+		}
 	}
-})
+)
 </script>
 
 <template>

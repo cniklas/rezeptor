@@ -1,9 +1,9 @@
 <script setup>
 import { ref } from 'vue'
-// import BackLink from '@/components/BackLink.vue'
+import BackLink from '@/components/BackLink.vue'
 import { auth } from '@/firebase'
 import { signInWithEmailAndPassword } from 'firebase/auth'
-import { useToast } from '@/useToast'
+import { useToast } from '@/use/toast'
 
 const { addToast } = useToast()
 
@@ -28,7 +28,7 @@ const onSubmit = async () => {
 
 <template>
 	<section>
-		<!-- <BackLink /> -->
+		<BackLink />
 
 		<h2 class="headline text-2xl md:text-3xl font-medium mt-2.5 mb-8 pb-2.5">Anmelden</h2>
 
