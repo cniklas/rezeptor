@@ -1,15 +1,164 @@
 <script setup>
-import { inject } from 'vue'
+import { ref, reactive, computed, inject } from 'vue'
+import BackLink from '@/components/BackLink.vue'
+import RecipeForm from '@/components/RecipeForm.vue'
+import { useRoute, useRouter, RouterLink } from 'vue-router'
+import { useStore } from '../use/store'
+import { useToast } from '../use/toast'
 
+const hashids = inject('hashids')
 const _complexity = inject('complexity')
 const _cookbooks = inject('cookbooks')
+
+const route = useRoute()
+const router = useRouter()
+
+const { state, updateEntry } = useStore()
+const { addToast } = useToast()
+
+const _id = hashids.decode(route.params.id)[0]
+const recipe = computed(() => state.recipes.find(item => item.id === _id))
+const ingredients = computed(() => (recipe.value.ingredients ? recipe.value.ingredients.split('\n') : []))
+const notes = computed(() =>
+	recipe.value.notes.replace(
+		/(\b(https?|):\/\/[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])/gi,
+		'<a href="$1" rel="noopener">$1</a>'
+	)
+)
+
+const form = reactive({})
+const edit = ref(false)
+const isLocked = ref(false)
+const setForm = () => {
+	edit.value = true
+	Object.assign(form, {
+		...recipe.value,
+		duration: recipe.value.duration || '',
+		serves: recipe.value.serves || '',
+		leftovers: recipe.value.leftovers || false, // /!\ `leftovers` ist eine neue Property und daher nicht in allen Records enthalten
+	})
+
+	window.scrollTo(0, 0)
+}
+const leaveForm = () => {
+	edit.value = false
+	window.scrollTo(0, 0)
+}
+const submitForm = async () => {
+	isLocked.value = true
+
+	const formData = {
+		...form,
+		duration: form.duration || 0,
+		serves: form.serves || 0,
+	}
+	await updateEntry(formData)
+
+	router.push({ name: 'recipes' })
+}
+
+const headline = computed(() => (!edit.value ? recipe.value.name : form.name))
+
+const isShareSupported = 'share' in navigator
+const share = () => {
+	try {
+		navigator.share({
+			title: 'Rezeptor',
+			text: recipe.value.name,
+			url: route.fullPath,
+		})
+	} catch (error) {
+		// console.error(error)
+		addToast('Sharing failed')
+	}
+}
 </script>
 
 <template>
 	<section>
-		RecipeView
+		<template v-if="recipe">
+			<div class="flex justify-between">
+				<BackLink />
+				<button
+					v-if="isShareSupported && !edit"
+					type="button"
+					class="back-link inline-block max-w-full mb-2.5 hover:underline focus:underline"
+					@click="share"
+				>
+					Link teilen
+				</button>
+			</div>
+
+			<h2 class="headline text-2xl md:text-3xl font-medium mt-2.5 mb-5 pb-2.5">{{ headline }}</h2>
+
+			<template v-if="!edit">
+				<dl class="md:flex md:flex-wrap">
+					<dt class="inline-list-dt font-bold">
+						Zutaten <template v-if="recipe.serves > 0">für {{ recipe.serves }}</template>
+					</dt>
+					<dd class="inline-list-dd">
+						<ul v-if="ingredients.length" class="list-disc ml-5 mb-2">
+							<li v-for="(ingredient, i) in ingredients" :key="i">{{ ingredient }}</li>
+						</ul>
+					</dd>
+
+					<dt class="inline-list-dt font-bold">Zubereitungszeit</dt>
+					<dd class="inline-list-dd">
+						<template v-if="recipe.duration > 0">{{ recipe.duration }} Minuten</template>
+					</dd>
+
+					<dt class="inline-list-dt font-bold">Schwierigkeit</dt>
+					<dd class="inline-list-dd">{{ _complexity.get(recipe.complexity) || 'n.a.' }}</dd>
+
+					<dt class="inline-list-dt font-bold">Kochbuch</dt>
+					<dd class="inline-list-dd">{{ _cookbooks.get(recipe.cook_book_id) }}</dd>
+				</dl>
+
+				<dl v-if="recipe.notes" class="md:flex md:flex-wrap mt-4">
+					<dt class="inline-list-dt font-bold">Tipps</dt>
+					<dd class="inline-list-dd whitespace-pre-line break-words" v-html="notes"></dd>
+				</dl>
+
+				<div v-if="state.hasAuthenticated" class="mt-5 hidden-print">
+					<button type="button" class="btn btn-primary" @click="setForm">Rezept bearbeiten</button>
+				</div>
+			</template>
+
+			<form v-else role="form" accept-charset="utf-8" @submit.prevent="submitForm">
+				<RecipeForm :form-data="form" />
+
+				<div class="submit">
+					<button type="submit" class="btn btn-primary" :disabled="isLocked">Speichern</button>
+					<button type="button" class="btn btn-default ml-2" @click="leaveForm">Abbrechen</button>
+				</div>
+			</form>
+		</template>
+
+		<template v-else>
+			<RouterLink
+				:to="{ name: 'recipes' }"
+				class="back-link inline-block max-w-full mb-2.5 hover:underline focus:underline"
+				>zurück</RouterLink
+			>
+			<div class="text-base md:text-xl font-light text-center">Ungültige Rezept-ID</div>
+		</template>
 	</section>
 </template>
 
 <style>
+/* 🔺 TODO */
+@media screen and (min-width: 768px) {
+	.inline-list-dt {
+		flex-basis: min(38.2%, 280px);
+		padding-right: 1.25rem;
+		text-align: right;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.inline-list-dd {
+		flex-basis: 61.8%;
+	}
+}
 </style>

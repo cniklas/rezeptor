@@ -48,6 +48,25 @@ const fetchEntries = async (limit = false) => {
 	}
 }
 
+const updateEntry = async (recipe) => {
+	if (!state.hasAuthenticated) return
+
+	const index = state.recipes.findIndex(item => item.id === recipe.id) // im Fehlerfall `-1`
+	const key = firebaseKeys[index] // im Fehlerfall `undefined`
+	if (key === undefined) return
+
+	try {
+		// 🔺 TODO
+		// await db.collection('recipes').doc(key).set(recipe)
+		state.recipes[index] = recipe
+
+		addToast('Rezept aktualisiert', true)
+	} catch (error) {
+		const message = error.message ?? 'Verbindung zum Server fehlgeschlagen.'
+		addToast(message)
+	}
+}
+
 const setHasHistory = () => {
 	state.hasHistory = true
 }
@@ -62,6 +81,7 @@ export const useStore = () => ({
 	search, // mutable
 	sorting, // mutable
 	fetchEntries,
+	updateEntry,
 	setHasHistory,
 	setAuthState,
 })
