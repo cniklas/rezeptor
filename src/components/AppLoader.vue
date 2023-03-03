@@ -3,7 +3,7 @@
 		xmlns="http://www.w3.org/2000/svg"
 		stroke="#000"
 		viewBox="0 0 44 44"
-		class="svg-icon icon-loader inline-block fill-current stroke-current stroke-0"
+		class="inline-block fill-current stroke-current stroke-0"
 	>
 		<g fill="none" fill-rule="evenodd" stroke-width="2">
 			<circle cx="22" cy="22" r="1">

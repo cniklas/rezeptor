@@ -1,25 +1,107 @@
 <script setup>
-import { ref, inject } from 'vue'
+import { ref, computed, inject, onMounted, onBeforeUnmount } from 'vue'
 import ListHeader from '@/components/ListHeader.vue'
+import SortIcons from '@/components/SortIcons.vue'
 import AppLoader from '@/components/AppLoader.vue'
+import { RouterLink } from 'vue-router'
 import { useStore } from '../use/store'
 
+const hashids = inject('hashids')
 const _complexity = inject('complexity')
 const _categories = inject('categories')
-const { state, search } = useStore()
+const { state, search, sorting, fetchEntries, setHasHistory } = useStore()
 
 const isLoading = ref(false)
-const fetchRecipes = () => {}
+const fetchRecipes = () => {
+	if (!isLoading.value) {
+		isLoading.value = true
+		fetchEntries()
+	}
+}
 
+const sortBy = key => {
+	fetchRecipes()
+
+	if (key === sorting.key) {
+		sorting.order[key] = sorting.order[key] * -1
+	} else {
+		sorting.key = key
+		// sorting.order[key] = 1
+	}
+}
+const sortClass = key => {
+	return (sorting.order[key] > 0 ? 'asc' : 'desc') + (sorting.key == key ? ' active' : '')
+}
+
+const filteredList = computed(() => {
+	// https://vuejs.org/v2/examples/grid-component.html
+	const filterKey = search.value && search.value.toLowerCase()
+	const key = sorting.key
+	const order = sorting.order[key] || 1
+	let filteredList = state.recipes
+
+	if (filterKey) {
+		filteredList = filteredList.filter(item => {
+			return (
+				item.name.toLowerCase().indexOf(filterKey) !== -1 || item.ingredients.toLowerCase().indexOf(filterKey) !== -1
+			)
+		})
+	}
+
+	if (key) {
+		filteredList = filteredList.slice().sort((a, b) => {
+			a = a[key]
+			b = b[key]
+			return Number.isInteger(a) ? (a === b ? 0 : a > b ? 1 : -1) * order : a.localeCompare(b) * order
+		})
+	}
+
+	return filteredList
+})
 const resetList = () => {
 	search.value = ''
 }
+
+const encodeId = id => hashids.encode(id)
+
+const loader = ref(null)
+let observer = null
+const _startObserver = () => {
+	observer = new IntersectionObserver(
+		([entry], self) => {
+			if (entry.isIntersecting) {
+				fetchRecipes()
+				self.unobserve(entry.target)
+			}
+		},
+		{ rootMargin: '0px 0px 120px 0px', threshold: 0 }
+	)
+	observer.observe(loader.value)
+}
+const _stopObserver = () => {
+	if (observer) {
+		observer.disconnect()
+	}
+}
+
+onMounted(() => {
+	if (!state.hasLoaded) {
+		_startObserver()
+	}
+
+	if (!state.hasHistory) {
+		setHasHistory()
+	}
+})
+
+onBeforeUnmount(() => {
+	_stopObserver()
+})
 </script>
 
 <template>
 	<section>
-		ListRecipes
-
+		<!-- <template v-if="state.recipes"> -->
 		<ListHeader :has-authenticated="state.hasAuthenticated" @reset="resetList">
 			<input
 				v-model.trim="search"
@@ -34,10 +116,81 @@ const resetList = () => {
 			/>
 		</ListHeader>
 
+		<table class="table-striped table-stacked w-full">
+			<thead class="thead">
+				<tr class="tr">
+					<th
+						class="th sort text-left font-semibold whitespace-nowrap align-bottom p-2 w-1/4"
+						:class="sortClass('name')"
+						@click="sortBy('name')"
+					>
+						Name <SortIcons />
+					</th>
+					<th
+						class="th sort text-left font-semibold whitespace-nowrap align-bottom p-2"
+						:class="sortClass('category_id')"
+						@click="sortBy('category_id')"
+					>
+						Kategorie <SortIcons />
+					</th>
+					<th
+						class="th sort text-left font-semibold whitespace-nowrap align-bottom p-2"
+						:class="sortClass('complexity')"
+						@click="sortBy('complexity')"
+					>
+						Schwierigkeit <SortIcons />
+					</th>
+					<th
+						class="th sort text-left font-semibold whitespace-nowrap align-bottom p-2"
+						:class="sortClass('duration')"
+						@click="sortBy('duration')"
+					>
+						Zubereitungszeit <SortIcons />
+					</th>
+					<th class="th text-left font-semibold whitespace-nowrap align-bottom p-2">besondere Zutaten</th>
+				</tr>
+			</thead>
+
+			<tbody class="tbody">
+				<tr
+					v-for="{
+						id,
+						name,
+						leftovers,
+						recommended,
+						category_id,
+						complexity,
+						duration,
+						remarkable_ingredients,
+					} in filteredList"
+					:key="id"
+					class="tr"
+				>
+					<td class="td align-top p-2">
+						<RouterLink :to="{ name: 'view-recipe', params: { id: encodeId(id) } }" class="nav-link">{{
+							name
+						}}</RouterLink
+						><template v-if="leftovers"> 🆁</template><template v-if="recommended"> 🥕</template>
+					</td>
+
+					<td class="td align-top p-2">{{ _categories.get(category_id) }}</td>
+
+					<td class="td align-top p-2 hidden-xxs">{{ _complexity.get(complexity) || 'n.a.' }}</td>
+
+					<td class="td align-top p-2">
+						<template v-if="duration > 0">{{ duration }} Minuten</template>
+					</td>
+
+					<td class="td align-top p-2">{{ remarkable_ingredients }}</td>
+				</tr>
+			</tbody>
+		</table>
+
 		<div ref="loader" class="w-7 mt-4 mx-auto" :class="{ invisible: !isLoading, hidden: state.hasLoaded }">
-			<AppLoader />
+			<AppLoader class="w-7 h-7" />
 		</div>
 	</section>
+	<!-- </template> -->
 </template>
 
 <style lang="postcss">
@@ -136,9 +289,5 @@ const resetList = () => {
 			margin-right: 0.25rem;
 		}
 	}
-}
-
-.icon-loader {
-	font-size: 1.75rem;
 }
 </style>

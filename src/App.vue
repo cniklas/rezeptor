@@ -12,7 +12,7 @@ const hashids = inject('hashids')
 const route = useRoute()
 const router = useRouter()
 
-const { state, setAuthState } = useStore()
+const { state, fetchEntries, setAuthState } = useStore()
 const { toasts, removeToast } = useToast()
 
 const _getNameById = (data, id) => data.find(item => item.id === id)?.name ?? ''
@@ -29,6 +29,19 @@ watch(() => state.recipes, _setTitle)
 const onBeforeEnter = () => {
 	emitter.emit('TriggerScroll')
 }
+
+// 🔺 TODO Warum fetch hier UND in ListRecipes?
+const fetchRecipes = async () => {
+	try {
+		await router.isReady()
+	} catch (error) {
+		// console.error(error)
+	}
+
+	const limit = route.name === 'recipes'
+	fetchEntries(limit)
+}
+fetchRecipes()
 
 // const logout = () => {
 // 	try {
@@ -59,7 +72,9 @@ watch(
 
 <template>
 	<main id="content" class="bg-white mx-auto px-3 pt-4 pb-8 lg:px-4 lg:py-8">
-		<div>
+		<div v-show="!state.recipes.length" class="text-base md:text-xl font-light text-center">Rezepte laden …</div>
+
+		<div v-show="state.recipes.length">
 			<RouterView class="has-transition" v-slot="{ Component }">
 				<Transition name="page" mode="out-in" @before-enter="onBeforeEnter">
 					<Component :is="Component" />

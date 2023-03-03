@@ -1,9 +1,10 @@
 import { ref, reactive, readonly } from 'vue'
-// import { auth } from '@/firebase'
-// import { useToast } from './toast'
+import { db } from '@/firebase'
+import { collection, getDocs } from 'firebase/firestore'
+import { useToast } from './toast'
 
-// const { addToast } = useToast()
-// let firebaseKeys = []
+const { addToast } = useToast()
+let firebaseKeys = []
 
 const state = reactive({
 	recipes: [],
@@ -18,6 +19,39 @@ const sorting = reactive({
 	order: { name: 1, category_id: 1, complexity: 1, duration: 1 },
 })
 
+const fetchEntries = async (limit = false) => {
+	if (state.hasLoaded) return
+
+	try {
+		// `get` ist statisch; `onSnapshot` wird in real time aktualisiert?
+		const keys = []
+		const recipes = []
+		// 🔺 TODO
+		// const snapshot = limit
+		// 	? await db.collection('recipes').orderBy('name').limit(24).get()
+		// 	: await db.collection('recipes').orderBy('name').get()
+		const snapshot = await getDocs(collection(db, 'recipes'))
+		snapshot.forEach(doc => {
+			keys.push(doc.id)
+			// recipes.push({ category_id: doc.data().category_id, … })
+			recipes.push(doc.data())
+		})
+
+		if (!limit) {
+			state.hasLoaded = true
+		}
+		firebaseKeys = [...keys]
+		state.recipes = [...recipes]
+	} catch (error) {
+		const message = error.message ?? 'Verbindung zum Server fehlgeschlagen.'
+		addToast(message) // ¯\\_(ツ)_/¯
+	}
+}
+
+const setHasHistory = () => {
+	state.hasHistory = true
+}
+
 const setAuthState = (hasAuthenticated = false) => {
 	state.hasAuthenticated = hasAuthenticated
 }
@@ -27,5 +61,7 @@ export const useStore = () => ({
 	state: readonly(state),
 	search, // mutable
 	sorting, // mutable
+	fetchEntries,
+	setHasHistory,
 	setAuthState,
 })
