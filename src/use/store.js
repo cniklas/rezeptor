@@ -37,9 +37,8 @@ const fetchEntries = async (limit = false) => {
 			recipes.push(doc.data())
 		})
 
-		if (!limit) {
-			state.hasLoaded = true
-		}
+		if (!limit) state.hasLoaded = true
+
 		firebaseKeys = [...keys]
 		state.recipes = [...recipes]
 	} catch (error) {
@@ -48,7 +47,33 @@ const fetchEntries = async (limit = false) => {
 	}
 }
 
-const updateEntry = async (recipe) => {
+const _getNextId = () => Math.max(...state.recipes.map(recipe => recipe.id)) + 1
+
+const addEntry = async recipe => {
+	if (!state.hasAuthenticated) return
+	if (!state.hasLoaded) await fetchEntries()
+
+	try {
+		recipe.id = _getNextId()
+		// Behind the scenes, `.add()` and `.doc().set()` are completely equivalent, so you can use whichever is more convenient.
+		// 🔺 TODO
+		// const { id } = await db.collection('recipes').add(recipe)
+
+		// 🔺 TODO
+		// if (id) {
+		// 	firebaseKeys.push(id)
+		// 	state.recipes.push(recipe)
+		// }
+
+		addToast('Rezept gespeichert', true)
+	} catch (error) {
+		// const message = error.message ?? 'Verbindung zum Server fehlgeschlagen.'
+		const message = error.message || 'Verbindung zum Server fehlgeschlagen.'
+		addToast(message)
+	}
+}
+
+const updateEntry = async recipe => {
 	if (!state.hasAuthenticated) return
 
 	const index = state.recipes.findIndex(item => item.id === recipe.id) // im Fehlerfall `-1`
@@ -81,6 +106,7 @@ export const useStore = () => ({
 	search, // mutable
 	sorting, // mutable
 	fetchEntries,
+	addEntry,
 	updateEntry,
 	setHasHistory,
 	setAuthState,
