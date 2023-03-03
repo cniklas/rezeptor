@@ -3,6 +3,9 @@ import App from './App.vue'
 import router from './router'
 import Hashids from 'hashids'
 
+import 'virtual:windi.css'
+import './assets/main.css'
+
 // // dev test
 // import { db } from './firebase'
 // import { collection, getDocs } from 'firebase/firestore'

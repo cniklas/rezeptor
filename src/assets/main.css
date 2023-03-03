@@ -1,0 +1,163 @@
+:root {
+	--scrollbar-thumb-color: hsl(218, 13%, 64%);
+	--scrollbar-track-color: hsla(218, 76%, 15%, 0.08);
+}
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-thumb { background-color: var(--scrollbar-thumb-color); }
+::-webkit-scrollbar-track { background-color: var(--scrollbar-track-color); }
+
+html {
+	scrollbar-width: thin;
+	scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
+}
+
+body {
+	background-color: #f4f4f5;
+	color: #1e293b;
+}
+
+a,
+button {
+	@apply focus:outline-none focus:ring-2 focus:ring-offset-1;
+}
+
+a {
+	@apply no-underline hover:underline focus:underline;
+}
+
+a,
+.back-link {
+	color: #0369a1;
+}
+
+a:hover,
+a:focus,
+.back-link:hover,
+.back-link:focus {
+	color: #075985;
+}
+
+button {
+	-webkit-tap-highlight-color: transparent;
+}
+
+button:disabled {
+	@apply cursor-not-allowed opacity-60;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+	@apply focus:outline-none focus:ring-2 focus:ring-offset-1;
+}
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+	-webkit-appearance: none;
+}
+
+input[type="email"],
+input[type="number"],
+input[type="password"],
+input[type="search"],
+input[type="text"],
+textarea {
+	@apply box-border appearance-none;
+	-webkit-tap-highlight-color: transparent;
+}
+
+.headline {
+	border-bottom: 1px solid #334155;
+}
+
+.svg-icon {
+	height: 1em;
+	width: 1em;
+}
+
+.btn {
+	@apply inline-flex items-center font-normal text-center whitespace-nowrap py-1.5 px-3 border-0 rounded select-none hover:no-underline focus:no-underline;
+	touch-action: manipulation;
+	-webkit-tap-highlight-color: transparent;
+}
+
+.btn-default {
+	color: #1e293b;
+	background-color: #e5e5e5;
+}
+
+.btn-default:hover,
+.btn-default:focus {
+	color: #1e293b;
+	background-color: #d4d4d4;
+}
+
+.btn-primary {
+	color: #fff;
+	background-color: #0369a1;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+	color: #fff;
+	background-color: #075985;
+}
+
+.is-required > label::after {
+	@apply text-red-700;
+	content: ' *';
+}
+
+.form-control {
+	@apply block w-full rounded py-1.5 px-3 bg-gray-100 border border-transparent focus:outline-none focus:border-gray-500 focus:bg-white;
+	font-size: 14px;
+}
+
+.form-control:not(textarea) {
+	height: 2.125rem;
+}
+
+.form-control::placeholder {
+	@apply opacity-100;
+	color: #6b7280;
+}
+
+/* https://www.warrenchandler.com/2019/04/02/stop-iphones-from-zooming-in-on-form-fields/ */
+/* iPhone 5, 5C, 5S, iPod Touch 5g */
+@media screen and (device-aspect-ratio: 40/71) {
+	.form-control {
+		font-size: 16px;
+	}
+}
+/* iPhone 6, iPhone 6s, iPhone 7 */
+@media screen and (device-aspect-ratio: 375/667) {
+	.form-control {
+		font-size: 16px;
+	}
+}
+/* iPhone 6 Plus, iPhone 6s Plus, iPhone 7 Plus, iPhone 8, iPhone X, XS, XS Max */
+@media screen and (device-aspect-ratio: 9/16) {
+	.form-control {
+		font-size: 16px;
+	}
+}
+
+.checkbox input {
+	flex: 0 0 auto;
+}
+
+.radio input:first-of-type {
+	@apply ml-0;
+}
+
+@media (max-width: 767px) {
+	.hidden-md-down {
+		display: none !important;
+	}
+}
+
+@media print {
+	.hidden-print {
+		display: none !important;
+	}
+}
