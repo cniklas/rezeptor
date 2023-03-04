@@ -9,9 +9,7 @@ const props = defineProps({
 })
 
 onMounted(() => {
-	if (props.timeout) {
-		setTimeout(emit, 1800, 'removeToast')
-	}
+	if (props.timeout) setTimeout(emit, 1800, 'removeToast')
 })
 
 // https://nolanlawson.com/2020/02/19/fixing-memory-leaks-in-web-applications/
@@ -28,22 +26,14 @@ onMounted(() => {
 
 <style lang="postcss">
 .toast {
-	cursor: pointer;
-	pointer-events: auto;
-	padding: 0.375rem 1rem;
-	font-size: 1rem;
-	text-align: center;
-	border-radius: 1rem;
-	margin-bottom: 0.625rem;
+	@apply cursor-pointer leading-5 mb-2.5 pointer-events-auto px-4 py-1.5 rounded-2xl text-base text-center text-white;
 
 	&.success {
 		background-color: #10b981;
-		color: #fff;
 	}
 
 	&.danger {
 		background-color: #f43f5e;
-		color: #fff;
 	}
 }
 </style>

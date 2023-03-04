@@ -29,9 +29,7 @@ const sortBy = key => {
 		// sorting.order[key] = 1
 	}
 }
-const sortClass = key => {
-	return (sorting.order[key] > 0 ? 'asc' : 'desc') + (sorting.key == key ? ' active' : '')
-}
+const sortClass = key => (sorting.order[key] > 0 ? 'asc' : 'desc') + (sorting.key === key ? ' active' : '')
 
 const filteredList = computed(() => {
 	// https://vuejs.org/v2/examples/grid-component.html
@@ -79,19 +77,12 @@ const _startObserver = () => {
 	observer.observe(loader.value)
 }
 const _stopObserver = () => {
-	if (observer) {
-		observer.disconnect()
-	}
+	if (observer) observer.disconnect()
 }
 
 onMounted(() => {
-	if (!state.hasLoaded) {
-		_startObserver()
-	}
-
-	if (!state.hasHistory) {
-		setHasHistory()
-	}
+	if (!state.hasLoaded) _startObserver()
+	if (!state.hasHistory) setHasHistory()
 })
 
 onBeforeUnmount(() => {
@@ -101,7 +92,6 @@ onBeforeUnmount(() => {
 
 <template>
 	<section>
-		<!-- <template v-if="state.recipes"> -->
 		<ListHeader :has-authenticated="state.hasAuthenticated" @reset="resetList">
 			<input
 				v-model.trim="search"
@@ -190,7 +180,6 @@ onBeforeUnmount(() => {
 			<AppLoader class="w-7 h-7" />
 		</div>
 	</section>
-	<!-- </template> -->
 </template>
 
 <style lang="postcss">
@@ -218,7 +207,8 @@ onBeforeUnmount(() => {
 	.icon-sort {
 		display: none;
 		fill: #1e293b; /* body color */
-		font-size: 1.125rem;
+		width: 1.125rem;
+		height: 1.125rem;
 		vertical-align: -0.25rem;
 	}
 

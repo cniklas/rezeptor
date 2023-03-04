@@ -6,15 +6,6 @@ import Hashids from 'hashids'
 import 'virtual:windi.css'
 import './assets/main.css'
 
-// // dev test
-// import { db } from './firebase'
-// import { collection, getDocs } from 'firebase/firestore'
-// const querySnapshot = await getDocs(collection(db, 'recipes'))
-// querySnapshot.forEach(doc => {
-// 	console.log(doc.data().name)
-// })
-// // END dev test
-
 const complexity = new Map([
 	[1, 'leicht'],
 	[2, 'mittel'],

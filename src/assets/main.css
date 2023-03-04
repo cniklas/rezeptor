@@ -70,11 +70,6 @@ textarea {
 	border-bottom: 1px solid #334155;
 }
 
-.svg-icon {
-	height: 1em;
-	width: 1em;
-}
-
 .btn {
 	@apply inline-flex items-center font-normal text-center whitespace-nowrap py-1.5 px-3 border-0 rounded select-none hover:no-underline focus:no-underline;
 	touch-action: manipulation;
@@ -93,13 +88,13 @@ textarea {
 }
 
 .btn-primary {
-	color: #fff;
+	@apply text-white;
 	background-color: #0369a1;
 }
 
 .btn-primary:hover,
 .btn-primary:focus {
-	color: #fff;
+	@apply text-white;
 	background-color: #075985;
 }
 
@@ -140,14 +135,6 @@ textarea {
 	.form-control {
 		font-size: 16px;
 	}
-}
-
-.checkbox input {
-	flex: 0 0 auto;
-}
-
-.radio input:first-of-type {
-	@apply ml-0;
 }
 
 @media (max-width: 767px) {

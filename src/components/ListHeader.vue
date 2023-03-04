@@ -21,7 +21,7 @@ defineProps({
 					class="reset-button absolute top-0 bottom-0 right-px flex items-center px-3 focus:ring-transparent focus:ring-offset-transparent"
 					@click="$emit('reset')"
 				>
-					<svg class="svg-icon icon-clear inline-block fill-current stroke-current stroke-0">
+					<svg class="icon-clear inline-block fill-current stroke-current stroke-0 w-4 h-4">
 						<use href="@/assets/app.svg#clear"></use>
 					</svg>
 				</button>
@@ -35,7 +35,7 @@ defineProps({
 </template>
 
 <style scoped>
-.form-control {
+:deep(.form-control) {
 	padding-right: 2.875rem;
 }
 
@@ -44,7 +44,6 @@ defineProps({
 }
 
 .icon-clear {
-	font-size: 1rem;
 	margin-left: -3px;
 	margin-right: -3px;
 }

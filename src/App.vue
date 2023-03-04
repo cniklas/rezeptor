@@ -6,7 +6,7 @@ import { auth } from './firebase'
 import { onAuthStateChanged /* signOut */ } from 'firebase/auth'
 import { useStore } from './use/store'
 import { useToast } from './use/toast'
-import { emitter } from './use/emitter'
+// import { emitter } from './use/emitter'
 
 const hashids = inject('hashids')
 const route = useRoute()
@@ -26,11 +26,10 @@ const _setTitle = () => {
 watch(route, _setTitle)
 watch(() => state.recipes, _setTitle)
 
-const onBeforeEnter = () => {
-	emitter.emit('TriggerScroll')
-}
+// const onBeforeEnter = () => {
+// 	emitter.emit('TriggerScroll')
+// }
 
-// 🔺 TODO Warum fetch hier UND in ListRecipes?
 const fetchRecipes = async () => {
 	try {
 		await router.isReady()
@@ -38,8 +37,8 @@ const fetchRecipes = async () => {
 		// console.error(error)
 	}
 
-	const limit = route.name === 'recipes'
-	fetchEntries(limit)
+	const limited = route.name === 'recipes'
+	fetchEntries(limited)
 }
 fetchRecipes()
 
@@ -75,15 +74,20 @@ watch(
 		<div v-show="!state.recipes.length" class="text-base md:text-xl font-light text-center">Rezepte laden …</div>
 
 		<div v-show="state.recipes.length">
-			<RouterView class="has-transition" v-slot="{ Component }">
+			<!-- <RouterView class="has-transition" v-slot="{ Component }">
 				<Transition name="page" mode="out-in" @before-enter="onBeforeEnter">
 					<Component :is="Component" />
 				</Transition>
-			</RouterView>
+			</RouterView> -->
+			<RouterView />
 		</div>
 	</main>
 
-	<TransitionGroup name="toasted" tag="div" id="toaster">
+	<TransitionGroup
+		name="toasted"
+		tag="div"
+		class="fixed pointer-events-none z-[1] top-8 left-1/2 transform -translate-x-1/2 w-[calc(100vw-30px)] max-w-[380px] flex flex-col items-center"
+	>
 		<!-- /!\ als `:key` keinesfalls den Array-Index verwenden; Indizes werden bei `splice` neu geschrieben -->
 		<AppToast
 			v-for="toast in toasts"
@@ -142,20 +146,6 @@ watch(
 
 .has-transition {
 	transform: translateZ(0); /* use GPU acceleration */
-}
-
-#toaster {
-	pointer-events: none;
-	position: fixed;
-	z-index: 1;
-	top: 2rem;
-	left: 50%;
-	transform: translateX(-50%);
-	width: calc(100vw - 30px);
-	max-width: 380px;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
 }
 
 @keyframes slide-fade-in {

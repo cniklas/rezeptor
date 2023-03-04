@@ -1,6 +1,6 @@
 import { ref, reactive, readonly } from 'vue'
 import { db } from '@/firebase'
-import { collection, getDocs } from 'firebase/firestore'
+import { collection, query, orderBy, limit, getDocs } from 'firebase/firestore'
 import { useToast } from './toast'
 
 const { addToast } = useToast()
@@ -19,25 +19,22 @@ const sorting = reactive({
 	order: { name: 1, category_id: 1, complexity: 1, duration: 1 },
 })
 
-const fetchEntries = async (limit = false) => {
+const fetchEntries = async (limited = false) => {
 	if (state.hasLoaded) return
 
 	try {
-		// `get` ist statisch; `onSnapshot` wird in real time aktualisiert?
 		const keys = []
 		const recipes = []
-		// 🔺 TODO
-		// const snapshot = limit
-		// 	? await db.collection('recipes').orderBy('name').limit(24).get()
-		// 	: await db.collection('recipes').orderBy('name').get()
-		const snapshot = await getDocs(collection(db, 'recipes'))
+		const snapshot = limited
+			? await getDocs(query(collection(db, 'recipes'), orderBy('name'), limit(24)))
+			: await getDocs(collection(db, 'recipes'))
 		snapshot.forEach(doc => {
 			keys.push(doc.id)
 			// recipes.push({ category_id: doc.data().category_id, … })
 			recipes.push(doc.data())
 		})
 
-		if (!limit) state.hasLoaded = true
+		if (!limited) state.hasLoaded = true
 
 		firebaseKeys = [...keys]
 		state.recipes = [...recipes]
