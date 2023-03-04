@@ -13,7 +13,7 @@ const goBack = () => {
 <template>
 	<a
 		v-if="state.hasHistory"
-		class="back-link inline-block max-w-full mb-2.5 hover:underline focus:underline"
+		class="back-link mb-2.5 inline-block max-w-full hover:underline focus:underline"
 		role="button"
 		@click="goBack"
 		>zurück</a
@@ -21,7 +21,7 @@ const goBack = () => {
 	<RouterLink
 		v-else
 		:to="{ name: 'recipes' }"
-		class="back-link inline-block max-w-full mb-2.5 hover:underline focus:underline"
+		class="back-link mb-2.5 inline-block max-w-full hover:underline focus:underline"
 		>Home</RouterLink
 	>
 </template>

@@ -26,7 +26,7 @@ onMounted(() => {
 
 <style lang="postcss">
 .toast {
-	@apply cursor-pointer leading-5 mb-2.5 pointer-events-auto px-4 py-1.5 rounded-2xl text-base text-center text-white;
+	@apply pointer-events-auto mb-2.5 cursor-pointer rounded-2xl px-4 py-1.5 text-center text-base leading-5 text-white;
 
 	&.success {
 		background-color: #10b981;

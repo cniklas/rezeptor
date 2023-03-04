@@ -70,8 +70,8 @@ watch(
 </script>
 
 <template>
-	<main id="content" class="bg-white mx-auto px-3 pt-4 pb-8 lg:px-4 lg:py-8">
-		<div v-show="!state.recipes.length" class="text-base md:text-xl font-light text-center">Rezepte laden …</div>
+	<main id="content" class="mx-auto bg-white px-3 pt-4 pb-8 lg:px-4 lg:py-8">
+		<div v-show="!state.recipes.length" class="text-center text-base font-light md:text-xl">Rezepte laden …</div>
 
 		<div v-show="state.recipes.length">
 			<!-- <RouterView class="has-transition" v-slot="{ Component }">
@@ -86,7 +86,7 @@ watch(
 	<TransitionGroup
 		name="toasted"
 		tag="div"
-		class="fixed pointer-events-none z-[1] top-8 left-1/2 transform -translate-x-1/2 w-[calc(100vw-30px)] max-w-[380px] flex flex-col items-center"
+		class="pointer-events-none fixed top-8 left-1/2 z-[1] flex w-[calc(100vw-30px)] max-w-[380px] -translate-x-1/2 transform flex-col items-center"
 	>
 		<!-- /!\ als `:key` keinesfalls den Array-Index verwenden; Indizes werden bei `splice` neu geschrieben -->
 		<AppToast

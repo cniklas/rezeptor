@@ -9,10 +9,10 @@ defineProps({
 
 <template>
 	<nav class="search-form mb-6 py-2">
-		<label for="search" class="inline-block font-medium mb-2 hidden-md-down">Suche nach Rezept oder Zutaten:</label>
+		<label for="search" class="hidden-md-down mb-2 inline-block font-medium">Suche nach Rezept oder Zutaten:</label>
 
 		<div class="flex justify-between">
-			<div class="flex-auto relative sm:max-w-xs">
+			<div class="relative flex-auto sm:max-w-xs">
 				<slot />
 
 				<button
@@ -21,7 +21,7 @@ defineProps({
 					class="reset-button absolute top-0 bottom-0 right-px flex items-center px-3 focus:ring-transparent focus:ring-offset-transparent"
 					@click="$emit('reset')"
 				>
-					<svg class="icon-clear inline-block fill-current stroke-current stroke-0 w-4 h-4">
+					<svg class="icon-clear inline-block h-4 w-4 fill-current stroke-current stroke-0">
 						<use href="@/assets/app.svg#clear"></use>
 					</svg>
 				</button>

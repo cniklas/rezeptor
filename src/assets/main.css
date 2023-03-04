@@ -3,9 +3,16 @@
 	--scrollbar-track-color: hsla(218, 76%, 15%, 0.08);
 }
 
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-thumb { background-color: var(--scrollbar-thumb-color); }
-::-webkit-scrollbar-track { background-color: var(--scrollbar-track-color); }
+::-webkit-scrollbar {
+	width: 6px;
+	height: 6px;
+}
+::-webkit-scrollbar-thumb {
+	background-color: var(--scrollbar-thumb-color);
+}
+::-webkit-scrollbar-track {
+	background-color: var(--scrollbar-track-color);
+}
 
 html {
 	scrollbar-width: thin;
@@ -46,21 +53,21 @@ button:disabled {
 	@apply cursor-not-allowed opacity-60;
 }
 
-input[type="checkbox"],
-input[type="radio"] {
+input[type='checkbox'],
+input[type='radio'] {
 	@apply focus:outline-none focus:ring-2 focus:ring-offset-1;
 }
 
-input[type="search"]::-webkit-search-cancel-button,
-input[type="search"]::-webkit-search-decoration {
+input[type='search']::-webkit-search-cancel-button,
+input[type='search']::-webkit-search-decoration {
 	-webkit-appearance: none;
 }
 
-input[type="email"],
-input[type="number"],
-input[type="password"],
-input[type="search"],
-input[type="text"],
+input[type='email'],
+input[type='number'],
+input[type='password'],
+input[type='search'],
+input[type='text'],
 textarea {
 	@apply box-border appearance-none;
 	-webkit-tap-highlight-color: transparent;
@@ -71,7 +78,7 @@ textarea {
 }
 
 .btn {
-	@apply inline-flex items-center font-normal text-center whitespace-nowrap py-1.5 px-3 border-0 rounded select-none hover:no-underline focus:no-underline;
+	@apply inline-flex select-none items-center whitespace-nowrap rounded border-0 py-1.5 px-3 text-center font-normal hover:no-underline focus:no-underline;
 	touch-action: manipulation;
 	-webkit-tap-highlight-color: transparent;
 }
@@ -104,7 +111,7 @@ textarea {
 }
 
 .form-control {
-	@apply block w-full rounded py-1.5 px-3 bg-gray-100 border border-transparent focus:outline-none focus:border-gray-500 focus:bg-white;
+	@apply block w-full rounded border border-transparent bg-gray-100 py-1.5 px-3 focus:border-gray-500 focus:bg-white focus:outline-none;
 	font-size: 14px;
 }
 

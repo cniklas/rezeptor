@@ -82,14 +82,14 @@ const share = () => {
 				<button
 					v-if="isShareSupported && !edit"
 					type="button"
-					class="back-link inline-block max-w-full mb-2.5 hover:underline focus:underline"
+					class="back-link mb-2.5 inline-block max-w-full hover:underline focus:underline"
 					@click="share"
 				>
 					Link teilen
 				</button>
 			</div>
 
-			<h2 class="headline text-2xl md:text-3xl font-medium mt-2.5 mb-5 pb-2.5">{{ headline }}</h2>
+			<h2 class="headline mt-2.5 mb-5 pb-2.5 text-2xl font-medium md:text-3xl">{{ headline }}</h2>
 
 			<template v-if="!edit">
 				<dl class="md:flex md:flex-wrap">
@@ -97,7 +97,7 @@ const share = () => {
 						Zutaten <template v-if="recipe.serves > 0">für {{ recipe.serves }}</template>
 					</dt>
 					<dd class="inline-list-dd">
-						<ul v-if="ingredients.length" class="list-disc ml-5 mb-2">
+						<ul v-if="ingredients.length" class="ml-5 mb-2 list-disc">
 							<li v-for="(ingredient, i) in ingredients" :key="i">{{ ingredient }}</li>
 						</ul>
 					</dd>
@@ -114,12 +114,12 @@ const share = () => {
 					<dd class="inline-list-dd">{{ _cookbooks.get(recipe.cook_book_id) }}</dd>
 				</dl>
 
-				<dl v-if="recipe.notes" class="md:flex md:flex-wrap mt-4">
+				<dl v-if="recipe.notes" class="mt-4 md:flex md:flex-wrap">
 					<dt class="inline-list-dt font-bold">Tipps</dt>
 					<dd class="inline-list-dd whitespace-pre-line break-words" v-html="notes"></dd>
 				</dl>
 
-				<div v-if="state.hasAuthenticated" class="mt-5 hidden-print">
+				<div v-if="state.hasAuthenticated" class="hidden-print mt-5">
 					<button type="button" class="btn btn-primary" @click="setForm">Rezept bearbeiten</button>
 				</div>
 			</template>
@@ -137,10 +137,10 @@ const share = () => {
 		<template v-else>
 			<RouterLink
 				:to="{ name: 'recipes' }"
-				class="back-link inline-block max-w-full mb-2.5 hover:underline focus:underline"
+				class="back-link mb-2.5 inline-block max-w-full hover:underline focus:underline"
 				>zurück</RouterLink
 			>
-			<div class="text-base md:text-xl font-light text-center">Ungültige Rezept-ID</div>
+			<div class="text-center text-base font-light md:text-xl">Ungültige Rezept-ID</div>
 		</template>
 	</section>
 </template>

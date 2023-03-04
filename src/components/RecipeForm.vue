@@ -19,8 +19,8 @@ const form = reactive(props.formData)
 <template>
 	<div class="grid gap-x-8 md:grid-cols-2">
 		<div>
-			<div class="mb-4 is-required">
-				<label for="name" class="inline-block font-medium mb-1.5">Name</label>
+			<div class="is-required mb-4">
+				<label for="name" class="mb-1.5 inline-block font-medium">Name</label>
 				<input
 					v-model.trim="form.name"
 					type="text"
@@ -32,19 +32,19 @@ const form = reactive(props.formData)
 				/>
 			</div>
 
-			<div class="flex gap-x-2 mb-3">
+			<div class="mb-3 flex gap-x-2">
 				<input v-model="form.leftovers" type="checkbox" class="mt-1 flex-shrink-0" id="leftovers" />
 				<label for="leftovers" class="inline-block cursor-pointer">Fleischreste-Verwertung</label>
 			</div>
 
-			<div class="flex gap-x-2 mb-3 -mt-1.5">
+			<div class="mb-3 -mt-1.5 flex gap-x-2">
 				<input v-model="form.recommended" type="checkbox" class="mt-1 flex-shrink-0" id="recommended" />
 				<label for="recommended" class="inline-block cursor-pointer">Empfehlung</label>
 			</div>
 
 			<div class="grid gap-x-4 md:grid-cols-2">
 				<div class="mb-4">
-					<label for="categoryId" class="inline-block font-medium mb-1.5">Kategorie</label>
+					<label for="categoryId" class="mb-1.5 inline-block font-medium">Kategorie</label>
 					<select v-model.number="form.category_id" class="form-control" id="categoryId">
 						<option value="0"></option>
 						<option v-for="[key, category] of _categories" :key="`category-${key}`" :value="key">{{ category }}</option>
@@ -52,7 +52,7 @@ const form = reactive(props.formData)
 				</div>
 
 				<div class="mb-4">
-					<label for="cookBookId" class="inline-block font-medium mb-1.5">Kochbuch</label>
+					<label for="cookBookId" class="mb-1.5 inline-block font-medium">Kochbuch</label>
 					<select v-model.number="form.cook_book_id" class="form-control" id="cookBookId">
 						<option v-for="[key, book] of _cookbooks" :key="`book-${key}`" :value="key">{{ book }}</option>
 					</select>
@@ -60,7 +60,7 @@ const form = reactive(props.formData)
 			</div>
 
 			<div class="mb-3">
-				<div class="font-medium mb-0.5">Schwierigkeit</div>
+				<div class="mb-0.5 font-medium">Schwierigkeit</div>
 				<template v-for="[key, complexity] of _complexity" :key="`complexity-${key}`">
 					<input
 						v-model.number="form.complexity"
@@ -69,20 +69,20 @@ const form = reactive(props.formData)
 						:id="`complexity${key}`"
 						name="complexity"
 						:value="key"
-					/><label :for="`complexity${key}`" class="inline-block cursor-pointer mr-4 last:mr-0">{{ complexity }}</label>
+					/><label :for="`complexity${key}`" class="mr-4 inline-block cursor-pointer last:mr-0">{{ complexity }}</label>
 				</template>
 			</div>
 
 			<div class="mb-4">
-				<label for="notes" class="inline-block font-medium mb-1.5">Tipps</label>
+				<label for="notes" class="mb-1.5 inline-block font-medium">Tipps</label>
 				<textarea v-model.trim="form.notes" class="form-control" id="notes" cols="30" rows="6"></textarea>
 			</div>
 		</div>
 
 		<div>
-			<div class="grid gap-x-4 grid-cols-2">
+			<div class="grid grid-cols-2 gap-x-4">
 				<div class="mb-4">
-					<label for="duration" class="inline-block font-medium mb-1.5">Zubereitungszeit</label>
+					<label for="duration" class="mb-1.5 inline-block font-medium">Zubereitungszeit</label>
 					<input
 						v-model.number="form.duration"
 						type="number"
@@ -97,7 +97,7 @@ const form = reactive(props.formData)
 				</div>
 
 				<div class="mb-4">
-					<label for="serves" class="inline-block font-medium mb-1.5">Anzahl Portionen</label>
+					<label for="serves" class="mb-1.5 inline-block font-medium">Anzahl Portionen</label>
 					<input
 						v-model.number="form.serves"
 						type="number"
@@ -111,12 +111,12 @@ const form = reactive(props.formData)
 			</div>
 
 			<div class="mb-4">
-				<label for="ingredients" class="inline-block font-medium mb-1.5">Zutaten</label>
+				<label for="ingredients" class="mb-1.5 inline-block font-medium">Zutaten</label>
 				<textarea v-model.trim="form.ingredients" class="form-control" id="ingredients" cols="30" rows="10"></textarea>
 			</div>
 
 			<div class="mb-4">
-				<label for="remarkableIngredients" class="inline-block font-medium mb-1.5">besondere Zutaten</label>
+				<label for="remarkableIngredients" class="mb-1.5 inline-block font-medium">besondere Zutaten</label>
 				<input
 					v-model.trim="form.remarkable_ingredients"
 					type="text"

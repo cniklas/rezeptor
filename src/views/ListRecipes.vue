@@ -110,34 +110,34 @@ onBeforeUnmount(() => {
 			<thead class="thead">
 				<tr class="tr">
 					<th
-						class="th sort text-left font-semibold whitespace-nowrap align-bottom p-2 w-1/4"
+						class="th sort w-1/4 whitespace-nowrap p-2 text-left align-bottom font-semibold"
 						:class="sortClass('name')"
 						@click="sortBy('name')"
 					>
 						Name <SortIcons />
 					</th>
 					<th
-						class="th sort text-left font-semibold whitespace-nowrap align-bottom p-2"
+						class="th sort whitespace-nowrap p-2 text-left align-bottom font-semibold"
 						:class="sortClass('category_id')"
 						@click="sortBy('category_id')"
 					>
 						Kategorie <SortIcons />
 					</th>
 					<th
-						class="th sort text-left font-semibold whitespace-nowrap align-bottom p-2"
+						class="th sort whitespace-nowrap p-2 text-left align-bottom font-semibold"
 						:class="sortClass('complexity')"
 						@click="sortBy('complexity')"
 					>
 						Schwierigkeit <SortIcons />
 					</th>
 					<th
-						class="th sort text-left font-semibold whitespace-nowrap align-bottom p-2"
+						class="th sort whitespace-nowrap p-2 text-left align-bottom font-semibold"
 						:class="sortClass('duration')"
 						@click="sortBy('duration')"
 					>
 						Zubereitungszeit <SortIcons />
 					</th>
-					<th class="th text-left font-semibold whitespace-nowrap align-bottom p-2">besondere Zutaten</th>
+					<th class="th whitespace-nowrap p-2 text-left align-bottom font-semibold">besondere Zutaten</th>
 				</tr>
 			</thead>
 
@@ -156,28 +156,28 @@ onBeforeUnmount(() => {
 					:key="id"
 					class="tr"
 				>
-					<td class="td align-top p-2">
+					<td class="td p-2 align-top">
 						<RouterLink :to="{ name: 'view-recipe', params: { id: encodeId(id) } }" class="nav-link">{{
 							name
 						}}</RouterLink
 						><template v-if="leftovers"> 🆁</template><template v-if="recommended"> 🥕</template>
 					</td>
 
-					<td class="td align-top p-2">{{ _categories.get(category_id) }}</td>
+					<td class="td p-2 align-top">{{ _categories.get(category_id) }}</td>
 
-					<td class="td align-top p-2 hidden-xxs">{{ _complexity.get(complexity) || 'n.a.' }}</td>
+					<td class="td hidden-xxs p-2 align-top">{{ _complexity.get(complexity) || 'n.a.' }}</td>
 
-					<td class="td align-top p-2">
+					<td class="td p-2 align-top">
 						<template v-if="duration > 0">{{ duration }} Minuten</template>
 					</td>
 
-					<td class="td align-top p-2">{{ remarkable_ingredients }}</td>
+					<td class="td p-2 align-top">{{ remarkable_ingredients }}</td>
 				</tr>
 			</tbody>
 		</table>
 
-		<div ref="loader" class="w-7 mt-4 mx-auto" :class="{ invisible: !isLoading, hidden: state.hasLoaded }">
-			<AppLoader class="w-7 h-7" />
+		<div ref="loader" class="mx-auto mt-4 w-7" :class="{ invisible: !isLoading, hidden: state.hasLoaded }">
+			<AppLoader class="h-7 w-7" />
 		</div>
 	</section>
 </template>

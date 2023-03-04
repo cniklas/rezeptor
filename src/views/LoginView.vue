@@ -30,11 +30,11 @@ const onSubmit = async () => {
 	<section>
 		<BackLink />
 
-		<h2 class="headline text-2xl md:text-3xl font-medium mt-2.5 mb-8 pb-2.5">Anmelden</h2>
+		<h2 class="headline mt-2.5 mb-8 pb-2.5 text-2xl font-medium md:text-3xl">Anmelden</h2>
 
 		<form novalidate @submit.prevent="onSubmit">
 			<div class="md:w-6/12 lg:w-5/12 xl:w-4/12">
-				<div class="mb-4 is-required">
+				<div class="is-required mb-4">
 					<label for="email" class="sr-only">E-Mail</label>
 					<input
 						v-model.trim="email"
@@ -46,7 +46,7 @@ const onSubmit = async () => {
 					/>
 				</div>
 
-				<div class="mb-4 is-required">
+				<div class="is-required mb-4">
 					<label for="password" class="sr-only">Passwort</label>
 					<input
 						v-model.trim="password"
