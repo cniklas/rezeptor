@@ -176,7 +176,7 @@ onBeforeUnmount(() => {
 			</tbody>
 		</table>
 
-		<div ref="loader" class="mx-auto mt-4 w-7" :class="{ invisible: !isLoading, hidden: state.hasLoaded }">
+		<div ref="loader" class="mx-auto mt-4 w-7" :class="{ 'invisible': !isLoading, 'hidden': state.hasLoaded }">
 			<AppLoader class="h-7 w-7" />
 		</div>
 	</section>

@@ -2,34 +2,24 @@
 
 This template should help get you started developing with Vue 3 in Vite.
 
-## Recommended IDE Setup
+## Windi CSS
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+### Vue Scoped Styles
 
-## Customize configuration
+> You will need to set `transformCSS: 'pre'` to get Scoped Style work.
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+https://windicss.org/integrations/vite.html#caveats
 
-## Project Setup
+### Dynamic classes
 
-```sh
-yarn
+Windi CSS does not detect utilities that are not wrapped in quotes!
+
+```html
+<!-- ❌ does not work -->
+<div :class="{ hidden: isTrue }" />
+
+<!-- ✅ does work -->
+<div :class="{ 'hidden': isTrue }" />
 ```
 
-### Compile and Hot-Reload for Development
-
-```sh
-yarn dev
-```
-
-### Compile and Minify for Production
-
-```sh
-yarn build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-yarn lint
-```
+To prevent Prettier from removing quotes add `"quoteProps": "preserve"` to the config.
