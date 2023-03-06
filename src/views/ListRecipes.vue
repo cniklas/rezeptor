@@ -228,7 +228,7 @@ onBeforeUnmount(() => {
 /* Responsive Table, inspired by https://codepen.io/geoffyuen/pen/FCBEg */
 @media screen and (max-width: 639px) {
 	.table-stacked {
-		width: 100vw;
+		width: 100vw !important;
 		margin-left: -0.75rem;
 		margin-right: -0.75rem;
 

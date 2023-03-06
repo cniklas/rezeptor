@@ -9,7 +9,7 @@ defineProps({
 
 <template>
 	<nav class="search-form mb-6 py-2">
-		<label for="search" class="hidden-md-down mb-2 inline-block font-medium">Suche nach Rezept oder Zutaten:</label>
+		<label for="search" class="<md:hidden mb-2 inline-block font-medium">Suche nach Rezept oder Zutaten:</label>
 
 		<div class="flex justify-between">
 			<div class="relative flex-auto sm:max-w-xs">
@@ -27,7 +27,7 @@ defineProps({
 				</button>
 			</div>
 
-			<RouterLink :to="{ name: hasAuthenticated ? 'add-recipe' : 'login' }" class="btn btn-primary hidden-md-down">
+			<RouterLink :to="{ name: hasAuthenticated ? 'add-recipe' : 'login' }" class="btn btn-primary !<md:hidden">
 				{{ hasAuthenticated ? 'Rezept hinzufügen' : 'Anmelden' }}
 			</RouterLink>
 		</div>

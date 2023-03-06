@@ -92,34 +92,34 @@ const share = () => {
 			<h2 class="headline mt-2.5 mb-5 pb-2.5 text-2xl font-medium md:text-3xl">{{ headline }}</h2>
 
 			<template v-if="!edit">
-				<dl class="md:flex md:flex-wrap">
+				<dl class="md:grid md:grid-cols-[min(38.2%,280px),61.8%]">
 					<dt class="inline-list-dt font-bold">
 						Zutaten <template v-if="recipe.serves > 0">für {{ recipe.serves }}</template>
 					</dt>
-					<dd class="inline-list-dd">
+					<dd>
 						<ul v-if="ingredients.length" class="ml-5 mb-2 list-disc">
 							<li v-for="(ingredient, i) in ingredients" :key="i">{{ ingredient }}</li>
 						</ul>
 					</dd>
 
 					<dt class="inline-list-dt font-bold">Zubereitungszeit</dt>
-					<dd class="inline-list-dd">
+					<dd>
 						<template v-if="recipe.duration > 0">{{ recipe.duration }} Minuten</template>
 					</dd>
 
 					<dt class="inline-list-dt font-bold">Schwierigkeit</dt>
-					<dd class="inline-list-dd">{{ _complexity.get(recipe.complexity) || 'n.a.' }}</dd>
+					<dd>{{ _complexity.get(recipe.complexity) || 'n.a.' }}</dd>
 
 					<dt class="inline-list-dt font-bold">Kochbuch</dt>
-					<dd class="inline-list-dd">{{ _cookbooks.get(recipe.cook_book_id) }}</dd>
+					<dd>{{ _cookbooks.get(recipe.cook_book_id) }}</dd>
 				</dl>
 
-				<dl v-if="recipe.notes" class="mt-4 md:flex md:flex-wrap">
+				<dl v-if="recipe.notes" class="mt-4 md:grid md:grid-cols-[min(38.2%,280px),61.8%]">
 					<dt class="inline-list-dt font-bold">Tipps</dt>
-					<dd class="inline-list-dd whitespace-pre-line break-words" v-html="notes"></dd>
+					<dd class="whitespace-pre-line break-words" v-html="notes"></dd>
 				</dl>
 
-				<div v-if="state.hasAuthenticated" class="hidden-print mt-5">
+				<div v-if="state.hasAuthenticated" class="mt-5 print:hidden">
 					<button type="button" class="btn btn-primary" @click="setForm">Rezept bearbeiten</button>
 				</div>
 			</template>
@@ -145,20 +145,10 @@ const share = () => {
 	</section>
 </template>
 
-<style>
-/* 🔺 TODO */
+<style lang="postcss">
 @media screen and (min-width: 768px) {
 	.inline-list-dt {
-		flex-basis: min(38.2%, 280px);
-		padding-right: 1.25rem;
-		text-align: right;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-	}
-
-	.inline-list-dd {
-		flex-basis: 61.8%;
+		@apply overflow-hidden overflow-ellipsis whitespace-nowrap pr-5 text-right;
 	}
 }
 </style>
