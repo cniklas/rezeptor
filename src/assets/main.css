@@ -69,7 +69,7 @@ input[type='password'],
 input[type='search'],
 input[type='text'],
 textarea {
-	@apply box-border appearance-none;
+	@apply appearance-none;
 	-webkit-tap-highlight-color: transparent;
 }
 

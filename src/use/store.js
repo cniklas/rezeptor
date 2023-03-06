@@ -1,6 +1,6 @@
 import { ref, reactive, readonly } from 'vue'
 import { db } from '@/firebase'
-import { collection, query, orderBy, limit, getDocs } from 'firebase/firestore'
+import { collection, query, orderBy, limit, getDocs, addDoc, doc, setDoc } from 'firebase/firestore'
 import { useToast } from './toast'
 
 const { addToast } = useToast()
@@ -46,21 +46,19 @@ const fetchEntries = async (limited = false) => {
 
 const _getNextId = () => Math.max(...state.recipes.map(recipe => recipe.id)) + 1
 
-const addEntry = async recipe => {
+const addEntry = async formData => {
 	if (!state.hasAuthenticated) return
 	if (!state.hasLoaded) await fetchEntries()
 
 	try {
-		recipe.id = _getNextId()
+		formData.id = _getNextId()
 		// Behind the scenes, `.add()` and `.doc().set()` are completely equivalent, so you can use whichever is more convenient.
-		// 🔺 TODO
-		// const { id } = await db.collection('recipes').add(recipe)
+		const { id } = await addDoc(collection(db, 'recipes'), formData)
 
-		// 🔺 TODO
-		// if (id) {
-		// 	firebaseKeys.push(id)
-		// 	state.recipes.push(recipe)
-		// }
+		if (id) {
+			firebaseKeys.push(id)
+			state.recipes.push(formData)
+		}
 
 		addToast('Rezept gespeichert', true)
 	} catch (error) {
@@ -70,17 +68,16 @@ const addEntry = async recipe => {
 	}
 }
 
-const updateEntry = async recipe => {
+const updateEntry = async formData => {
 	if (!state.hasAuthenticated) return
 
-	const index = state.recipes.findIndex(item => item.id === recipe.id) // im Fehlerfall `-1`
+	const index = state.recipes.findIndex(recipe => recipe.id === formData.id) // im Fehlerfall `-1`
 	const key = firebaseKeys[index] // im Fehlerfall `undefined`
 	if (key === undefined) return
 
 	try {
-		// 🔺 TODO
-		// await db.collection('recipes').doc(key).set(recipe)
-		state.recipes[index] = recipe
+		await setDoc(doc(db, 'recipes', key), formData)
+		state.recipes[index] = formData
 
 		addToast('Rezept aktualisiert', true)
 	} catch (error) {
