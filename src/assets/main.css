@@ -1,6 +1,9 @@
 :root {
 	--scrollbar-thumb-color: hsl(218, 13%, 64%);
 	--scrollbar-track-color: hsla(218, 76%, 15%, 0.08);
+	--base-text-color: #1e293b;
+	--primary-color: #0369a1;
+	--primary-hover-color: #075985;
 }
 
 ::-webkit-scrollbar {
@@ -21,7 +24,7 @@ html {
 
 body {
 	background-color: #f4f4f5;
-	color: #1e293b;
+	color: var(--base-text-color);
 }
 
 a,
@@ -35,14 +38,14 @@ a {
 
 a,
 .back-link {
-	color: #0369a1;
+	color: var(--primary-color);
 }
 
 a:hover,
 a:focus,
 .back-link:hover,
 .back-link:focus {
-	color: #075985;
+	color: var(--primary-hover-color);
 }
 
 button {
@@ -78,31 +81,30 @@ textarea {
 }
 
 .btn {
-	@apply inline-flex select-none items-center whitespace-nowrap rounded border-0 py-1.5 px-3 text-center font-normal hover:no-underline focus:no-underline;
-	touch-action: manipulation;
+	@apply inline-flex touch-manipulation select-none items-center whitespace-nowrap rounded border-0 py-1.5 px-3 text-center font-normal hover:no-underline focus:no-underline;
 	-webkit-tap-highlight-color: transparent;
 }
 
 .btn-default {
-	color: #1e293b;
+	color: var(--base-text-color);
 	background-color: #e5e5e5;
 }
 
 .btn-default:hover,
 .btn-default:focus {
-	color: #1e293b;
+	color: var(--base-text-color);
 	background-color: #d4d4d4;
 }
 
 .btn-primary {
 	@apply text-white;
-	background-color: #0369a1;
+	background-color: var(--primary-color);
 }
 
 .btn-primary:hover,
 .btn-primary:focus {
 	@apply text-white;
-	background-color: #075985;
+	background-color: var(--primary-hover-color);
 }
 
 .is-required > label::after {

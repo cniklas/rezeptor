@@ -117,27 +117,10 @@ watch(
 	}
 }
 
-/*
-@keyframes fade-in {
-	from { opacity: 0; }
-	to { }
-}
-
-.page-enter-active {
-	animation: fade-in 180ms ease-out forwards;
-}
-
-.page-leave-active {
-	animation: fade-in 180ms ease-in reverse forwards;
-} */
 .page-enter-active,
 .page-leave-active {
-	transition: opacity 180ms ease; /* ease-out */
+	transition: opacity 180ms ease;
 }
-
-/* .page-leave-active {
-	transition-timing-function: ease-in;
-} */
 
 .page-enter-from,
 .page-leave-to {

@@ -196,7 +196,7 @@ onBeforeUnmount(() => {
 }
 
 .sort {
-	color: #0369a1;
+	color: var(--primary-color);
 	cursor: pointer;
 	user-select: none;
 
@@ -206,7 +206,7 @@ onBeforeUnmount(() => {
 
 	.icon-sort {
 		display: none;
-		fill: #1e293b; /* body color */
+		fill: var(--base-text-color);
 		width: 1.125rem;
 		height: 1.125rem;
 		vertical-align: -0.25rem;
