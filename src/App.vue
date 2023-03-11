@@ -6,7 +6,7 @@ import { auth } from './firebase'
 import { onAuthStateChanged /* signOut */ } from 'firebase/auth'
 import { useStore } from './use/store'
 import { useToast } from './use/toast'
-// import { emitter } from './use/emitter'
+import { emitter } from './use/emitter'
 
 const hashids = inject('hashids')
 const route = useRoute()
@@ -26,9 +26,9 @@ const _setTitle = () => {
 watch(route, _setTitle)
 watch(() => state.recipes, _setTitle)
 
-// const onBeforeEnter = () => {
-// 	emitter.emit('TriggerScroll')
-// }
+const onBeforeEnter = () => {
+	emitter.emit('TriggerScroll')
+}
 
 const fetchRecipes = async () => {
 	try {
@@ -74,12 +74,11 @@ watch(
 		<div v-show="!state.recipes.length" class="text-center text-base font-light md:text-xl">Rezepte laden …</div>
 
 		<div v-show="state.recipes.length">
-			<!-- <RouterView class="has-transition" v-slot="{ Component }">
+			<RouterView class="has-transition" v-slot="{ Component }">
 				<Transition name="page" mode="out-in" @before-enter="onBeforeEnter">
 					<Component :is="Component" />
 				</Transition>
-			</RouterView> -->
-			<RouterView />
+			</RouterView>
 		</div>
 	</main>
 
