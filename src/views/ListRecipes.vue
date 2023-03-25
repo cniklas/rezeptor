@@ -229,8 +229,7 @@ onBeforeUnmount(() => {
 @media screen and (max-width: 639px) {
 	.table-stacked {
 		width: 100vw !important;
-		margin-left: -0.75rem;
-		margin-right: -0.75rem;
+		margin-inline: -0.75rem;
 
 		.thead {
 			display: none;

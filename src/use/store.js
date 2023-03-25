@@ -30,7 +30,6 @@ const fetchEntries = async (limited = false) => {
 			: await getDocs(collection(db, 'recipes'))
 		snapshot.forEach(doc => {
 			keys.push(doc.id)
-			// recipes.push({ category_id: doc.data().category_id, … })
 			recipes.push(doc.data())
 		})
 
@@ -62,8 +61,7 @@ const addEntry = async formData => {
 
 		addToast('Rezept gespeichert', true)
 	} catch (error) {
-		// const message = error.message ?? 'Verbindung zum Server fehlgeschlagen.'
-		const message = error.message || 'Verbindung zum Server fehlgeschlagen.'
+		const message = error.message ?? 'Verbindung zum Server fehlgeschlagen.'
 		addToast(message)
 	}
 }

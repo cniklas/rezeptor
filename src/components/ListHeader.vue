@@ -44,7 +44,6 @@ defineProps({
 }
 
 .icon-clear {
-	margin-left: -3px;
-	margin-right: -3px;
+	margin-inline: -3px;
 }
 </style>

@@ -35,7 +35,7 @@ const setForm = () => {
 		...recipe.value,
 		duration: recipe.value.duration || '',
 		serves: recipe.value.serves || '',
-		leftovers: recipe.value.leftovers || false, // /!\ `leftovers` ist eine neue Property und daher nicht in allen Records enthalten
+		leftovers: recipe.value.leftovers ?? false, // /!\ `leftovers` ist eine neue Property und daher nicht in allen Records enthalten
 	})
 
 	window.scrollTo(0, 0)

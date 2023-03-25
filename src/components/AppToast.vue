@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, onBeforeUnmount } from 'vue'
 
 const emit = defineEmits(['removeToast'])
 const props = defineProps({
@@ -8,14 +8,15 @@ const props = defineProps({
 	},
 })
 
+let _timeout
 onMounted(() => {
-	if (props.timeout) setTimeout(emit, 1800, 'removeToast')
+	if (props.timeout) _timeout = setTimeout(emit, 1800, 'removeToast')
 })
 
 // https://nolanlawson.com/2020/02/19/fixing-memory-leaks-in-web-applications/
-// onBeforeUnmount(() => {
-// 	clearTimeout( … )
-// })
+onBeforeUnmount(() => {
+	if (_timeout) clearTimeout(_timeout)
+})
 </script>
 
 <template>
