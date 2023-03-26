@@ -1,10 +1,10 @@
+import 'virtual:windi.css'
+import './assets/main.css'
+
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import Hashids from 'hashids'
-
-import 'virtual:windi.css'
-import './assets/main.css'
 
 const complexity = new Map([
 	[1, 'leicht'],
