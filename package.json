@@ -29,7 +29,7 @@
     "eslint-plugin-vue": "^9.11.0",
     "postcss-nesting": "^11.2.2",
     "prettier": "^2.8.8",
-    "prettier-plugin-tailwindcss": "^0.2.4",
+    "prettier-plugin-tailwindcss": "^0.2.8",
     "vite": "^4.3.3",
     "vite-plugin-windicss": "^1.8.10",
     "windicss": "^3.5.6"
