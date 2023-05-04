@@ -18,7 +18,7 @@ defineProps({
 				<button
 					type="reset"
 					aria-label="Reset"
-					class="reset-button absolute top-0 bottom-0 right-px flex items-center px-3 focus:ring-transparent focus:ring-offset-transparent"
+					class="reset-button absolute bottom-0 right-px top-0 flex items-center px-3 focus:ring-transparent focus:ring-offset-transparent"
 					@click="$emit('reset')"
 				>
 					<svg aria-hidden="true" class="icon-clear inline-block h-4 w-4 fill-current stroke-current stroke-0">

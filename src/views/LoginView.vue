@@ -30,7 +30,7 @@ const onSubmit = async () => {
 	<section>
 		<BackLink />
 
-		<h2 class="headline mt-2.5 mb-8 pb-2.5 text-2xl font-medium md:text-3xl">Anmelden</h2>
+		<h2 class="headline mb-8 mt-2.5 pb-2.5 text-2xl font-medium md:text-3xl">Anmelden</h2>
 
 		<form novalidate @submit.prevent="onSubmit">
 			<div class="md:w-6/12 lg:w-5/12 xl:w-4/12">

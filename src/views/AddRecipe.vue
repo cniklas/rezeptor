@@ -41,7 +41,7 @@ const submitForm = async () => {
 	<section>
 		<BackLink />
 
-		<h2 class="headline mt-2.5 mb-5 pb-2.5 text-2xl font-medium md:text-3xl">Rezept hinzufügen</h2>
+		<h2 class="headline mb-5 mt-2.5 pb-2.5 text-2xl font-medium md:text-3xl">Rezept hinzufügen</h2>
 
 		<form role="form" @submit.prevent="submitForm">
 			<RecipeForm :form-data="form" />

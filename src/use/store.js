@@ -7,7 +7,7 @@ const { addToast } = useToast()
 let firebaseKeys = []
 
 const state = reactive({
-	recipes: [],
+	recipes: new Array(),
 	hasLoaded: false,
 	hasHistory: false,
 	hasAuthenticated: false,

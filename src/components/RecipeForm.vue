@@ -26,7 +26,7 @@ const form = reactive(props.formData)
 					type="text"
 					class="form-control"
 					id="name"
-					required="required"
+					required
 					autocomplete="off"
 					autocorrect="off"
 				/>
@@ -37,7 +37,7 @@ const form = reactive(props.formData)
 				<label for="leftovers" class="inline-block cursor-pointer">Fleischreste-Verwertung</label>
 			</div>
 
-			<div class="mb-3 -mt-1.5 flex gap-x-2">
+			<div class="-mt-1.5 mb-3 flex gap-x-2">
 				<input v-model="form.recommended" type="checkbox" class="mt-1 flex-shrink-0" id="recommended" />
 				<label for="recommended" class="inline-block cursor-pointer">Empfehlung</label>
 			</div>
@@ -65,7 +65,7 @@ const form = reactive(props.formData)
 					<input
 						v-model.number="form.complexity"
 						type="radio"
-						class="mt-1 mr-1.5 align-top"
+						class="mr-1.5 mt-1 align-top"
 						:id="`complexity${key}`"
 						name="complexity"
 						:value="key"

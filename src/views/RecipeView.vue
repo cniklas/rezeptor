@@ -89,7 +89,7 @@ const share = () => {
 				</button>
 			</div>
 
-			<h2 class="headline mt-2.5 mb-5 pb-2.5 text-2xl font-medium md:text-3xl">{{ headline }}</h2>
+			<h2 class="headline mb-5 mt-2.5 pb-2.5 text-2xl font-medium md:text-3xl">{{ headline }}</h2>
 
 			<template v-if="!edit">
 				<dl class="md:grid md:grid-cols-[min(38.2%,280px),61.8%]">
@@ -97,7 +97,7 @@ const share = () => {
 						Zutaten <template v-if="recipe.serves > 0">für {{ recipe.serves }}</template>
 					</dt>
 					<dd>
-						<ul v-if="ingredients.length" class="ml-5 mb-2 list-disc">
+						<ul v-if="ingredients.length" class="mb-2 ml-5 list-disc">
 							<li v-for="(ingredient, i) in ingredients" :key="i">{{ ingredient }}</li>
 						</ul>
 					</dd>
