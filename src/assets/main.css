@@ -81,7 +81,9 @@ textarea {
 }
 
 .btn {
-	@apply inline-flex touch-manipulation select-none items-center whitespace-nowrap rounded border-0 py-1.5 px-3 text-center font-normal hover:no-underline focus:no-underline;
+	@apply touch-manipulation select-none whitespace-nowrap rounded border-0 py-1.5 px-3 text-center font-normal hover:no-underline focus:no-underline;
+	display: inline-flex;
+	align-items: center;
 	-webkit-tap-highlight-color: transparent;
 }
 
