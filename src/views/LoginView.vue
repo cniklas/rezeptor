@@ -42,6 +42,7 @@ const onSubmit = async () => {
 						class="form-control"
 						id="email"
 						placeholder="E-Mail"
+						autocomplete="username"
 						enterkeyhint="go"
 					/>
 				</div>
@@ -54,6 +55,7 @@ const onSubmit = async () => {
 						class="form-control"
 						id="password"
 						placeholder="Passwort"
+						autocomplete="current-password"
 						enterkeyhint="go"
 					/>
 				</div>
