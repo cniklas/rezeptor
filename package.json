@@ -19,7 +19,7 @@
     "hashids": "^2.3.0",
     "mitt": "^3.0.0",
     "vue": "^3.3.4",
-    "vue-router": "^4.1.6"
+    "vue-router": "^4.2.2"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.2.0",
