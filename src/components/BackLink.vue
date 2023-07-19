@@ -11,17 +11,6 @@ const goBack = () => {
 </script>
 
 <template>
-	<a
-		v-if="state.hasHistory"
-		class="back-link mb-2.5 inline-block max-w-full hover:underline focus:underline"
-		role="button"
-		@click="goBack"
-		>zurück</a
-	>
-	<RouterLink
-		v-else
-		:to="{ name: 'recipes' }"
-		class="back-link mb-2.5 inline-block max-w-full hover:underline focus:underline"
-		>Home</RouterLink
-	>
+	<button v-if="state.hasHistory" type="button" class="back-link" @click="goBack">zurück</button>
+	<RouterLink v-else :to="{ name: 'recipes' }" class="back-link">Home</RouterLink>
 </template>

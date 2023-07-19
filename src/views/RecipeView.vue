@@ -68,7 +68,6 @@ const share = () => {
 			url: route.fullPath,
 		})
 	} catch (error) {
-		// console.error(error)
 		addToast('Sharing failed')
 	}
 }
@@ -77,22 +76,15 @@ const share = () => {
 <template>
 	<section>
 		<template v-if="recipe">
-			<div class="flex justify-between">
+			<div class="mb-5 flex justify-between">
 				<BackLink />
-				<button
-					v-if="isShareSupported && !edit"
-					type="button"
-					class="back-link mb-2.5 inline-block max-w-full hover:underline focus:underline"
-					@click="share"
-				>
-					Link teilen
-				</button>
+				<button v-if="isShareSupported && !edit" type="button" class="back-link" @click="share">Link teilen</button>
 			</div>
 
-			<h2 class="headline mb-5 mt-2.5 pb-2.5 text-2xl font-medium md:text-3xl">{{ headline }}</h2>
+			<h2 class="headline mb-5 mt-2.5">{{ headline }}</h2>
 
 			<template v-if="!edit">
-				<dl class="md:grid md:grid-cols-[min(38.2%,280px),61.8%]">
+				<dl class="md:grid md:grid-cols-[min(38.2%,280px)_61.8%]">
 					<dt class="inline-list-dt font-bold">
 						Zutaten <template v-if="recipe.serves > 0">für {{ recipe.serves }}</template>
 					</dt>
@@ -114,7 +106,7 @@ const share = () => {
 					<dd>{{ _cookbooks.get(recipe.cook_book_id) }}</dd>
 				</dl>
 
-				<dl v-if="recipe.notes" class="mt-4 md:grid md:grid-cols-[min(38.2%,280px),61.8%]">
+				<dl v-if="recipe.notes" class="mt-4 md:grid md:grid-cols-[min(38.2%,280px)_61.8%]">
 					<dt class="inline-list-dt font-bold">Tipps</dt>
 					<dd class="whitespace-pre-line break-words" v-html="notes"></dd>
 				</dl>
@@ -135,11 +127,7 @@ const share = () => {
 		</template>
 
 		<template v-else>
-			<RouterLink
-				:to="{ name: 'recipes' }"
-				class="back-link mb-2.5 inline-block max-w-full hover:underline focus:underline"
-				>zurück</RouterLink
-			>
+			<RouterLink :to="{ name: 'recipes' }" class="back-link mb-2.5 inline-block">zurück</RouterLink>
 			<div class="text-center text-base font-light md:text-xl">Ungültige Rezept-ID</div>
 		</template>
 	</section>

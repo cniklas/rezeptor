@@ -23,8 +23,7 @@ html {
 }
 
 body {
-	background-color: #f4f4f5;
-	color: var(--base-text-color);
+	@apply bg-[#f4f4f5] text-[--base-text-color];
 }
 
 a,
@@ -32,28 +31,15 @@ button {
 	@apply focus:outline-none focus:ring-2 focus:ring-offset-1;
 }
 
-a {
-	@apply no-underline hover:underline focus:underline;
-}
-
 a,
 .back-link {
-	color: var(--primary-color);
-}
-
-a:hover,
-a:focus,
-.back-link:hover,
-.back-link:focus {
-	color: var(--primary-hover-color);
+	@apply text-[--primary-color] hover:text-[--primary-hover-color] hover:underline focus:text-[--primary-hover-color] focus:underline;
 }
 
 button {
+	@apply disabled:cursor-not-allowed disabled:opacity-60;
 	-webkit-tap-highlight-color: transparent;
-}
-
-button:disabled {
-	@apply cursor-not-allowed opacity-60;
+	background-color: unset; /* https://unocss.dev/guide/style-reset#tailwind */
 }
 
 input[type='checkbox'],
@@ -77,36 +63,20 @@ textarea {
 }
 
 .headline {
-	border-bottom: 1px solid #334155;
+	@apply border-b border-b-[#334155] pb-2.5 text-2xl font-medium md:text-3xl;
 }
 
 .btn {
-	@apply touch-manipulation select-none whitespace-nowrap rounded border-0 py-1.5 px-3 text-center font-normal hover:no-underline focus:no-underline;
-	display: inline-flex;
-	align-items: center;
+	@apply inline-flex touch-manipulation select-none items-center whitespace-nowrap rounded border-0 px-3 py-1.5 text-center font-normal hover:no-underline focus:no-underline;
 	-webkit-tap-highlight-color: transparent;
 }
 
 .btn-default {
-	color: var(--base-text-color);
-	background-color: #e5e5e5;
-}
-
-.btn-default:hover,
-.btn-default:focus {
-	color: var(--base-text-color);
-	background-color: #d4d4d4;
+	@apply bg-[#e5e5e5] text-[--base-text-color] hover:bg-[#d4d4d4] hover:text-[--base-text-color] focus:bg-[#d4d4d4] focus:text-[--base-text-color];
 }
 
 .btn-primary {
-	@apply text-white;
-	background-color: var(--primary-color);
-}
-
-.btn-primary:hover,
-.btn-primary:focus {
-	@apply text-white;
-	background-color: var(--primary-hover-color);
+	@apply bg-[--primary-color] text-white hover:bg-[--primary-hover-color] hover:text-white focus:bg-[--primary-hover-color] focus:text-white;
 }
 
 .is-required > label::after {
@@ -115,8 +85,7 @@ textarea {
 }
 
 .form-control {
-	@apply block w-full rounded border border-transparent bg-gray-100 py-1.5 px-3 focus:border-gray-500 focus:bg-white focus:outline-none;
-	font-size: 14px;
+	@apply block w-full rounded border border-transparent bg-gray-100 px-3 py-1.5 focus:border-gray-500 focus:bg-white focus:outline-none;
 }
 
 .form-control:not(textarea) {
