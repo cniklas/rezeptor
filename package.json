@@ -1,6 +1,6 @@
 {
   "name": "rezeptor",
-  "version": "4.6.0",
+  "version": "5.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/cniklas/rezeptor-vite.git"
@@ -29,7 +29,6 @@
     "@vue/eslint-config-prettier": "^7.1.0",
     "eslint": "^8.35.0",
     "eslint-plugin-vue": "^9.15.1",
-    "postcss-nesting": "^11.2.2",
     "prettier": "^2.8.8",
     "prettier-plugin-tailwindcss": "^0.3.0",
     "unocss": "^0.53.5",

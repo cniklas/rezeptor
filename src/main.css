@@ -26,13 +26,11 @@ body {
 	@apply bg-[#f4f4f5] text-[--base-text-color];
 }
 
-a,
-button {
+:is(a, button) {
 	@apply focus:outline-none focus:ring-2 focus:ring-offset-1;
 }
 
-a,
-.back-link {
+:is(a, .back-link) {
 	@apply text-[--primary-color] hover:text-[--primary-hover-color] hover:underline focus:text-[--primary-hover-color] focus:underline;
 }
 
@@ -86,32 +84,18 @@ textarea {
 
 .form-control {
 	@apply block w-full rounded border border-transparent bg-gray-100 px-3 py-1.5 focus:border-gray-500 focus:bg-white focus:outline-none;
-}
 
-.form-control:not(textarea) {
-	height: 2.125rem;
-}
+	&:not(textarea) {
+		height: 2.125rem;
+	}
 
-.form-control::placeholder {
-	@apply opacity-100;
-	color: #6b7280;
-}
-
-/* https://www.warrenchandler.com/2019/04/02/stop-iphones-from-zooming-in-on-form-fields/ */
-/* iPhone 5, 5C, 5S, iPod Touch 5g */
-@media screen and (device-aspect-ratio: 40/71) {
-	.form-control {
-		font-size: 16px;
+	&::placeholder {
+		color: #6b7280;
 	}
 }
-/* iPhone 6, iPhone 6s, iPhone 7 */
-@media screen and (device-aspect-ratio: 375/667) {
-	.form-control {
-		font-size: 16px;
-	}
-}
-/* iPhone 6 Plus, iPhone 6s Plus, iPhone 7 Plus, iPhone 8, iPhone X, XS, XS Max */
-@media screen and (device-aspect-ratio: 9/16) {
+
+/* https://www.bram.us/2021/06/23/css-at-supports-rules-to-target-only-firefox-safari-chromium/#update-2 */
+@supports (background: -webkit-named-image(i)) {
 	.form-control {
 		font-size: 16px;
 	}

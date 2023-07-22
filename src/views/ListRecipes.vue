@@ -182,7 +182,7 @@ onBeforeUnmount(() => {
 	</section>
 </template>
 
-<style lang="postcss">
+<style>
 :root {
 	--table-border-color: #d4d4d8;
 }
@@ -203,20 +203,20 @@ onBeforeUnmount(() => {
 	&.active {
 		background-color: #f4f4f5;
 	}
+}
 
-	.icon-sort {
-		display: none;
-		fill: var(--base-text-color);
-		width: 1.125rem;
-		height: 1.125rem;
-		vertical-align: -0.25rem;
-	}
+.icon-sort {
+	display: none;
+	fill: var(--base-text-color);
+	width: 1.125rem;
+	height: 1.125rem;
+	vertical-align: -0.25rem;
 
-	&.active .icon-sort {
+	.active > & {
 		display: inline-block;
 	}
 
-	&.active.asc .icon-sort {
+	.active.asc > & {
 		transform: scaleY(-1);
 	}
 }
@@ -226,9 +226,9 @@ onBeforeUnmount(() => {
 }
 
 /* Responsive Table, inspired by https://codepen.io/geoffyuen/pen/FCBEg */
-@media screen and (max-width: 639px) {
+@media not all and (min-width: 40em) {
 	.table-stacked {
-		width: 100vw !important;
+		width: 100vw;
 		margin-inline: -0.75rem;
 
 		.thead {
@@ -246,13 +246,12 @@ onBeforeUnmount(() => {
 			padding: 0.125rem 0;
 			border: 0;
 
-			&:empty,
-			&.hidden-xxs {
+			&:is(:empty, .hidden-xxs) {
 				display: none;
 			}
 
 			&::before {
-				content: attr(data-th) ':';
+				content: '';
 				flex: 0 0 38.2%;
 				font-weight: 600;
 				overflow: hidden;

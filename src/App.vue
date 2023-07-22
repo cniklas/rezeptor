@@ -101,28 +101,26 @@ watch(
 	</TransitionGroup>
 </template>
 
-<style lang="postcss">
+<style>
 #content {
-	@media screen and (min-width: 768px) {
+	@media screen and (min-width: 48em) {
 		width: 750px;
 	}
 
-	@media screen and (min-width: 992px) {
+	@media screen and (min-width: 62em) {
 		width: 970px;
 	}
 
-	@media screen and (min-width: 1200px) {
+	@media screen and (min-width: 75em) {
 		width: 1170px;
 	}
 }
 
-.page-enter-active,
-.page-leave-active {
+:is(.page-enter-active, .page-leave-active) {
 	transition: opacity 180ms ease;
 }
 
-.page-enter-from,
-.page-leave-to {
+:is(.page-enter-from, .page-leave-to) {
 	opacity: 0;
 }
 
