@@ -116,7 +116,7 @@ const share = () => {
 				</div>
 			</template>
 
-			<form v-else role="form" @submit.prevent="submitForm">
+			<form v-else @submit.prevent="submitForm">
 				<RecipeForm :form-data="form" />
 
 				<div class="submit">
