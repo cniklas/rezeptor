@@ -1,7 +1,6 @@
 <script setup>
-import { ref, reactive, computed, inject } from 'vue'
+import { ref, reactive, computed, inject, defineAsyncComponent } from 'vue'
 import BackLink from '@/components/BackLink.vue'
-import RecipeForm from '@/components/RecipeForm.vue'
 import { useRoute, useRouter, RouterLink } from 'vue-router'
 import { useStore } from '../use/store'
 import { useToast } from '../use/toast'
@@ -13,6 +12,7 @@ const _cookbooks = inject('cookbooks')
 const route = useRoute()
 const router = useRouter()
 
+const RecipeForm = defineAsyncComponent(() => import('@/components/RecipeForm.vue'))
 const { state, updateEntry } = useStore()
 const { addToast } = useToast()
 
