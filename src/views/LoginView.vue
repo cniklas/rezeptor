@@ -27,7 +27,7 @@ const onSubmit = async () => {
 </script>
 
 <template>
-	<section>
+	<div>
 		<BackLink class="mb-2.5 inline-block" />
 
 		<h2 class="headline mb-8 mt-2.5">Anmelden</h2>
@@ -65,5 +65,5 @@ const onSubmit = async () => {
 				<button type="submit" class="btn btn-primary" :disabled="isSubmitLocked">Anmelden</button>
 			</div>
 		</form>
-	</section>
+	</div>
 </template>

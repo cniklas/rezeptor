@@ -74,7 +74,7 @@ const share = () => {
 </script>
 
 <template>
-	<section>
+	<div>
 		<template v-if="recipe">
 			<div class="mb-5 flex justify-between">
 				<BackLink />
@@ -130,7 +130,7 @@ const share = () => {
 			<RouterLink :to="{ name: 'recipes' }" class="back-link mb-2.5 inline-block">zurück</RouterLink>
 			<div class="text-center text-base font-light md:text-xl">Ungültige Rezept-ID</div>
 		</template>
-	</section>
+	</div>
 </template>
 
 <style lang="postcss">

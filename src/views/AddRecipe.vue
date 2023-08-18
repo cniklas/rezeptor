@@ -38,7 +38,7 @@ const submitForm = async () => {
 </script>
 
 <template>
-	<section>
+	<div>
 		<BackLink class="mb-2.5 inline-block" />
 
 		<h2 class="headline mb-5 mt-2.5">Rezept hinzufügen</h2>
@@ -51,5 +51,5 @@ const submitForm = async () => {
 				<RouterLink :to="{ name: 'recipes' }" class="btn btn-default ml-2">Abbrechen</RouterLink>
 			</div>
 		</form>
-	</section>
+	</div>
 </template>

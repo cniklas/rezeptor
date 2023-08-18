@@ -8,7 +8,7 @@ defineProps({
 </script>
 
 <template>
-	<nav class="search-form mb-6 py-2">
+	<div class="py-2">
 		<label for="search" class="<md:hidden mb-2 inline-block font-medium">Suche nach Rezept oder Zutaten:</label>
 
 		<div class="flex justify-between">
@@ -17,11 +17,11 @@ defineProps({
 
 				<button
 					type="reset"
-					aria-label="Reset"
-					class="reset-button absolute bottom-0 right-px top-0 flex items-center px-3 focus:ring-transparent focus:ring-offset-transparent"
+					aria-label="Eingabe löschen"
+					class="reset-button absolute bottom-0 right-px top-0 flex items-center px-3 _focus:ring-transparent _focus:ring-offset-transparent"
 					@click="$emit('reset')"
 				>
-					<svg aria-hidden="true" class="icon-clear inline-block h-4 w-4 fill-current stroke-current stroke-0">
+					<svg class="icon-clear inline-block h-4 w-4 fill-current stroke-current stroke-0" aria-hidden="true">
 						<use href="@/assets/app.svg#clear"></use>
 					</svg>
 				</button>
@@ -31,10 +31,11 @@ defineProps({
 				{{ hasAuthenticated ? 'Rezept hinzufügen' : 'Anmelden' }}
 			</RouterLink>
 		</div>
-	</nav>
+	</div>
 </template>
 
 <style scoped>
+/* Input field slot */
 :deep(.form-control) {
 	padding-right: 2.875rem;
 }

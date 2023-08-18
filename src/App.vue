@@ -73,13 +73,11 @@ watch(
 	<main id="content" class="mx-auto bg-white px-3 pb-8 pt-4 lg:px-4 lg:py-8">
 		<div v-show="!state.recipes.length" class="text-center text-base font-light md:text-xl">Rezepte laden …</div>
 
-		<div v-show="state.recipes.length">
-			<RouterView class="has-transition" v-slot="{ Component }">
-				<Transition name="page" mode="out-in" @before-enter="onBeforeEnter">
-					<Component :is="Component" />
-				</Transition>
-			</RouterView>
-		</div>
+		<RouterView v-show="state.recipes.length" class="has-transition" v-slot="{ Component }">
+			<Transition name="page" mode="out-in" @before-enter="onBeforeEnter">
+				<Component :is="Component" />
+			</Transition>
+		</RouterView>
 	</main>
 
 	<TransitionGroup

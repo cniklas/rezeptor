@@ -91,8 +91,8 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-	<section>
-		<ListHeader :has-authenticated="state.hasAuthenticated" @reset="resetList">
+	<div>
+		<ListHeader class="mb-6" :has-authenticated="state.hasAuthenticated" @reset="resetList">
 			<input
 				v-model.trim="search"
 				type="search"
@@ -179,7 +179,7 @@ onBeforeUnmount(() => {
 		<div ref="loader" class="mx-auto mt-4 w-7" :class="{ invisible: !isLoading, hidden: state.hasLoaded }">
 			<AppLoader class="h-7 w-7" />
 		</div>
-	</section>
+	</div>
 </template>
 
 <style>
