@@ -31,7 +31,7 @@
     "eslint-plugin-vue": "^9.17.0",
     "prettier": "^2.8.8",
     "prettier-plugin-tailwindcss": "^0.3.0",
-    "unocss": "^0.53.5",
+    "unocss": "^0.55.4",
     "vite": "^4.3.9"
   }
 }
