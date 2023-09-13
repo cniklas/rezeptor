@@ -1,4 +1,4 @@
 [[headers]]
-for = "/*.svg"
-[headers.values]
-Cache-Control = "public, max-age=7884000, immutable" # 3 months
+	for = "/*.(css|js|svg|woff2)"
+	[headers.values]
+	Cache-Control = "public, max-age=31536000, immutable" # 12 months
