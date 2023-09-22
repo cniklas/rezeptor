@@ -114,28 +114,28 @@ onBeforeUnmount(() => {
 						:class="sortClass('name')"
 						@click="sortBy('name')"
 					>
-						Name <SortIcons />
+						Name <SortIcons width="18" height="18" />
 					</th>
 					<th
 						class="th sort whitespace-nowrap p-2 text-left align-bottom font-semibold"
 						:class="sortClass('category_id')"
 						@click="sortBy('category_id')"
 					>
-						Kategorie <SortIcons />
+						Kategorie <SortIcons width="18" height="18" />
 					</th>
 					<th
 						class="th sort whitespace-nowrap p-2 text-left align-bottom font-semibold"
 						:class="sortClass('complexity')"
 						@click="sortBy('complexity')"
 					>
-						Schwierigkeit <SortIcons />
+						Schwierigkeit <SortIcons width="18" height="18" />
 					</th>
 					<th
 						class="th sort whitespace-nowrap p-2 text-left align-bottom font-semibold"
 						:class="sortClass('duration')"
 						@click="sortBy('duration')"
 					>
-						Zubereitungszeit <SortIcons />
+						Zubereitungszeit <SortIcons width="18" height="18" />
 					</th>
 					<th class="th whitespace-nowrap p-2 text-left align-bottom font-semibold">besondere Zutaten</th>
 				</tr>
@@ -177,7 +177,7 @@ onBeforeUnmount(() => {
 		</table>
 
 		<div ref="loader" class="mx-auto mt-4 w-7" :class="{ invisible: !isLoading, hidden: state.hasLoaded }">
-			<AppLoader class="h-7 w-7" />
+			<AppLoader class="h-7 w-7" width="28" height="28" />
 		</div>
 	</div>
 </template>
