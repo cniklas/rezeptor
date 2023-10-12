@@ -18,10 +18,15 @@ defineProps({
 				<button
 					type="reset"
 					aria-label="Eingabe löschen"
-					class="reset-button absolute bottom-0 right-px top-0 flex items-center px-3 _focus:ring-transparent _focus:ring-offset-transparent"
+					class="reset-button absolute bottom-0 right-px top-0 flex items-center px-3"
 					@click="$emit('reset')"
 				>
-					<svg class="icon-clear inline-block h-4 w-4 fill-current stroke-current stroke-0" aria-hidden="true" width="16" height="16">
+					<svg
+						class="icon-clear inline-block h-4 w-4 fill-current stroke-current stroke-0"
+						aria-hidden="true"
+						width="16"
+						height="16"
+					>
 						<use href="@/assets/app.svg#clear"></use>
 					</svg>
 				</button>
