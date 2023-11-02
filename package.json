@@ -18,7 +18,7 @@
     "firebase": "^10.5.2",
     "hashids": "^2.3.0",
     "mitt": "^3.0.1",
-    "vue": "^3.3.4",
+    "vue": "^3.3.7",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
