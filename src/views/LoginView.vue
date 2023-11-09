@@ -43,7 +43,6 @@ const onSubmit = async () => {
 						id="email"
 						placeholder="E-Mail"
 						autocomplete="username"
-						enterkeyhint="go"
 					/>
 				</div>
 

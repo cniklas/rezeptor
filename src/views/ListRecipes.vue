@@ -101,6 +101,7 @@ onBeforeUnmount(() => {
 				placeholder="Suche"
 				autocorrect="off"
 				autocomplete="off"
+				enterkeyhint="search"
 				@keyup.esc="resetList"
 				@focus.once="fetchRecipes"
 			/>
