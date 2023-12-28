@@ -27,7 +27,7 @@ onBeforeUnmount(() => {
 
 <style lang="postcss">
 .toast {
-	@apply pointer-events-auto mb-2.5 cursor-pointer rounded-2xl px-4 py-1.5 text-center text-base leading-5 text-white;
+	@apply pointer-events-auto mb-2.5 cursor-pointer rounded-2xl px-4 py-1.5 text-center text-base/5 text-white;
 
 	&.success {
 		background-color: #10b981;
