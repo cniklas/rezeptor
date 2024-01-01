@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.6.1",
-    "@unocss/reset": "^0.57.7",
+    "@unocss/reset": "^0.58.2",
     "@unocss/transformer-directives": "^0.57.1",
     "@vitejs/plugin-vue": "^4.4.0",
     "@vue/eslint-config-prettier": "^8.0.0",
