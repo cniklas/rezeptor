@@ -22,8 +22,8 @@ const ingredients = computed(() => (recipe.value.ingredients ? recipe.value.ingr
 const notes = computed(() =>
 	recipe.value.notes.replace(
 		/(\b(https?|):\/\/[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])/gi,
-		'<a href="$1" rel="noopener">$1</a>'
-	)
+		'<a href="$1" rel="noopener">$1</a>',
+	),
 )
 
 const form = reactive({})

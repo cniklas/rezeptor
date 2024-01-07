@@ -72,7 +72,7 @@ const _startObserver = () => {
 				self.unobserve(entry.target)
 			}
 		},
-		{ rootMargin: '0px 0px 120px 0px', threshold: 0 }
+		{ rootMargin: '0px 0px 120px 0px', threshold: 0 },
 	)
 	observer.observe(loader.value)
 }

@@ -65,7 +65,7 @@ watch(
 			router.replace(route.query.redirectTo ?? '/')
 			return
 		}
-	}
+	},
 )
 </script>
 
