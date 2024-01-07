@@ -27,7 +27,7 @@ defineProps({
 						width="16"
 						height="16"
 					>
-						<use href="@/assets/app.svg#clear"></use>
+						<use href="/app.svg#clear"></use>
 					</svg>
 				</button>
 			</div>
