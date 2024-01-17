@@ -1,25 +1,7 @@
 :root {
-	--scrollbar-thumb-color: hsl(218, 13%, 64%);
-	--scrollbar-track-color: hsla(218, 76%, 15%, 0.08);
 	--base-text-color: #1e293b;
 	--primary-color: #0369a1;
 	--primary-hover-color: #075985;
-}
-
-::-webkit-scrollbar {
-	width: 6px;
-	height: 6px;
-}
-::-webkit-scrollbar-thumb {
-	background-color: var(--scrollbar-thumb-color);
-}
-::-webkit-scrollbar-track {
-	background-color: var(--scrollbar-track-color);
-}
-
-html {
-	scrollbar-width: thin;
-	scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
 }
 
 body {
