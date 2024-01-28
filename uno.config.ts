@@ -8,9 +8,9 @@ export default defineConfig({
 	// custom CSS
 	// rules: [['class-name', { 'rule-name': 'rule-value' }]],
 
-	// shortcuts: {
-	// 	'headline': 'border-b border-b-[#334155]',
-	// },
+	shortcuts: {
+		'inline-list-dt': 'md:overflow-hidden md:text-ellipsis md:whitespace-nowrap md:text-right',
+	},
 
 	// https://unocss.dev/presets/wind
 	presets: [presetWind()],

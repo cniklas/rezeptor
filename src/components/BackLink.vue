@@ -1,6 +1,6 @@
-<script setup>
+<script setup lang="ts">
 import { useRouter, RouterLink } from 'vue-router'
-import { useStore } from '../use/store'
+import { useStore } from '@/use/store'
 
 const { state } = useStore()
 

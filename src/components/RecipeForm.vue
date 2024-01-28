@@ -1,17 +1,17 @@
-<script setup>
-import { reactive, inject } from 'vue'
+<script setup lang="ts">
+import { reactive } from 'vue'
+import type { RecipeFormData } from '@/types/Recipe.type'
+import { PROVIDE_CATEGORIES, PROVIDE_COMPLEXITY, PROVIDE_COOKBOOKS } from '@/keys'
+import { injectStrict } from '@/use/helper'
 
-const _complexity = inject('complexity')
-const _categories = inject('categories')
-const _cookbooks = inject('cookbooks')
+const categories = injectStrict(PROVIDE_CATEGORIES)
+const complexities = injectStrict(PROVIDE_COMPLEXITY)
+const cookbooks = injectStrict(PROVIDE_COOKBOOKS)
 
-const props = defineProps({
+const props = defineProps<{
 	// /!\ Objects and arrays in JavaScript are passed by reference, so if the prop is an array or object, mutating the object or array itself inside the child component will affect parent state.
-	formData: {
-		type: Object,
-		default: () => null,
-	},
-})
+	formData: RecipeFormData
+}>()
 // 'Fix' für ESLint Error 'vue/no-mutating-props'
 const form = reactive(props.formData)
 </script>
@@ -47,21 +47,21 @@ const form = reactive(props.formData)
 					<label for="categoryId" class="mb-1.5 inline-block font-medium">Kategorie</label>
 					<select v-model.number="form.category_id" class="form-control" id="categoryId">
 						<option value="0"></option>
-						<option v-for="[key, category] of _categories" :key="`category-${key}`" :value="key">{{ category }}</option>
+						<option v-for="[key, category] of categories" :key="`category-${key}`" :value="key">{{ category }}</option>
 					</select>
 				</div>
 
 				<div class="mb-4">
 					<label for="cookBookId" class="mb-1.5 inline-block font-medium">Kochbuch</label>
 					<select v-model.number="form.cook_book_id" class="form-control" id="cookBookId">
-						<option v-for="[key, book] of _cookbooks" :key="`book-${key}`" :value="key">{{ book }}</option>
+						<option v-for="[key, book] of cookbooks" :key="`book-${key}`" :value="key">{{ book }}</option>
 					</select>
 				</div>
 			</div>
 
 			<div class="mb-3">
 				<div class="mb-0.5 font-medium">Schwierigkeit</div>
-				<template v-for="[key, complexity] of _complexity" :key="`complexity-${key}`">
+				<template v-for="[key, complexity] of complexities" :key="`complexity-${key}`">
 					<input
 						v-model.number="form.complexity"
 						type="radio"

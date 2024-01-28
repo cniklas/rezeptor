@@ -8,7 +8,12 @@ body {
 	@apply bg-[#f4f4f5] text-[--base-text-color];
 }
 
-:is(a, button):focus-visible {
+/* :any-link {
+	text-decoration: underline;
+} */
+
+:focus-visible,
+:is(.secondary-button, .primary-button, .reset-button):active {
 	outline: 2px solid currentColor;
 	outline-offset: 2px;
 }
@@ -23,9 +28,9 @@ button {
 	background-color: unset; /* https://unocss.dev/guide/style-reset#tailwind */
 }
 
-input[type='checkbox'],
-input[type='radio'] {
-	@apply focus:outline-none focus:ring-2 focus:ring-offset-1;
+/* iOS */
+button[type='submit'] {
+	font-weight: 400;
 }
 
 input[type='search']::-webkit-search-cancel-button,
@@ -47,17 +52,16 @@ textarea {
 	@apply border-b border-b-[#334155] pb-2.5 text-2xl font-medium md:text-3xl;
 }
 
-.btn {
+:is(.secondary-button, .primary-button) {
 	@apply inline-flex touch-manipulation select-none items-center whitespace-nowrap rounded border-0 px-3 py-1.5 text-center font-normal hover:no-underline focus:no-underline;
-	-webkit-tap-highlight-color: transparent;
 }
 
-.btn-default {
+.secondary-button {
 	@apply bg-[#e5e5e5] text-[--base-text-color] hover:bg-[#d4d4d4] hover:text-[--base-text-color] focus:bg-[#d4d4d4] focus:text-[--base-text-color];
 }
 
-.btn-primary {
-	@apply bg-[--primary-color] text-white hover:bg-[--primary-hover-color] hover:text-white focus:bg-[--primary-hover-color] focus:text-white focus-visible:outline-[--primary-hover-color];
+.primary-button {
+	@apply bg-[--primary-color] text-white hover:bg-[--primary-hover-color] hover:text-white focus:bg-[--primary-hover-color] focus:text-white focus-visible:outline-[--primary-hover-color] active:outline-[--primary-hover-color];
 }
 
 .is-required > label::after {
@@ -66,7 +70,7 @@ textarea {
 }
 
 .form-control {
-	@apply block w-full rounded border border-transparent bg-gray-100 px-3 py-1.5 focus:border-gray-500 focus:bg-white focus:outline-none;
+	@apply block w-full rounded border border-transparent bg-gray-100 px-3 py-1.5 focus:bg-white;
 
 	&:not(textarea) {
 		height: 2.125rem;

@@ -1,15 +1,16 @@
-<script setup>
-import BackLink from '@/components/BackLink.vue'
-import RecipeForm from '@/components/RecipeForm.vue'
+<script setup lang="ts">
 import { ref, reactive } from 'vue'
 import { useRouter, RouterLink } from 'vue-router'
-import { useStore } from '../use/store'
+import BackLink from '@/components/BackLink.vue'
+import RecipeForm from '@/components/RecipeForm.vue'
+import type { RecipeFormData } from '@/types/Recipe.type'
+import { useStore } from '@/use/store'
 
 const router = useRouter()
 
 const { addEntry } = useStore()
 
-const form = reactive({
+const form = reactive<RecipeFormData>({
 	name: '',
 	cook_book_id: 1,
 	category_id: 0,
@@ -47,8 +48,8 @@ const submitForm = async () => {
 			<RecipeForm :form-data="form" />
 
 			<div class="submit">
-				<button type="submit" class="btn btn-primary" :disabled="isLocked">Speichern</button>
-				<RouterLink :to="{ name: 'recipes' }" class="btn btn-default ml-2">Abbrechen</RouterLink>
+				<button type="submit" class="primary-button" :disabled="isLocked">Speichern</button>
+				<RouterLink :to="{ name: 'recipes' }" class="secondary-button ml-2">Abbrechen</RouterLink>
 			</div>
 		</form>
 	</div>

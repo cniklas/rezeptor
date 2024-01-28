@@ -2,12 +2,14 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { nextTick } from 'vue'
 import ListRecipes from './views/ListRecipes.vue'
 import { emitter } from './use/emitter'
-import { auth } from './firebase'
+import { useStore } from './use/store'
 
-let scrollPosition = null
+const { state } = useStore()
+
+let scrollPosition: ScrollToOptions | null = null
 emitter.on('TriggerScroll', async () => {
 	await nextTick()
-	window.scrollTo(scrollPosition || { top: 0 })
+	window.scrollTo(scrollPosition ?? { top: 0 })
 })
 
 const router = createRouter({
@@ -23,7 +25,7 @@ const router = createRouter({
 			name: 'add-recipe',
 			component: () => import('./views/AddRecipe.vue'),
 			beforeEnter: to => {
-				if (!auth.currentUser)
+				if (!state.hasAuthenticated)
 					return {
 						name: 'login',
 						query: {

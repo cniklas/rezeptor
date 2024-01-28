@@ -1,8 +1,7 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
+import { supabase } from '@/supabase'
 import BackLink from '@/components/BackLink.vue'
-import { auth } from '@/firebase'
-import { signInWithEmailAndPassword } from 'firebase/auth'
 import { useToast } from '@/use/toast'
 
 const { addToast } = useToast()
@@ -17,8 +16,9 @@ const onSubmit = async () => {
 	isSubmitLocked.value = true
 
 	try {
-		await signInWithEmailAndPassword(auth, email.value, password.value)
-	} catch (error) {
+		const { error } = await supabase.auth.signInWithPassword({ email: email.value, password: password.value })
+		if (error) throw error
+	} catch (error: any) {
 		const message = error.message ?? 'Anmeldung fehlgeschlagen.'
 		addToast(message, false)
 		isSubmitLocked.value = false
@@ -61,7 +61,7 @@ const onSubmit = async () => {
 			</div>
 
 			<div class="submit">
-				<button type="submit" class="btn btn-primary" :disabled="isSubmitLocked">Anmelden</button>
+				<button type="submit" class="primary-button" :disabled="isSubmitLocked">Anmelden</button>
 			</div>
 		</form>
 	</div>
