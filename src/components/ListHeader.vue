@@ -1,10 +1,12 @@
-<script setup>
+<script setup lang="ts">
 import { RouterLink } from 'vue-router'
 
-defineEmits(['reset'])
-defineProps({
-	hasAuthenticated: Boolean,
-})
+defineEmits<{
+	(event: 'reset'): void
+}>()
+defineProps<{
+	hasAuthenticated: boolean
+}>()
 </script>
 
 <template>
@@ -32,7 +34,7 @@ defineProps({
 				</button>
 			</div>
 
-			<RouterLink :to="{ name: hasAuthenticated ? 'add-recipe' : 'login' }" class="btn btn-primary !<md:hidden">
+			<RouterLink :to="{ name: hasAuthenticated ? 'add-recipe' : 'login' }" class="primary-button !<md:hidden">
 				{{ hasAuthenticated ? 'Rezept hinzufügen' : 'Anmelden' }}
 			</RouterLink>
 		</div>

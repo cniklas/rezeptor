@@ -1,20 +1,27 @@
 import { ref, reactive, readonly } from 'vue'
-import { db } from '@/firebase'
-import { collection, query, orderBy, limit, getDocs, addDoc, doc, setDoc } from 'firebase/firestore'
+import { supabase } from '@/supabase'
+import type { Recipe, RecipeFormData } from '@/types/Recipe.type'
 import { useToast } from './toast'
 
 const { addToast } = useToast()
-let firebaseKeys = []
 
-const state = reactive({
-	recipes: new Array(),
+const state = reactive<{
+	recipes: Recipe[]
+	hasLoaded: boolean
+	hasHistory: boolean
+	hasAuthenticated: boolean
+}>({
+	recipes: [],
 	hasLoaded: false,
 	hasHistory: false,
 	hasAuthenticated: false,
 })
 
 const search = ref('')
-const sorting = reactive({
+const sorting = reactive<{
+	key: 'name' | 'category_id' | 'complexity' | 'duration'
+	order: { name: number; category_id: number; complexity: number; duration: number }
+}>({
 	key: 'name',
 	order: { name: 1, category_id: 1, complexity: 1, duration: 1 },
 })
@@ -23,21 +30,15 @@ const fetchEntries = async (limited = false) => {
 	if (state.hasLoaded) return
 
 	try {
-		const keys = []
-		const recipes = []
-		const snapshot = limited
-			? await getDocs(query(collection(db, 'recipes'), orderBy('name'), limit(24)))
-			: await getDocs(collection(db, 'recipes'))
-		snapshot.forEach(doc => {
-			keys.push(doc.id)
-			recipes.push(doc.data())
-		})
+		const { data, error, status } = limited
+			? await supabase.from('recipes').select().range(0, 24).order('name', { ascending: true })
+			: await supabase.from('recipes').select()
+		if (error) throw error
+		if (data === null) throw new Error('Verbindung zur Datenbank fehlgeschlagen.')
 
 		if (!limited) state.hasLoaded = true
-
-		firebaseKeys = [...keys]
-		state.recipes = [...recipes]
-	} catch (error) {
+		state.recipes = data
+	} catch (error: any) {
 		const message = error.message ?? 'Verbindung zum Server fehlgeschlagen.'
 		addToast(message) // ¯\\_(ツ)_/¯
 	}
@@ -45,40 +46,35 @@ const fetchEntries = async (limited = false) => {
 
 const _getNextId = () => Math.max(...state.recipes.map(recipe => recipe.id)) + 1
 
-const addEntry = async formData => {
+const addEntry = async (formData: RecipeFormData) => {
 	if (!state.hasAuthenticated) return
 	if (!state.hasLoaded) await fetchEntries()
 
 	try {
 		formData.id = _getNextId()
-		// Behind the scenes, `.add()` and `.doc().set()` are completely equivalent, so you can use whichever is more convenient.
-		const { id } = await addDoc(collection(db, 'recipes'), formData)
+		const { error, status } = await supabase.from('recipes').insert(formData) /* .select() */
+		if (error) throw error
 
-		if (id) {
-			firebaseKeys.push(id)
-			state.recipes.push(formData)
-		}
-
+		state.recipes.push(formData as Recipe)
 		addToast('Rezept gespeichert', true)
-	} catch (error) {
+	} catch (error: any) {
 		const message = error.message ?? 'Verbindung zum Server fehlgeschlagen.'
 		addToast(message)
 	}
 }
 
-const updateEntry = async formData => {
+const updateEntry = async (formData: RecipeFormData) => {
 	if (!state.hasAuthenticated) return
 
 	const index = state.recipes.findIndex(recipe => recipe.id === formData.id) // im Fehlerfall `-1`
-	const key = firebaseKeys[index] // im Fehlerfall `undefined`
-	if (key === undefined) return
 
 	try {
-		await setDoc(doc(db, 'recipes', key), formData)
-		state.recipes[index] = formData
+		const { error, status } = await supabase.from('recipes').update(formData).eq('id', formData.id) /* .select() */
+		if (error) throw error
+		state.recipes[index] = formData as Recipe
 
 		addToast('Rezept aktualisiert', true)
-	} catch (error) {
+	} catch (error: any) {
 		const message = error.message ?? 'Verbindung zum Server fehlgeschlagen.'
 		addToast(message)
 	}

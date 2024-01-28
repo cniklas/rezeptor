@@ -1,21 +1,21 @@
-<script setup>
+<script setup lang="ts">
 import { onMounted, onBeforeUnmount } from 'vue'
 
-const emit = defineEmits(['removeToast'])
-const props = defineProps({
-	timeout: {
-		type: Boolean,
-	},
-})
+const emit = defineEmits<{
+	(event: 'removeToast'): void
+}>()
+const props = defineProps<{
+	timeout: boolean
+}>()
 
-let _timeout
+let _timeout: number
 onMounted(() => {
-	if (props.timeout) _timeout = setTimeout(emit, 1800, 'removeToast')
+	if (props.timeout) _timeout = window.setTimeout(emit, 1800, 'removeToast')
 })
 
 // https://nolanlawson.com/2020/02/19/fixing-memory-leaks-in-web-applications/
 onBeforeUnmount(() => {
-	if (_timeout) clearTimeout(_timeout)
+	if (_timeout) window.clearTimeout(_timeout)
 })
 </script>
 

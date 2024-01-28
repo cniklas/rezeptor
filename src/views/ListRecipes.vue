@@ -1,14 +1,16 @@
-<script setup>
-import { ref, computed, inject, onMounted, onBeforeUnmount } from 'vue'
+<script setup lang="ts">
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import { RouterLink } from 'vue-router'
 import ListHeader from '@/components/ListHeader.vue'
 import SortIcons from '@/components/SortIcons.vue'
 import AppLoader from '@/components/AppLoader.vue'
-import { RouterLink } from 'vue-router'
-import { useStore } from '../use/store'
+import { PROVIDE_CATEGORIES, PROVIDE_COMPLEXITY, PROVIDE_SQIDS } from '@/keys'
+import { injectStrict } from '@/use/helper'
+import { useStore } from '@/use/store'
 
-const hashids = inject('hashids')
-const _complexity = inject('complexity')
-const _categories = inject('categories')
+const sqids = injectStrict(PROVIDE_SQIDS)
+const categories = injectStrict(PROVIDE_CATEGORIES)
+const complexities = injectStrict(PROVIDE_COMPLEXITY)
 const { state, search, sorting, fetchEntries, setHasHistory } = useStore()
 
 const isLoading = ref(false)
@@ -19,7 +21,7 @@ const fetchRecipes = () => {
 	}
 }
 
-const sortBy = key => {
+const sortBy = (key: 'name' | 'category_id' | 'complexity' | 'duration') => {
 	fetchRecipes()
 
 	if (key === sorting.key) {
@@ -29,7 +31,8 @@ const sortBy = key => {
 		// sorting.order[key] = 1
 	}
 }
-const sortClass = key => (sorting.order[key] > 0 ? 'asc' : 'desc') + (sorting.key === key ? ' active' : '')
+const sortClass = (key: 'name' | 'category_id' | 'complexity' | 'duration') =>
+	(sorting.order[key] > 0 ? 'asc' : 'desc') + (sorting.key === key ? ' active' : '')
 
 const filteredList = computed(() => {
 	// https://vuejs.org/v2/examples/grid-component.html
@@ -39,18 +42,19 @@ const filteredList = computed(() => {
 	let filteredList = state.recipes
 
 	if (filterKey) {
-		filteredList = filteredList.filter(item => {
-			return (
-				item.name.toLowerCase().indexOf(filterKey) !== -1 || item.ingredients.toLowerCase().indexOf(filterKey) !== -1
-			)
-		})
+		filteredList = filteredList.filter(
+			item =>
+				item.name.toLowerCase().indexOf(filterKey) !== -1 || item.ingredients.toLowerCase().indexOf(filterKey) !== -1,
+		)
 	}
 
 	if (key) {
 		filteredList = filteredList.slice().sort((a, b) => {
-			a = a[key]
-			b = b[key]
-			return Number.isInteger(a) ? (a === b ? 0 : a > b ? 1 : -1) * order : a.localeCompare(b) * order
+			const _a = a[key]
+			const _b = b[key]
+			return Number.isInteger(_a)
+				? (_a === _b ? 0 : _a > _b ? 1 : -1) * order
+				: (_a as string).localeCompare(_b as string) * order
 		})
 	}
 
@@ -60,11 +64,13 @@ const resetList = () => {
 	search.value = ''
 }
 
-const encodeId = id => hashids.encode(id)
+const encodeId = (id: number) => sqids.encode([id])
 
-const loader = ref(null)
-let observer = null
+const loaderEl = ref(null)
+let observer: IntersectionObserver | null = null
 const _startObserver = () => {
+	if (!loaderEl.value) return
+
 	observer = new IntersectionObserver(
 		([entry], self) => {
 			if (entry.isIntersecting) {
@@ -74,10 +80,10 @@ const _startObserver = () => {
 		},
 		{ rootMargin: '0px 0px 120px 0px', threshold: 0 },
 	)
-	observer.observe(loader.value)
+	observer.observe(loaderEl.value)
 }
 const _stopObserver = () => {
-	if (observer) observer.disconnect()
+	observer?.disconnect()
 }
 
 onMounted(() => {
@@ -164,20 +170,22 @@ onBeforeUnmount(() => {
 						><template v-if="leftovers"> 🆁</template><template v-if="recommended"> 🥕</template>
 					</td>
 
-					<td class="td p-2 align-top">{{ _categories.get(category_id) }}</td>
+					<td class="td p-2 align-top" data-th="Kategorie">{{ categories.get(category_id) }}</td>
 
-					<td class="td hidden-xxs p-2 align-top">{{ _complexity.get(complexity) || 'n.a.' }}</td>
+					<td class="td hidden-xxs p-2 align-top" data-th="Schwierigkeit">
+						{{ complexities.get(complexity) || 'n.a.' }}
+					</td>
 
-					<td class="td p-2 align-top">
+					<td class="td p-2 align-top" data-th="Zubereitungszeit">
 						<template v-if="duration > 0">{{ duration }} Minuten</template>
 					</td>
 
-					<td class="td p-2 align-top">{{ remarkable_ingredients }}</td>
+					<td class="td p-2 align-top" data-th="bes. Zutaten">{{ remarkable_ingredients }}</td>
 				</tr>
 			</tbody>
 		</table>
 
-		<div ref="loader" class="mx-auto mt-4 w-7" :class="{ invisible: !isLoading, hidden: state.hasLoaded }">
+		<div ref="loaderEl" class="mx-auto mt-4 w-7" :class="{ invisible: !isLoading, hidden: state.hasLoaded }">
 			<AppLoader class="h-7 w-7" width="28" height="28" />
 		</div>
 	</div>

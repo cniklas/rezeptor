@@ -1,26 +1,28 @@
-<script setup>
-import { watch, inject } from 'vue'
-import AppToast from './components/AppToast.vue'
+<script setup lang="ts">
+import { watch } from 'vue'
 import { useRoute, useRouter, RouterView } from 'vue-router'
-import { auth } from './firebase'
-import { onAuthStateChanged /* signOut */ } from 'firebase/auth'
+import { supabase } from './supabase'
+import AppToast from './components/AppToast.vue'
+import type { Recipe } from './types/Recipe.type'
+import { PROVIDE_SQIDS } from './keys'
 import { useStore } from './use/store'
 import { useToast } from './use/toast'
 import { emitter } from './use/emitter'
+import { injectStrict } from './use/helper'
 
-const hashids = inject('hashids')
+const sqids = injectStrict(PROVIDE_SQIDS)
 const route = useRoute()
 const router = useRouter()
 
 const { state, fetchEntries, setAuthState } = useStore()
 const { toasts, removeToast } = useToast()
 
-const _getNameById = (data, id) => data.find(item => item.id === id)?.name ?? ''
+const _getNameById = (data: Readonly<Recipe[]>, id: number) => data.find(item => item.id === id)?.name ?? ''
 const _defaultTitle = document.title
 const _setTitle = () => {
 	document.title =
 		route.params.id && state.recipes.length
-			? _getNameById(state.recipes, hashids.decode(route.params.id)[0])
+			? _getNameById(state.recipes, sqids.decode(route.params.id as string).at(0) as number)
 			: _defaultTitle
 }
 watch(route, _setTitle)
@@ -42,27 +44,30 @@ const fetchRecipes = async () => {
 }
 fetchRecipes()
 
-// const logout = () => {
+// const logout = async () => {
 // 	try {
-// 		signOut(auth)
+// 		let { error } = await supabase.auth.signOut()
+// 		if (error) throw error
 // 	} catch (error) {
-// 		console.log(error)
+// 		console.error(error)
 // 	}
 // }
 
-onAuthStateChanged(auth, user => {
-	setAuthState(user !== null)
+supabase.auth.onAuthStateChange((_, session) => {
+	setAuthState(session !== null)
 })
 watch(
 	() => state.hasAuthenticated,
-	val => {
+	async val => {
+		await router.isReady()
+
 		if (!val && route.name === 'add-recipe') {
 			router.push('/')
 			return
 		}
 
 		if (val && route.name === 'login') {
-			router.replace(route.query.redirectTo ?? '/')
+			router.replace((route.query.redirectTo as string) ?? '/')
 			return
 		}
 	},

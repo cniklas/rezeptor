@@ -1,13 +1,16 @@
-<script setup>
-import { ref, reactive, computed, inject, defineAsyncComponent } from 'vue'
-import BackLink from '@/components/BackLink.vue'
+<script setup lang="ts">
+import { ref, reactive, computed, defineAsyncComponent } from 'vue'
 import { useRoute, useRouter, RouterLink } from 'vue-router'
-import { useStore } from '../use/store'
-import { useToast } from '../use/toast'
+import BackLink from '@/components/BackLink.vue'
+import type { RecipeFormData } from '@/types/Recipe.type'
+import { PROVIDE_COMPLEXITY, PROVIDE_COOKBOOKS, PROVIDE_SQIDS } from '@/keys'
+import { injectStrict } from '@/use/helper'
+import { useStore } from '@/use/store'
+import { useToast } from '@/use/toast'
 
-const hashids = inject('hashids')
-const _complexity = inject('complexity')
-const _cookbooks = inject('cookbooks')
+const sqids = injectStrict(PROVIDE_SQIDS)
+const complexities = injectStrict(PROVIDE_COMPLEXITY)
+const cookbooks = injectStrict(PROVIDE_COOKBOOKS)
 
 const route = useRoute()
 const router = useRouter()
@@ -16,32 +19,32 @@ const RecipeForm = defineAsyncComponent(() => import('@/components/RecipeForm.vu
 const { state, updateEntry } = useStore()
 const { addToast } = useToast()
 
-const _id = hashids.decode(route.params.id)[0]
+const _id = sqids.decode(route.params.id as string).at(0) as number
 const recipe = computed(() => state.recipes.find(item => item.id === _id))
-const ingredients = computed(() => (recipe.value.ingredients ? recipe.value.ingredients.split('\n') : []))
+const ingredients = computed(() => (recipe.value?.ingredients ? recipe.value.ingredients.split('\n') : []))
 const notes = computed(() =>
-	recipe.value.notes.replace(
+	recipe.value?.notes.replace(
 		/(\b(https?|):\/\/[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])/gi,
 		'<a href="$1" rel="noopener">$1</a>',
 	),
 )
 
-const form = reactive({})
-const edit = ref(false)
+const form = reactive<RecipeFormData>({} as RecipeFormData)
+const isFormOpen = ref(false)
 const isLocked = ref(false)
 const setForm = () => {
-	edit.value = true
 	Object.assign(form, {
 		...recipe.value,
-		duration: recipe.value.duration || '',
-		serves: recipe.value.serves || '',
-		leftovers: recipe.value.leftovers ?? false, // /!\ `leftovers` ist eine neue Property und daher nicht in allen Records enthalten
+		duration: recipe.value?.duration || '',
+		serves: recipe.value?.serves || '',
+		leftovers: recipe.value?.leftovers ?? false, // /!\ `leftovers` ist eine neue Property und daher nicht in allen Records enthalten
 	})
 
+	isFormOpen.value = true
 	window.scrollTo(0, 0)
 }
 const leaveForm = () => {
-	edit.value = false
+	isFormOpen.value = false
 	window.scrollTo(0, 0)
 }
 const submitForm = async () => {
@@ -57,14 +60,14 @@ const submitForm = async () => {
 	router.push({ name: 'recipes' })
 }
 
-const headline = computed(() => (!edit.value ? recipe.value.name : form.name))
+const headline = computed(() => (!isFormOpen.value ? recipe.value?.name : form.name))
 
 const isShareSupported = 'share' in navigator
 const share = () => {
 	try {
 		navigator.share({
 			title: 'Rezeptor',
-			text: recipe.value.name,
+			text: recipe.value?.name,
 			url: route.fullPath,
 		})
 	} catch (error) {
@@ -78,13 +81,15 @@ const share = () => {
 		<template v-if="recipe">
 			<div class="mb-5 flex justify-between">
 				<BackLink />
-				<button v-if="isShareSupported && !edit" type="button" class="back-link" @click="share">Link teilen</button>
+				<button v-if="isShareSupported && !isFormOpen" type="button" class="back-link" @click="share">
+					Link teilen
+				</button>
 			</div>
 
 			<h2 class="headline mb-5 mt-2.5">{{ headline }}</h2>
 
-			<template v-if="!edit">
-				<dl class="md:grid md:grid-cols-[min(38.2%,280px)_61.8%]">
+			<template v-if="!isFormOpen">
+				<dl class="md:grid md:grid-cols-[calc(min(38.2%,280px)-0.625rem)_calc(61.8%-0.625rem)] md:gap-x-5">
 					<dt class="inline-list-dt font-bold">
 						Zutaten <template v-if="recipe.serves > 0">für {{ recipe.serves }}</template>
 					</dt>
@@ -100,19 +105,22 @@ const share = () => {
 					</dd>
 
 					<dt class="inline-list-dt font-bold">Schwierigkeit</dt>
-					<dd>{{ _complexity.get(recipe.complexity) || 'n.a.' }}</dd>
+					<dd>{{ complexities.get(recipe.complexity) || 'n.a.' }}</dd>
 
 					<dt class="inline-list-dt font-bold">Kochbuch</dt>
-					<dd>{{ _cookbooks.get(recipe.cook_book_id) }}</dd>
+					<dd>{{ cookbooks.get(recipe.cook_book_id) }}</dd>
 				</dl>
 
-				<dl v-if="recipe.notes" class="mt-4 md:grid md:grid-cols-[min(38.2%,280px)_61.8%]">
+				<dl
+					v-if="recipe.notes"
+					class="mt-4 md:grid md:grid-cols-[calc(min(38.2%,280px)-0.625rem)_calc(61.8%-0.625rem)] md:gap-x-5"
+				>
 					<dt class="inline-list-dt font-bold">Tipps</dt>
 					<dd class="whitespace-pre-line break-words" v-html="notes"></dd>
 				</dl>
 
 				<div v-if="state.hasAuthenticated" class="mt-5 print:hidden">
-					<button type="button" class="btn btn-primary" @click="setForm">Rezept bearbeiten</button>
+					<button type="button" class="primary-button" @click="setForm">Rezept bearbeiten</button>
 				</div>
 			</template>
 
@@ -120,8 +128,8 @@ const share = () => {
 				<RecipeForm :form-data="form" />
 
 				<div class="submit">
-					<button type="submit" class="btn btn-primary" :disabled="isLocked">Speichern</button>
-					<button type="button" class="btn btn-default ml-2" @click="leaveForm">Abbrechen</button>
+					<button type="submit" class="primary-button" :disabled="isLocked">Speichern</button>
+					<button type="button" class="secondary-button ml-2" @click="leaveForm">Abbrechen</button>
 				</div>
 			</form>
 		</template>
@@ -132,11 +140,3 @@ const share = () => {
 		</template>
 	</div>
 </template>
-
-<style lang="postcss">
-@media screen and (min-width: 768px) {
-	.inline-list-dt {
-		@apply overflow-hidden overflow-ellipsis whitespace-nowrap pr-5 text-right;
-	}
-}
-</style>

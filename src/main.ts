@@ -1,18 +1,14 @@
 import 'virtual:uno.css'
 // https://unocss.dev/guide/style-reset
 import '@unocss/reset/tailwind-compat.css'
-import './main.css'
+import './assets/main.css'
 
 import { createApp } from 'vue'
+import { PROVIDE_CATEGORIES, PROVIDE_COMPLEXITY, PROVIDE_COOKBOOKS, PROVIDE_SQIDS } from './keys'
 import App from './App.vue'
 import router from './router'
-import Hashids from 'hashids'
+import Sqids from 'sqids'
 
-const complexity = new Map([
-	[1, 'leicht'],
-	[2, 'mittel'],
-	[3, 'komplex'],
-])
 const categories = new Map([
 	[5, 'Pasta'],
 	[10, 'Rind'],
@@ -30,6 +26,11 @@ const categories = new Map([
 	[110, 'Dessert'],
 	[200, 'Sonstiges'],
 ])
+const complexity = new Map([
+	[1, 'leicht'],
+	[2, 'mittel'],
+	[3, 'komplex'],
+])
 const cookbooks = new Map([
 	[2, 'Cook Clever mit Jamie'],
 	[3, 'Essen ist fertig!'],
@@ -41,9 +42,9 @@ const cookbooks = new Map([
 ])
 
 const app = createApp(App)
-app.provide('hashids', new Hashids('', 3, 'abcdefghijklmnopqrstuvwxyz'))
-app.provide('complexity', complexity)
-app.provide('categories', categories)
-app.provide('cookbooks', cookbooks)
+app.provide(PROVIDE_SQIDS, new Sqids({ minLength: 3, alphabet: 'abcdefghijklmnopqrstuvwxyz' }))
+app.provide(PROVIDE_CATEGORIES, categories)
+app.provide(PROVIDE_COMPLEXITY, complexity)
+app.provide(PROVIDE_COOKBOOKS, cookbooks)
 app.use(router)
 app.mount('#app')
