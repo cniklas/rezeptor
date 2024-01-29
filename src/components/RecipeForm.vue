@@ -33,12 +33,12 @@ const form = reactive(props.formData)
 			</div>
 
 			<div class="mb-3 flex gap-x-2">
-				<input v-model="form.leftovers" type="checkbox" class="mt-1 flex-shrink-0" id="leftovers" />
+				<input v-model="form.leftovers" type="checkbox" class="shrink-0" id="leftovers" />
 				<label for="leftovers" class="inline-block cursor-pointer">Fleischreste-Verwertung</label>
 			</div>
 
 			<div class="-mt-1.5 mb-3 flex gap-x-2">
-				<input v-model="form.recommended" type="checkbox" class="mt-1 flex-shrink-0" id="recommended" />
+				<input v-model="form.recommended" type="checkbox" class="shrink-0" id="recommended" />
 				<label for="recommended" class="inline-block cursor-pointer">Empfehlung</label>
 			</div>
 
@@ -61,16 +61,20 @@ const form = reactive(props.formData)
 
 			<div class="mb-3">
 				<div class="mb-0.5 font-medium">Schwierigkeit</div>
-				<template v-for="[key, complexity] of complexities" :key="`complexity-${key}`">
-					<input
-						v-model.number="form.complexity"
-						type="radio"
-						class="mr-1.5 mt-1 align-top"
-						:id="`complexity${key}`"
-						name="complexity"
-						:value="key"
-					/><label :for="`complexity${key}`" class="mr-4 inline-block cursor-pointer last:mr-0">{{ complexity }}</label>
-				</template>
+				<div class="flex">
+					<template v-for="[key, complexity] of complexities" :key="`complexity-${key}`">
+						<input
+							v-model.number="form.complexity"
+							type="radio"
+							class="mr-1.5 align-top"
+							:id="`complexity${key}`"
+							name="complexity"
+							:value="key"
+						/><label :for="`complexity${key}`" class="mr-4 inline-block cursor-pointer last:mr-0">{{
+							complexity
+						}}</label>
+					</template>
+				</div>
 			</div>
 
 			<div class="mb-4">

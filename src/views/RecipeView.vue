@@ -6,7 +6,6 @@ import type { RecipeFormData } from '@/types/Recipe.type'
 import { PROVIDE_COMPLEXITY, PROVIDE_COOKBOOKS, PROVIDE_SQIDS } from '@/keys'
 import { injectStrict } from '@/use/helper'
 import { useStore } from '@/use/store'
-import { useToast } from '@/use/toast'
 
 const sqids = injectStrict(PROVIDE_SQIDS)
 const complexities = injectStrict(PROVIDE_COMPLEXITY)
@@ -17,7 +16,6 @@ const router = useRouter()
 
 const RecipeForm = defineAsyncComponent(() => import('@/components/RecipeForm.vue'))
 const { state, updateEntry } = useStore()
-const { addToast } = useToast()
 
 const _id = sqids.decode(route.params.id as string).at(0) as number
 const recipe = computed(() => state.recipes.find(item => item.id === _id))
@@ -61,29 +59,13 @@ const submitForm = async () => {
 }
 
 const headline = computed(() => (!isFormOpen.value ? recipe.value?.name : form.name))
-
-const isShareSupported = 'share' in navigator
-const share = () => {
-	try {
-		navigator.share({
-			title: 'Rezeptor',
-			text: recipe.value?.name,
-			url: route.fullPath,
-		})
-	} catch (error) {
-		addToast('Sharing failed')
-	}
-}
 </script>
 
 <template>
 	<div>
 		<template v-if="recipe">
-			<div class="mb-5 flex justify-between">
+			<div class="mb-5 print:hidden">
 				<BackLink />
-				<button v-if="isShareSupported && !isFormOpen" type="button" class="back-link" @click="share">
-					Link teilen
-				</button>
 			</div>
 
 			<h2 class="headline mb-5 mt-2.5">{{ headline }}</h2>
@@ -119,13 +101,13 @@ const share = () => {
 					<dd class="whitespace-pre-line break-words" v-html="notes"></dd>
 				</dl>
 
-				<div v-if="state.hasAuthenticated" class="mt-5 print:hidden">
+				<div v-if="state.hasAuthenticated" class="mt-8 print:hidden">
 					<button type="button" class="primary-button" @click="setForm">Rezept bearbeiten</button>
 				</div>
 			</template>
 
 			<form v-else @submit.prevent="submitForm">
-				<RecipeForm :form-data="form" />
+				<RecipeForm class="mb-4" :form-data="form" />
 
 				<div class="submit">
 					<button type="submit" class="primary-button" :disabled="isLocked">Speichern</button>
@@ -135,7 +117,7 @@ const share = () => {
 		</template>
 
 		<template v-else>
-			<RouterLink :to="{ name: 'recipes' }" class="back-link mb-2.5 inline-block">zurück</RouterLink>
+			<RouterLink :to="{ name: 'recipes' }" class="back-link mb-2.5 inline-block">Home</RouterLink>
 			<div class="text-center text-base font-light md:text-xl">Ungültige Rezept-ID</div>
 		</template>
 	</div>

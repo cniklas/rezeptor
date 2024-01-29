@@ -20,7 +20,7 @@ defineProps<{
 				<button
 					type="reset"
 					aria-label="Eingabe löschen"
-					class="reset-button absolute bottom-0 right-px top-0 flex items-center px-3"
+					class="reset-button absolute bottom-0 right-px top-0 grid place-content-center px-3"
 					@click="$emit('reset')"
 				>
 					<svg

@@ -45,7 +45,7 @@ const submitForm = async () => {
 		<h2 class="headline mb-5 mt-2.5">Rezept hinzufügen</h2>
 
 		<form @submit.prevent="submitForm">
-			<RecipeForm :form-data="form" />
+			<RecipeForm class="mb-4" :form-data="form" />
 
 			<div class="submit">
 				<button type="submit" class="primary-button" :disabled="isLocked">Speichern</button>
