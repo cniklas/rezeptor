@@ -110,6 +110,7 @@ onBeforeUnmount(() => {
 				autocorrect="off"
 				autocomplete="off"
 				enterkeyhint="search"
+				@keyup.enter="($event.target as HTMLInputElement).blur()"
 				@keyup.esc="resetList"
 				@focus.once="fetchRecipes"
 			/>
@@ -161,7 +162,7 @@ onBeforeUnmount(() => {
 						<RouterLink :to="{ name: 'view-recipe', params: { id: encodeId(id) } }" class="nav-link">{{
 							name
 						}}</RouterLink
-						><template v-if="leftovers"> 🆁</template><template v-if="recommended"> 🥕</template>
+						><template v-if="leftovers"> (Reste)</template><template v-if="recommended"> 🥕</template>
 					</td>
 
 					<td class="td p-2 align-top" data-th="Kategorie">{{ categories.get(category_id) }}</td>
@@ -251,6 +252,11 @@ onBeforeUnmount(() => {
 			display: block;
 			padding: 0.125rem 0;
 			border: 0;
+
+			&:first-child {
+				font-size: 1rem;
+				line-height: 1.5;
+			}
 
 			&[data-th] {
 				display: grid;
