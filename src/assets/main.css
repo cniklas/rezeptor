@@ -8,6 +8,10 @@ body {
 	@apply bg-[#f4f4f5] text-[--base-text-color];
 }
 
+:is(th, td) {
+	padding: unset;
+}
+
 /* :any-link {
 	text-decoration: underline;
 } */

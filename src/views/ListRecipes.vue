@@ -31,8 +31,10 @@ const sortBy = (key: 'name' | 'category_id' | 'complexity' | 'duration') => {
 		// sorting.order[key] = 1
 	}
 }
-const sortClass = (key: 'name' | 'category_id' | 'complexity' | 'duration') =>
-	(sorting.order[key] > 0 ? 'asc' : 'desc') + (sorting.key === key ? ' active' : '')
+const ariaSorting = (key: 'name' | 'category_id' | 'complexity' | 'duration') => {
+	if (sorting.key !== key) return null
+	return sorting.order[key] > 0 ? 'ascending' : 'descending'
+}
 
 const filteredList = computed(() => {
 	// https://vuejs.org/v2/examples/grid-component.html
@@ -114,37 +116,29 @@ onBeforeUnmount(() => {
 		</ListHeader>
 
 		<table class="table-striped table-stacked w-full">
-			<thead class="thead">
+			<thead class="thead select-none whitespace-nowrap">
 				<tr class="tr">
-					<th
-						class="th sort w-1/4 whitespace-nowrap p-2 text-left align-bottom font-semibold"
-						:class="sortClass('name')"
-						@click="sortBy('name')"
-					>
-						Name <SortIcons width="18" height="18" />
+					<th scope="col" class="th w-1/4" :aria-sorting="ariaSorting('name')">
+						<button type="button" class="sort-button" @click="sortBy('name')">
+							Name <SortIcons width="18" height="18" />
+						</button>
 					</th>
-					<th
-						class="th sort whitespace-nowrap p-2 text-left align-bottom font-semibold"
-						:class="sortClass('category_id')"
-						@click="sortBy('category_id')"
-					>
-						Kategorie <SortIcons width="18" height="18" />
+					<th scope="col" class="th" :aria-sorting="ariaSorting('category_id')">
+						<button type="button" class="sort-button" @click="sortBy('category_id')">
+							Kategorie <SortIcons width="18" height="18" />
+						</button>
 					</th>
-					<th
-						class="th sort whitespace-nowrap p-2 text-left align-bottom font-semibold"
-						:class="sortClass('complexity')"
-						@click="sortBy('complexity')"
-					>
-						Schwierigkeit <SortIcons width="18" height="18" />
+					<th scope="col" class="th" :aria-sorting="ariaSorting('complexity')">
+						<button type="button" class="sort-button" @click="sortBy('complexity')">
+							Schwierigkeit <SortIcons width="18" height="18" />
+						</button>
 					</th>
-					<th
-						class="th sort whitespace-nowrap p-2 text-left align-bottom font-semibold"
-						:class="sortClass('duration')"
-						@click="sortBy('duration')"
-					>
-						Zubereitungszeit <SortIcons width="18" height="18" />
+					<th scope="col" class="th" :aria-sorting="ariaSorting('duration')">
+						<button type="button" class="sort-button" @click="sortBy('duration')">
+							Zubereitungszeit <SortIcons width="18" height="18" />
+						</button>
 					</th>
-					<th class="th whitespace-nowrap p-2 text-left align-bottom font-semibold">besondere Zutaten</th>
+					<th scope="col" class="th whitespace-nowrap p-2 text-left align-bottom">besondere Zutaten</th>
 				</tr>
 			</thead>
 
@@ -186,7 +180,7 @@ onBeforeUnmount(() => {
 		</table>
 
 		<div ref="loaderEl" class="mx-auto mt-4 w-7" :class="{ invisible: !isLoading, hidden: state.hasLoaded }">
-			<AppLoader class="h-7 w-7" width="28" height="28" />
+			<AppLoader class="aspect-1 w-7" width="28" height="28" />
 		</div>
 	</div>
 </template>
@@ -202,30 +196,33 @@ onBeforeUnmount(() => {
 
 .th {
 	border-bottom: 2px solid var(--table-border-color);
+	font-weight: 600;
 }
 
-.sort {
+.sort-button {
 	color: var(--primary-color);
-	cursor: pointer;
-	user-select: none;
+	width: 100%;
+	height: 2.25rem;
+	padding-inline: 0.5rem;
+	text-align: left;
 
-	&.active {
+	[aria-sorting] > & {
 		background-color: #f4f4f5;
 	}
 }
 
-.icon-sort {
+.sort-icon {
 	display: none;
 	fill: var(--base-text-color);
 	width: 1.125rem;
-	height: 1.125rem;
+	aspect-ratio: 1;
 	vertical-align: -0.25rem;
 
-	.active > & {
+	[aria-sorting] & {
 		display: inline-block;
 	}
 
-	.active.asc > & {
+	[aria-sorting='ascending'] & {
 		transform: scaleY(-1);
 	}
 }
@@ -251,34 +248,26 @@ onBeforeUnmount(() => {
 		}
 
 		.td {
-			display: flex;
+			display: block;
 			padding: 0.125rem 0;
 			border: 0;
 
+			&[data-th] {
+				display: grid;
+				grid-template-columns: calc(38.2% - 0.25rem) calc(61.8% - 0.25rem);
+				column-gap: 0.5rem;
+
+				&::before {
+					content: attr(data-th) ':';
+					/* font-weight: 600; */
+					font-weight: 500;
+					overflow: hidden;
+					text-overflow: ellipsis;
+				}
+			}
+
 			&:is(:empty, .hidden-xxs) {
 				display: none;
-			}
-
-			&::before {
-				content: '';
-				flex: 0 0 38.2%;
-				font-weight: 600;
-				overflow: hidden;
-				padding-right: 0.375rem;
-				text-overflow: ellipsis;
-			}
-
-			&:nth-child(1)::before {
-				content: 'Name:';
-			}
-			&:nth-child(2)::before {
-				content: 'Kategorie:';
-			}
-			&:nth-child(4)::before {
-				content: 'Zubereitungszeit:';
-			}
-			&:nth-child(5)::before {
-				content: 'bes. Zutaten:';
 			}
 		}
 
