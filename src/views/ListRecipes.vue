@@ -116,7 +116,7 @@ onBeforeUnmount(() => {
 			/>
 		</ListHeader>
 
-		<table class="table-striped table-stacked w-full">
+		<table class="table-striped table-stacked w-full text-sm">
 			<thead class="thead select-none whitespace-nowrap">
 				<tr class="tr">
 					<th scope="col" class="th w-1/4" :aria-sorting="ariaSorting('name')">
@@ -129,14 +129,14 @@ onBeforeUnmount(() => {
 							Kategorie <SortIcons width="18" height="18" />
 						</button>
 					</th>
-					<th scope="col" class="th" :aria-sorting="ariaSorting('complexity')">
+					<th scope="col" class="th <md:hidden" :aria-sorting="ariaSorting('complexity')">
 						<button type="button" class="sort-button" @click="sortBy('complexity')">
 							Schwierigkeit <SortIcons width="18" height="18" />
 						</button>
 					</th>
 					<th scope="col" class="th" :aria-sorting="ariaSorting('duration')">
 						<button type="button" class="sort-button" @click="sortBy('duration')">
-							Zubereitungszeit <SortIcons width="18" height="18" />
+							Aufwand <SortIcons width="18" height="18" />
 						</button>
 					</th>
 					<th scope="col" class="th whitespace-nowrap p-2 text-left align-bottom">besondere Zutaten</th>
@@ -167,11 +167,11 @@ onBeforeUnmount(() => {
 
 					<td class="td p-2 align-top" data-th="Kategorie">{{ categories.get(category_id) }}</td>
 
-					<td class="td hidden-xxs p-2 align-top" data-th="Schwierigkeit">
-						{{ complexities.get(complexity) || 'n.a.' }}
+					<td class="td !<md:hidden p-2 align-top" data-th="Schwierigkeit">
+						{{ complexities.get(complexity) ?? 'n.a.' }}
 					</td>
 
-					<td class="td p-2 align-top" data-th="Zubereitungszeit">
+					<td class="td whitespace-nowrap p-2 align-top" data-th="Aufwand">
 						<template v-if="duration > 0">{{ duration }} Minuten</template>
 					</td>
 
@@ -272,7 +272,7 @@ onBeforeUnmount(() => {
 				}
 			}
 
-			&:is(:empty, .hidden-xxs) {
+			&:empty {
 				display: none;
 			}
 		}

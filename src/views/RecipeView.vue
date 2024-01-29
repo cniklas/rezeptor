@@ -90,24 +90,24 @@ const share = () => {
 
 			<template v-if="!isFormOpen">
 				<dl class="md:grid md:grid-cols-[calc(min(38.2%,280px)-0.625rem)_calc(61.8%-0.625rem)] md:gap-x-5">
-					<dt class="inline-list-dt font-bold">
+					<dt class="inline-list-dt font-semibold">
 						Zutaten <template v-if="recipe.serves > 0">für {{ recipe.serves }}</template>
 					</dt>
 					<dd>
-						<ul v-if="ingredients.length" class="mb-2 ml-5 list-disc">
+						<ul v-if="ingredients.length" class="ml-5 list-disc">
 							<li v-for="(ingredient, i) in ingredients" :key="i">{{ ingredient }}</li>
 						</ul>
 					</dd>
 
-					<dt class="inline-list-dt font-bold">Zubereitungszeit</dt>
+					<dt class="inline-list-dt <md:mt-2 font-semibold">Zubereitungszeit</dt>
 					<dd>
 						<template v-if="recipe.duration > 0">{{ recipe.duration }} Minuten</template>
 					</dd>
 
-					<dt class="inline-list-dt font-bold">Schwierigkeit</dt>
-					<dd>{{ complexities.get(recipe.complexity) || 'n.a.' }}</dd>
+					<dt class="inline-list-dt <md:mt-2 font-semibold">Schwierigkeit</dt>
+					<dd>{{ complexities.get(recipe.complexity) ?? 'n.a.' }}</dd>
 
-					<dt class="inline-list-dt font-bold">Kochbuch</dt>
+					<dt class="inline-list-dt <md:mt-2 font-semibold">Kochbuch</dt>
 					<dd>{{ cookbooks.get(recipe.cook_book_id) }}</dd>
 				</dl>
 
@@ -115,7 +115,7 @@ const share = () => {
 					v-if="recipe.notes"
 					class="mt-4 md:grid md:grid-cols-[calc(min(38.2%,280px)-0.625rem)_calc(61.8%-0.625rem)] md:gap-x-5"
 				>
-					<dt class="inline-list-dt font-bold">Tipps</dt>
+					<dt class="inline-list-dt font-semibold">Tipps</dt>
 					<dd class="whitespace-pre-line break-words" v-html="notes"></dd>
 				</dl>
 

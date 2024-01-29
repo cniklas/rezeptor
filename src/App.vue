@@ -75,7 +75,7 @@ watch(
 </script>
 
 <template>
-	<main id="content" class="mx-auto bg-white px-3 pb-8 pt-4 lg:px-4 lg:py-8">
+	<main class="mx-auto max-w-7xl bg-white px-3 pb-8 pt-4 lg:px-4 lg:py-8">
 		<div v-show="!state.recipes.length" class="text-center text-base font-light md:text-xl">Rezepte laden …</div>
 
 		<RouterView v-show="state.recipes.length" class="has-transition" v-slot="{ Component }">
@@ -105,20 +105,6 @@ watch(
 </template>
 
 <style>
-#content {
-	@media screen and (min-width: 48em) {
-		width: 750px;
-	}
-
-	@media screen and (min-width: 62em) {
-		width: 970px;
-	}
-
-	@media screen and (min-width: 75em) {
-		width: 1170px;
-	}
-}
-
 :is(.page-enter-active, .page-leave-active) {
 	transition: opacity 180ms ease;
 }

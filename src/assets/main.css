@@ -84,10 +84,3 @@ textarea {
 		color: #6b7280;
 	}
 }
-
-/* https://www.bram.us/2021/06/23/css-at-supports-rules-to-target-only-firefox-safari-chromium/#update-2 */
-@supports (background: -webkit-named-image(i)) {
-	.form-control {
-		font-size: 16px;
-	}
-}
