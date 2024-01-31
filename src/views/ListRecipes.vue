@@ -30,7 +30,7 @@ const sortBy = (key: 'name' | 'category_id' | 'complexity' | 'duration') => {
 	}
 }
 const ariaSorting = (key: 'name' | 'category_id' | 'complexity' | 'duration') => {
-	if (sorting.key !== key) return null
+	if (sorting.key !== key) return undefined
 	return sorting.order[key] > 0 ? 'ascending' : 'descending'
 }
 
@@ -116,22 +116,22 @@ onBeforeUnmount(() => {
 		<table class="table-striped table-stacked w-full text-sm">
 			<thead class="thead select-none whitespace-nowrap">
 				<tr class="tr">
-					<th scope="col" class="th w-1/4" :aria-sorting="ariaSorting('name')">
+					<th scope="col" class="th w-1/4" :aria-sort="ariaSorting('name')">
 						<button type="button" class="sort-button" @click="sortBy('name')">
 							Name <SortIcons width="18" height="18" />
 						</button>
 					</th>
-					<th scope="col" class="th" :aria-sorting="ariaSorting('category_id')">
+					<th scope="col" class="th" :aria-sort="ariaSorting('category_id')">
 						<button type="button" class="sort-button" @click="sortBy('category_id')">
 							Kategorie <SortIcons width="18" height="18" />
 						</button>
 					</th>
-					<th scope="col" class="th <md:hidden" :aria-sorting="ariaSorting('complexity')">
+					<th scope="col" class="th <md:hidden" :aria-sort="ariaSorting('complexity')">
 						<button type="button" class="sort-button" @click="sortBy('complexity')">
 							Schwierigkeit <SortIcons width="18" height="18" />
 						</button>
 					</th>
-					<th scope="col" class="th" :aria-sorting="ariaSorting('duration')">
+					<th scope="col" class="th" :aria-sort="ariaSorting('duration')">
 						<button type="button" class="sort-button" @click="sortBy('duration')">
 							Aufwand <SortIcons width="18" height="18" />
 						</button>
@@ -204,7 +204,7 @@ onBeforeUnmount(() => {
 	padding-inline: 0.5rem;
 	text-align: left;
 
-	[aria-sorting] > & {
+	[aria-sort] > & {
 		background-color: #f4f4f5;
 	}
 }
@@ -216,11 +216,11 @@ onBeforeUnmount(() => {
 	aspect-ratio: 1;
 	vertical-align: -0.25rem;
 
-	[aria-sorting] & {
+	[aria-sort] & {
 		display: inline-block;
 	}
 
-	[aria-sorting='ascending'] & {
+	[aria-sort='ascending'] & {
 		transform: scaleY(-1);
 	}
 }
