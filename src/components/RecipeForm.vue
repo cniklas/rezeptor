@@ -1,12 +1,7 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
 import type { RecipeFormData } from '@/types/Recipe.type'
-import { PROVIDE_CATEGORIES, PROVIDE_COMPLEXITY, PROVIDE_COOKBOOKS } from '@/keys'
-import { injectStrict } from '@/use/helper'
-
-const categories = injectStrict(PROVIDE_CATEGORIES)
-const complexities = injectStrict(PROVIDE_COMPLEXITY)
-const cookbooks = injectStrict(PROVIDE_COOKBOOKS)
+import { categories, complexities, cookbooks } from '@/use/store'
 
 const props = defineProps<{
 	// /!\ Objects and arrays in JavaScript are passed by reference, so if the prop is an array or object, mutating the object or array itself inside the child component will affect parent state.

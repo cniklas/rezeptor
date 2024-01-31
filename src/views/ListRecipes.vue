@@ -4,13 +4,11 @@ import { RouterLink } from 'vue-router'
 import ListHeader from '@/components/ListHeader.vue'
 import SortIcons from '@/components/SortIcons.vue'
 import AppLoader from '@/components/AppLoader.vue'
-import { PROVIDE_CATEGORIES, PROVIDE_COMPLEXITY, PROVIDE_SQIDS } from '@/keys'
+import { PROVIDE_SQIDS } from '@/keys'
 import { injectStrict } from '@/use/helper'
-import { useStore } from '@/use/store'
+import { useStore, categories, complexities } from '@/use/store'
 
 const sqids = injectStrict(PROVIDE_SQIDS)
-const categories = injectStrict(PROVIDE_CATEGORIES)
-const complexities = injectStrict(PROVIDE_COMPLEXITY)
 const { state, search, sorting, fetchEntries, setHasHistory } = useStore()
 
 const isLoading = ref(false)
@@ -92,7 +90,6 @@ onMounted(() => {
 	if (!state.hasLoaded) _startObserver()
 	if (!state.hasHistory) setHasHistory()
 })
-
 onBeforeUnmount(() => {
 	_stopObserver()
 })
@@ -100,7 +97,7 @@ onBeforeUnmount(() => {
 
 <template>
 	<div>
-		<ListHeader class="mb-6" :has-authenticated="state.hasAuthenticated" @reset="resetList">
+		<ListHeader class="mb-6" :is-authenticated="state.isAuthenticated" @reset="resetList">
 			<input
 				v-model.trim="search"
 				type="search"

@@ -5,7 +5,7 @@ defineEmits<{
 	(event: 'reset'): void
 }>()
 defineProps<{
-	hasAuthenticated: boolean
+	isAuthenticated: boolean
 }>()
 </script>
 
@@ -34,8 +34,8 @@ defineProps<{
 				</button>
 			</div>
 
-			<RouterLink :to="{ name: hasAuthenticated ? 'add-recipe' : 'login' }" class="primary-button !<md:hidden">
-				{{ hasAuthenticated ? 'Rezept hinzufügen' : 'Anmelden' }}
+			<RouterLink :to="{ name: isAuthenticated ? 'add-recipe' : 'login' }" class="primary-button !<md:hidden">
+				{{ isAuthenticated ? 'Rezept hinzufügen' : 'Anmelden' }}
 			</RouterLink>
 		</div>
 	</div>

@@ -3,13 +3,11 @@ import { ref, reactive, computed, defineAsyncComponent } from 'vue'
 import { useRoute, useRouter, RouterLink } from 'vue-router'
 import BackLink from '@/components/BackLink.vue'
 import type { RecipeFormData } from '@/types/Recipe.type'
-import { PROVIDE_COMPLEXITY, PROVIDE_COOKBOOKS, PROVIDE_SQIDS } from '@/keys'
+import { PROVIDE_SQIDS } from '@/keys'
 import { injectStrict } from '@/use/helper'
-import { useStore } from '@/use/store'
+import { useStore, complexities, cookbooks } from '@/use/store'
 
 const sqids = injectStrict(PROVIDE_SQIDS)
-const complexities = injectStrict(PROVIDE_COMPLEXITY)
-const cookbooks = injectStrict(PROVIDE_COOKBOOKS)
 
 const route = useRoute()
 const router = useRouter()
@@ -101,7 +99,7 @@ const headline = computed(() => (!isFormOpen.value ? recipe.value?.name : form.n
 					<dd class="whitespace-pre-line break-words" v-html="notes"></dd>
 				</dl>
 
-				<div v-if="state.hasAuthenticated" class="mt-8 print:hidden">
+				<div v-if="state.isAuthenticated" class="mt-8 print:hidden">
 					<button type="button" class="primary-button" @click="setForm">Rezept bearbeiten</button>
 				</div>
 			</template>

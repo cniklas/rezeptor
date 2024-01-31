@@ -25,7 +25,7 @@ const router = createRouter({
 			name: 'add-recipe',
 			component: () => import('./views/AddRecipe.vue'),
 			beforeEnter: to => {
-				if (!state.hasAuthenticated)
+				if (!state.isAuthenticated)
 					return {
 						name: 'login',
 						query: {

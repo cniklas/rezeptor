@@ -39,8 +39,8 @@ const fetchRecipes = async () => {
 		// console.error(error)
 	}
 
-	const limited = route.name === 'recipes'
-	fetchEntries(limited)
+	const limit = route.name === 'recipes' ? 24 : 0
+	fetchEntries(limit)
 }
 fetchRecipes()
 
@@ -57,7 +57,7 @@ supabase.auth.onAuthStateChange((_, session) => {
 	setAuthState(session !== null)
 })
 watch(
-	() => state.hasAuthenticated,
+	() => state.isAuthenticated,
 	async val => {
 		await router.isReady()
 
