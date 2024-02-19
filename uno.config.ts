@@ -9,7 +9,7 @@ export default defineConfig({
 	// rules: [['class-name', { 'rule-name': 'rule-value' }]],
 
 	shortcuts: {
-		'inline-list-dt': 'md:overflow-hidden md:text-ellipsis md:whitespace-nowrap md:text-right',
+		'inline-list-dt': 'md:overflow-clip md:text-ellipsis md:whitespace-nowrap md:text-right',
 	},
 
 	// https://unocss.dev/presets/wind

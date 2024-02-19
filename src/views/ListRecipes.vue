@@ -264,7 +264,7 @@ onBeforeUnmount(() => {
 					content: attr(data-th) ':';
 					/* font-weight: 600; */
 					font-weight: 500;
-					overflow: hidden;
+					overflow: clip;
 					text-overflow: ellipsis;
 				}
 			}
