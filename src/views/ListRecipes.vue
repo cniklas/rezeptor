@@ -185,11 +185,11 @@ onBeforeUnmount(() => {
 
 <style>
 :root {
-	--table-border-color: #d4d4d8;
+	--table-border-color: oklch(87.11% 0.005 286.29);
 }
 
 .table-striped .tbody .tr:nth-of-type(odd) {
-	background-color: #fafafa;
+	background-color: oklch(98.51% 0 0);
 }
 
 .th {
@@ -205,7 +205,7 @@ onBeforeUnmount(() => {
 	text-align: left;
 
 	[aria-sort] > & {
-		background-color: #f4f4f5;
+		background-color: oklch(96.74% 0.001 286.38);
 	}
 }
 

@@ -30,11 +30,11 @@ onBeforeUnmount(() => {
 	@apply pointer-events-auto mb-2.5 cursor-pointer rounded-2xl px-4 py-1.5 text-center text-base/5 text-white;
 
 	&.success {
-		background-color: #10b981;
+		background-color: oklch(69.59% 0.149 162.48);
 	}
 
 	&.danger {
-		background-color: #f43f5e;
+		background-color: oklch(64.5% 0.215 16.44);
 	}
 }
 </style>

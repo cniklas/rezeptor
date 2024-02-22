@@ -1,11 +1,11 @@
 :root {
-	--base-text-color: #1e293b;
-	--primary-color: #0369a1;
-	--primary-hover-color: #075985;
+	--base-text-color: oklch(27.95% 0.037 260.03);
+	--primary-color: oklch(50% 0.119 242.75);
+	--primary-hover-color: oklch(44.34% 0.1 240.79);
 }
 
 body {
-	@apply bg-[#f4f4f5] text-[--base-text-color];
+	@apply bg-[oklch(96.74%_0.001_286.38)] text-[--base-text-color];
 }
 
 :is(th, td) {
@@ -53,7 +53,7 @@ textarea {
 }
 
 .headline {
-	@apply border-b border-b-[#334155] pb-2.5 text-2xl font-medium md:text-3xl;
+	@apply border-b border-b-[oklch(37.17%_0.039_257.29)] pb-2.5 text-2xl font-medium md:text-3xl;
 }
 
 :is(.secondary-button, .primary-button) {
@@ -61,7 +61,7 @@ textarea {
 }
 
 .secondary-button {
-	@apply bg-[#e5e5e5] text-[--base-text-color] hover:bg-[#d4d4d4] hover:text-[--base-text-color] focus:bg-[#d4d4d4] focus:text-[--base-text-color];
+	@apply bg-[oklch(92.19%_0_0)] text-[--base-text-color] hover:bg-[oklch(86.99%_0_0)] hover:text-[--base-text-color] focus:bg-[oklch(86.99%_0_0)] focus:text-[--base-text-color];
 }
 
 .primary-button {
@@ -81,6 +81,6 @@ textarea {
 	}
 
 	&::placeholder {
-		color: #6b7280;
+		color: oklch(55.1% 0.023 264.36);
 	}
 }
