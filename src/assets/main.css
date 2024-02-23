@@ -1,11 +1,14 @@
 :root {
-	--base-text-color: oklch(27.95% 0.037 260.03);
-	--primary-color: oklch(50% 0.119 242.75);
-	--primary-hover-color: oklch(44.34% 0.1 240.79);
+	--base-text: oklch(27.95% 0.037 260.03);
+	--primary: oklch(50% 0.119 242.75);
+	--primary-hover: oklch(44.34% 0.1 240.79);
+	--secondary: oklch(92.19% 0 0);
+	--secondary-hover: oklch(86.99% 0 0);
 }
 
 body {
-	@apply bg-[oklch(96.74%_0.001_286.38)] text-[--base-text-color];
+	background-color: oklch(96.74% 0.001 286.38);
+	color: var(--base-text);
 }
 
 :is(th, td) {
@@ -23,13 +26,22 @@ body {
 }
 
 :is(a, .back-link) {
-	@apply text-[--primary-color] hover:text-[--primary-hover-color] hover:underline focus:text-[--primary-hover-color] focus:underline;
+	color: var(--primary);
+
+	&:is(:hover, :focus) {
+		color: var(--primary-hover);
+		text-decoration-line: underline;
+	}
 }
 
 button {
-	@apply disabled:cursor-not-allowed disabled:opacity-60;
 	-webkit-tap-highlight-color: transparent;
 	background-color: unset; /* https://unocss.dev/guide/style-reset#tailwind */
+
+	&:disabled {
+		cursor: not-allowed;
+		opacity: 0.6;
+	}
 }
 
 /* iOS */
@@ -48,7 +60,8 @@ input[type='password'],
 input[type='search'],
 input[type='text'],
 textarea {
-	@apply appearance-none;
+	-webkit-appearance: none;
+	appearance: none;
 	-webkit-tap-highlight-color: transparent;
 }
 
@@ -56,21 +69,41 @@ textarea {
 	@apply border-b border-b-[oklch(37.17%_0.039_257.29)] pb-2.5 text-2xl font-medium md:text-3xl;
 }
 
-:is(.secondary-button, .primary-button) {
+:is(.primary-button, .secondary-button) {
 	@apply inline-flex touch-manipulation select-none items-center whitespace-nowrap rounded border-0 px-3 py-1.5 text-center font-normal hover:no-underline focus:no-underline;
 }
 
-.secondary-button {
-	@apply bg-[oklch(92.19%_0_0)] text-[--base-text-color] hover:bg-[oklch(86.99%_0_0)] hover:text-[--base-text-color] focus:bg-[oklch(86.99%_0_0)] focus:text-[--base-text-color];
-}
-
 .primary-button {
-	@apply bg-[--primary-color] text-white hover:bg-[--primary-hover-color] hover:text-white focus:bg-[--primary-hover-color] focus:text-white focus-visible:outline-[--primary-hover-color] active:outline-[--primary-hover-color];
+	background-color: var(--primary);
+	color: #fff;
+
+	&:is(:hover, :focus) {
+		background-color: var(--primary-hover);
+		color: #fff;
+	}
+
+	&:is(:focus-visible, :active) {
+		outline-color: var(--primary-hover);
+	}
 }
 
-.is-required > label::after {
-	@apply text-red-700;
-	content: ' *';
+.secondary-button {
+	background-color: var(--secondary);
+	color: var(--base-text);
+
+	&:is(:hover, :focus) {
+		background-color: var(--secondary-hover);
+		color: var(--base-text);
+	}
+}
+
+.text-label {
+	@apply mb-1.5 inline-block font-medium;
+
+	&:has(+ [required])::after {
+		color: oklch(50.54% 0.19 27.52); /* = theme('colors.red.700') */
+		content: ' *';
+	}
 }
 
 .form-control {

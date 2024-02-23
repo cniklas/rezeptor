@@ -198,7 +198,7 @@ onBeforeUnmount(() => {
 }
 
 .sort-button {
-	color: var(--primary-color);
+	color: var(--primary);
 	width: 100%;
 	height: 2.25rem;
 	padding-inline: 0.5rem;
@@ -211,7 +211,7 @@ onBeforeUnmount(() => {
 
 .sort-icon {
 	display: none;
-	fill: var(--base-text-color);
+	fill: var(--base-text);
 	width: 1.125rem;
 	aspect-ratio: 1;
 	vertical-align: -0.25rem;
