@@ -11,6 +11,12 @@ body {
 	color: var(--base-text);
 }
 
+ol,
+ul,
+menu {
+	list-style-type: '';
+}
+
 :is(th, td) {
 	padding: unset;
 }
