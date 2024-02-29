@@ -15,7 +15,7 @@ const form = reactive(props.formData)
 	<div class="grid gap-x-8 md:grid-cols-2">
 		<div>
 			<div class="mb-4">
-				<label for="name" class="text-label">Name</label>
+				<label for="name" class="text-label">Name <span aria-hidden="true">*</span></label>
 				<input
 					v-model.trim="form.name"
 					type="text"

@@ -106,9 +106,8 @@ textarea {
 .text-label {
 	@apply mb-1.5 inline-block font-medium;
 
-	&:has(+ [required])::after {
+	&:has(+ [required]) > [aria-hidden] {
 		color: oklch(50.54% 0.19 27.52); /* = theme('colors.red.700') */
-		content: ' *';
 	}
 }
 

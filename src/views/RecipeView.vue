@@ -70,7 +70,7 @@ const headline = computed(() => (!isFormOpen.value ? recipe.value?.name : form.n
 
 			<template v-if="!isFormOpen">
 				<dl class="md:grid md:grid-cols-[calc(min(38.2%,280px)-0.625rem)_calc(61.8%-0.625rem)] md:gap-x-5">
-					<dt class="inline-list-dt font-semibold">
+					<dt class="md:inline-list-dt font-semibold">
 						Zutaten <template v-if="recipe.serves > 0">für {{ recipe.serves }}</template>
 					</dt>
 					<dd>
@@ -79,15 +79,15 @@ const headline = computed(() => (!isFormOpen.value ? recipe.value?.name : form.n
 						</ul>
 					</dd>
 
-					<dt class="inline-list-dt <md:mt-2 font-semibold">Zubereitungszeit</dt>
+					<dt class="md:inline-list-dt <md:mt-2 font-semibold">Zubereitungszeit</dt>
 					<dd>
 						<template v-if="recipe.duration > 0">{{ recipe.duration }} Minuten</template>
 					</dd>
 
-					<dt class="inline-list-dt <md:mt-2 font-semibold">Schwierigkeit</dt>
+					<dt class="md:inline-list-dt <md:mt-2 font-semibold">Schwierigkeit</dt>
 					<dd>{{ complexities.get(recipe.complexity) ?? 'n.a.' }}</dd>
 
-					<dt class="inline-list-dt <md:mt-2 font-semibold">Kochbuch</dt>
+					<dt class="md:inline-list-dt <md:mt-2 font-semibold">Kochbuch</dt>
 					<dd>{{ cookbooks.get(recipe.cook_book_id) }}</dd>
 				</dl>
 
@@ -95,7 +95,7 @@ const headline = computed(() => (!isFormOpen.value ? recipe.value?.name : form.n
 					v-if="recipe.notes"
 					class="mt-4 md:grid md:grid-cols-[calc(min(38.2%,280px)-0.625rem)_calc(61.8%-0.625rem)] md:gap-x-5"
 				>
-					<dt class="inline-list-dt font-semibold">Tipps</dt>
+					<dt class="md:inline-list-dt font-semibold">Tipps</dt>
 					<dd class="whitespace-pre-line break-words" v-html="notes"></dd>
 				</dl>
 

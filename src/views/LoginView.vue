@@ -35,25 +35,17 @@ const onSubmit = async () => {
 		<form novalidate @submit.prevent="onSubmit">
 			<div class="md:w-6/12 lg:w-5/12 xl:w-4/12">
 				<div class="mb-4">
-					<label for="email" class="sr-only">E-Mail</label>
-					<input
-						v-model.trim="email"
-						type="text"
-						class="form-control"
-						id="email"
-						placeholder="E-Mail"
-						autocomplete="username"
-					/>
+					<label for="email" class="text-label">E-Mail</label>
+					<input v-model.trim="email" type="text" class="form-control" id="email" autocomplete="username" />
 				</div>
 
 				<div class="mb-4">
-					<label for="password" class="sr-only">Passwort</label>
+					<label for="password" class="text-label">Passwort</label>
 					<input
 						v-model.trim="password"
 						type="password"
 						class="form-control"
 						id="password"
-						placeholder="Passwort"
 						autocomplete="current-password"
 						enterkeyhint="go"
 					/>
