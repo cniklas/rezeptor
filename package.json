@@ -22,7 +22,7 @@
     "mitt": "^3.0.1",
     "sqids": "^0.3.0",
     "vue": "^3.3.11",
-    "vue-router": "^4.2.5"
+    "vue-router": "^4.3.0"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.7.2",
