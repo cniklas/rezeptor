@@ -66,7 +66,7 @@ const headline = computed(() => (!isFormOpen.value ? recipe.value?.name : form.n
 				<BackLink />
 			</div>
 
-			<h2 class="headline mb-5 mt-2.5">{{ headline }}</h2>
+			<h1 class="headline mb-5 mt-2.5">{{ headline }}</h1>
 
 			<template v-if="!isFormOpen">
 				<dl class="md:grid md:grid-cols-[calc(min(38.2%,280px)-0.625rem)_calc(61.8%-0.625rem)] md:gap-x-5">
