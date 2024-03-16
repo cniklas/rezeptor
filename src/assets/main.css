@@ -15,6 +15,15 @@ body {
 	padding: unset;
 }
 
+/* https://frontendmasters.com/blog/you-want-border-color-transparent-not-border-none/ */
+@media (forced-colors: active) {
+	button,
+	input,
+	textarea {
+		border: 1px solid transparent;
+	}
+}
+
 /* :any-link {
 	text-decoration: underline;
 } */
@@ -70,7 +79,7 @@ textarea {
 }
 
 :is(.primary-button, .secondary-button) {
-	@apply inline-flex touch-manipulation select-none items-center whitespace-nowrap rounded border-0 px-3 py-1.5 text-center font-normal hover:no-underline focus:no-underline;
+	@apply inline-flex h-9 touch-manipulation select-none items-center rounded px-3 text-center hover:no-underline focus:no-underline;
 }
 
 .primary-button {

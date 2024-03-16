@@ -14,6 +14,7 @@ module.exports = {
 	rules: {
 		'arrow-body-style': 'warn',
 		'prefer-arrow-callback': 'warn',
+		// "@typescript-eslint/no-explicit-any": "warn",
 	},
 	parserOptions: {
 		ecmaVersion: 'latest',

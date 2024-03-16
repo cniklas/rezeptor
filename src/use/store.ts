@@ -97,7 +97,7 @@ const addEntry = async (formData: RecipeFormData) => {
 
 	try {
 		formData.id = _getNextId()
-		const { error, status } = await supabase.from('recipes').insert(formData) /* .select() */
+		const { error } = await supabase.from('recipes').insert(formData) /* .select() */
 		if (error) throw error
 
 		state.recipes.push(formData as Recipe)
@@ -114,7 +114,7 @@ const updateEntry = async (formData: RecipeFormData) => {
 	const index = state.recipes.findIndex(recipe => recipe.id === formData.id) // im Fehlerfall `-1`
 
 	try {
-		const { error, status } = await supabase.from('recipes').update(formData).eq('id', formData.id) /* .select() */
+		const { error } = await supabase.from('recipes').update(formData).eq('id', formData.id) /* .select() */
 		if (error) throw error
 		state.recipes[index] = formData as Recipe
 
