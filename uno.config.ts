@@ -9,7 +9,6 @@ export default defineConfig({
 	// missing in presetMini
 	rules: [
 		['list-disc', { 'list-style-type': 'disc' }],
-		['touch-manipulation', { 'touch-action': 'manipulation' }],
 	],
 
 	shortcuts: {

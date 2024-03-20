@@ -15,6 +15,16 @@ body {
 	padding: unset;
 }
 
+button,
+label,
+input,
+select,
+textarea,
+summary {
+	/* https://dbushell.com/2024/03/10/css-button-styles-you-might-not-know/#touch-actions */
+	touch-action: manipulation;
+}
+
 /* https://frontendmasters.com/blog/you-want-border-color-transparent-not-border-none/ */
 @media (forced-colors: active) {
 	button,
@@ -29,7 +39,7 @@ body {
 } */
 
 :focus-visible,
-:is(.secondary-button, .primary-button, .reset-button):active {
+:where(.secondary-button, .primary-button, .reset-button):active {
 	outline: 2px solid currentColor;
 	outline-offset: 2px;
 }
@@ -53,11 +63,6 @@ button {
 	}
 }
 
-/* iOS */
-button[type='submit'] {
-	font-weight: 400;
-}
-
 input[type='search']::-webkit-search-cancel-button,
 input[type='search']::-webkit-search-decoration {
 	-webkit-appearance: none;
@@ -79,7 +84,7 @@ textarea {
 }
 
 :is(.primary-button, .secondary-button) {
-	@apply inline-flex h-9 touch-manipulation select-none items-center rounded px-3 text-center hover:no-underline focus:no-underline;
+	@apply inline-flex h-9 select-none items-center rounded px-3 text-center hover:no-underline focus:no-underline;
 }
 
 .primary-button {
