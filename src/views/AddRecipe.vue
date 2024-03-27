@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
-import { useRouter, RouterLink } from 'vue-router'
+import { useRouter } from 'vue-router'
 import BackLink from '@/components/BackLink.vue'
 import RecipeForm from '@/components/RecipeForm.vue'
 import type { RecipeFormData } from '@/types/Recipe.type'

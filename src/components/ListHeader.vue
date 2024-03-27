@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router'
-
 defineEmits<{
 	(event: 'reset'): void
 }>()

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { watch } from 'vue'
-import { useRoute, useRouter, RouterView } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { supabase } from './supabase'
 import AppToast from './components/AppToast.vue'
 import type { Recipe } from './types/Recipe.type'
