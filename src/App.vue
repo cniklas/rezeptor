@@ -85,11 +85,7 @@ watch(
 		</RouterView>
 	</main>
 
-	<TransitionGroup
-		name="toasted"
-		tag="div"
-		class="pointer-events-none fixed left-1/2 top-8 z-[1] flex w-[calc(100vw-30px)] max-w-[380px] -translate-x-1/2 transform flex-col items-center"
-	>
+	<TransitionGroup name="toasted" tag="div" class="toaster" aria-live="assertive">
 		<!-- /!\ als `:key` keinesfalls den Array-Index verwenden; Indizes werden bei `splice` neu geschrieben -->
 		<AppToast
 			v-for="toast in toasts"
@@ -115,29 +111,5 @@ watch(
 
 .has-transition {
 	transform: translateZ(0); /* use GPU acceleration */
-}
-
-@keyframes slide-fade-in {
-	from {
-		opacity: 0;
-		transform: translateY(1.25rem);
-	}
-	to {
-		transform: translateY(0);
-	}
-}
-
-@keyframes fade-out {
-	to {
-		opacity: 0;
-	}
-}
-
-.toasted-enter-active {
-	animation: slide-fade-in 360ms ease-out forwards;
-}
-
-.toasted-leave-active {
-	animation: fade-out 360ms ease-out forwards;
 }
 </style>

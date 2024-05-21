@@ -130,3 +130,40 @@ textarea {
 		color: oklch(55.1% 0.023 264.36);
 	}
 }
+
+.toaster {
+	display: grid;
+	row-gap: 0.625rem;
+	position: fixed;
+	width: calc(100vw - 1.5rem);
+	max-width: 23.75rem;
+	pointer-events: none;
+	left: 50%;
+	top: 2rem;
+	z-index: 1;
+	translate: -50%;
+}
+
+@keyframes slide-fade-in {
+	from {
+		opacity: 0;
+		transform: translateY(1.25rem);
+	}
+	to {
+		transform: translateY(0);
+	}
+}
+
+@keyframes fade-out {
+	to {
+		opacity: 0;
+	}
+}
+
+.toasted-enter-active {
+	animation: slide-fade-in 360ms ease-out forwards;
+}
+
+.toasted-leave-active {
+	animation: fade-out 360ms ease-out forwards;
+}
