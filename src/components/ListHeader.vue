@@ -8,15 +8,14 @@ defineProps<{
 </script>
 
 <template>
-	<div class="py-2">
-		<label for="search" class="<md:hidden mb-2 inline-block font-medium">Suche nach Rezept oder Zutaten:</label>
-
-		<div class="flex justify-between">
-			<div class="relative flex-auto sm:max-w-xs">
+	<div class="flex items-end justify-between py-2">
+		<search class="flex-auto sm:max-w-xs">
+			<label for="search" class="text-label !<md:hidden">Suche nach Rezept oder Zutaten:</label>
+			<div class="relative">
 				<slot />
 
 				<button
-					type="reset"
+					type="button"
 					aria-label="Eingabe löschen"
 					class="reset-button absolute bottom-0 right-px top-0 grid place-content-center px-3"
 					@click="$emit('reset')"
@@ -31,11 +30,11 @@ defineProps<{
 					</svg>
 				</button>
 			</div>
+		</search>
 
-			<RouterLink :to="{ name: isAuthenticated ? 'add-recipe' : 'login' }" class="primary-button !<md:hidden">
-				{{ isAuthenticated ? 'Rezept hinzufügen' : 'Anmelden' }}
-			</RouterLink>
-		</div>
+		<RouterLink :to="{ name: isAuthenticated ? 'add-recipe' : 'login' }" class="primary-button !<md:hidden">
+			{{ isAuthenticated ? 'Rezept hinzufügen' : 'Anmelden' }}
+		</RouterLink>
 	</div>
 </template>
 
