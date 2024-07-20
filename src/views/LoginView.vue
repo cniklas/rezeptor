@@ -30,9 +30,9 @@ const onSubmit = async () => {
 	<div>
 		<BackLink class="mb-2.5 inline-block" />
 
-		<h1 class="headline mb-8 mt-2.5">Anmelden</h1>
+		<h1 id="aria-heading-login" class="headline mb-8 mt-2.5">Anmelden</h1>
 
-		<form novalidate @submit.prevent="onSubmit">
+		<form novalidate aria-labelledby="aria-heading-login" @submit.prevent="onSubmit">
 			<div class="md:w-6/12 lg:w-5/12 xl:w-4/12">
 				<div class="mb-4">
 					<label for="email" class="text-label">E-Mail</label>

@@ -42,9 +42,9 @@ const submitForm = async () => {
 	<div>
 		<BackLink class="mb-2.5 inline-block" />
 
-		<h1 class="headline mb-5 mt-2.5">Rezept hinzufügen</h1>
+		<h1 id="aria-heading-add-recipe" class="headline mb-5 mt-2.5">Rezept hinzufügen</h1>
 
-		<form @submit.prevent="submitForm">
+		<form aria-labelledby="aria-heading-add-recipe" @submit.prevent="submitForm">
 			<RecipeForm class="mb-4" :form-data="form" />
 
 			<div class="submit">
