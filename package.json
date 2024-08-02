@@ -18,7 +18,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.41.1",
+    "@supabase/supabase-js": "^2.45.0",
     "mitt": "^3.0.1",
     "sqids": "^0.3.0",
     "vue": "^3.4.35",
