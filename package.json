@@ -21,7 +21,7 @@
     "@supabase/supabase-js": "^2.41.1",
     "mitt": "^3.0.1",
     "sqids": "^0.3.0",
-    "vue": "^3.4.26",
+    "vue": "^3.4.35",
     "vue-router": "^4.3.0"
   },
   "devDependencies": {
