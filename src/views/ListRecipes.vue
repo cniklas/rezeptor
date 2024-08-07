@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount, nextTick } from 'vue'
 import ListHeader from '@/components/ListHeader.vue'
 import SortIcons from '@/components/SortIcons.vue'
 import AppLoader from '@/components/AppLoader.vue'
@@ -59,8 +59,12 @@ const filteredList = computed(() => {
 
 	return filteredList
 })
-const resetList = () => {
+
+const inputEl = ref<HTMLInputElement | null>(null)
+const resetList = async () => {
 	search.value = ''
+	await nextTick()
+	inputEl.value?.focus()
 }
 
 const encodeId = (id: number) => sqids.encode([id])
@@ -98,6 +102,7 @@ onBeforeUnmount(() => {
 	<div>
 		<ListHeader class="mb-6" :is-authenticated="state.isAuthenticated" @reset="resetList">
 			<input
+				ref="inputEl"
 				v-model.trim="search"
 				type="search"
 				id="search"
@@ -106,7 +111,7 @@ onBeforeUnmount(() => {
 				autocorrect="off"
 				autocomplete="off"
 				enterkeyhint="search"
-				@keyup.enter="($event.target as HTMLInputElement).blur()"
+				@keydown.enter="($event.target as HTMLInputElement).blur()"
 				@keyup.esc="resetList"
 				@focus.once="fetchRecipes"
 			/>
