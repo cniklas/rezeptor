@@ -1,14 +1,10 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
 import type { RecipeFormData } from '@/types/Recipe.type'
 import { categories, complexities, cookbooks } from '@/use/store'
 
-const props = defineProps<{
-	// /!\ Objects and arrays in JavaScript are passed by reference, so if the prop is an array or object, mutating the object or array itself inside the child component will affect parent state.
-	formData: RecipeFormData
-}>()
-// 'Fix' für ESLint Error 'vue/no-mutating-props'
-const form = reactive(props.formData)
+const form = defineModel<RecipeFormData>({
+	required: true,
+})
 </script>
 
 <template>

@@ -105,7 +105,7 @@ const headline = computed(() => (!isFormOpen.value ? recipe.value?.name : form.n
 			</template>
 
 			<form v-else aria-label="Rezept bearbeiten" @submit.prevent="submitForm">
-				<RecipeForm class="mb-4" :form-data="form" />
+				<RecipeForm v-model="form" class="mb-4" />
 
 				<div class="submit">
 					<button type="submit" class="primary-button" :disabled="isLocked">Speichern</button>

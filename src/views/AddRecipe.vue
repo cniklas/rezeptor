@@ -45,7 +45,7 @@ const submitForm = async () => {
 		<h1 id="aria-heading-add-recipe" class="headline mb-5 mt-2.5">Rezept hinzufügen</h1>
 
 		<form aria-labelledby="aria-heading-add-recipe" @submit.prevent="submitForm">
-			<RecipeForm class="mb-4" :form-data="form" />
+			<RecipeForm v-model="form" class="mb-4" />
 
 			<div class="submit">
 				<button type="submit" class="primary-button" :disabled="isLocked">Speichern</button>
