@@ -77,7 +77,7 @@ const form = defineModel<RecipeFormData>({
 				<div class="mb-4">
 					<label for="duration" class="text-label">Zubereitungszeit</label>
 					<input
-						v-model.number="form.duration"
+						v-model="form.duration"
 						type="number"
 						inputmode="numeric"
 						class="form-control"
@@ -92,7 +92,7 @@ const form = defineModel<RecipeFormData>({
 				<div class="mb-4">
 					<label for="serves" class="text-label">Anzahl Portionen</label>
 					<input
-						v-model.number="form.serves"
+						v-model="form.serves"
 						type="number"
 						inputmode="numeric"
 						class="form-control"

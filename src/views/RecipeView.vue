@@ -48,8 +48,8 @@ const submitForm = async () => {
 
 	const formData = {
 		...form,
-		duration: form.duration || 0,
-		serves: form.serves || 0,
+		duration: +form.duration,
+		serves: +form.serves,
 	}
 	await updateEntry(formData)
 
