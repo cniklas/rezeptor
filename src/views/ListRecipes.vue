@@ -60,7 +60,7 @@ const filteredList = computed(() => {
 	return filteredList
 })
 
-const inputEl = useTemplateRef<HTMLInputElement | null>('input')
+const inputEl = useTemplateRef<HTMLInputElement | null>('inputEl')
 const resetList = async () => {
 	search.value = ''
 	await nextTick()
@@ -69,7 +69,7 @@ const resetList = async () => {
 
 const encodeId = (id: number) => sqids.encode([id])
 
-const loaderEl = useTemplateRef<HTMLDivElement | null>('loader')
+const loaderEl = useTemplateRef<HTMLDivElement | null>('loaderEl')
 let observer: IntersectionObserver | null = null
 const _startObserver = () => {
 	if (!loaderEl.value) return
@@ -102,7 +102,7 @@ onBeforeUnmount(() => {
 	<div>
 		<ListHeader class="mb-6" :is-authenticated="state.isAuthenticated" @reset="resetList">
 			<input
-				ref="input"
+				ref="inputEl"
 				v-model.trim="search"
 				type="search"
 				id="search"
@@ -181,7 +181,7 @@ onBeforeUnmount(() => {
 			</tbody>
 		</table>
 
-		<div ref="loader" class="mx-auto mt-4 w-7" :class="{ invisible: !isLoading, hidden: state.hasLoaded }">
+		<div ref="loaderEl" class="mx-auto mt-4 w-7" :class="{ invisible: !isLoading, hidden: state.hasLoaded }">
 			<AppLoader class="aspect-1 w-7" width="28" height="28" />
 		</div>
 	</div>
