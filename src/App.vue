@@ -76,9 +76,9 @@ watch(
 
 <template>
 	<main class="mx-auto max-w-7xl bg-white px-3 pb-8 pt-4 lg:px-4 lg:py-8">
-		<div v-show="!state.recipes.length" class="text-center text-base font-light md:text-xl">Rezepte laden …</div>
+		<div v-if="!state.recipes.length" class="text-center text-base font-light md:text-xl">Rezepte laden …</div>
 
-		<RouterView v-show="state.recipes.length" class="has-transition" v-slot="{ Component }">
+		<RouterView v-else class="has-transition" v-slot="{ Component }">
 			<Transition name="page" mode="out-in" @before-enter="onBeforeEnter">
 				<Component :is="Component" />
 			</Transition>
