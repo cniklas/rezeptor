@@ -1,6 +1,6 @@
 <script setup lang="ts">
 defineEmits<{
-	(event: 'reset'): void
+	reset: []
 }>()
 defineProps<{
 	isAuthenticated: boolean

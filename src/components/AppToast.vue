@@ -2,7 +2,7 @@
 import { onMounted, onBeforeUnmount } from 'vue'
 
 const emit = defineEmits<{
-	(event: 'removeToast'): void
+	removeToast: []
 }>()
 const props = defineProps<{
 	timeout: boolean
