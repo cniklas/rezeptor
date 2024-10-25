@@ -66,6 +66,7 @@ const sorting = reactive<{
 	order: { name: 1, category_id: 1, complexity: 1, duration: 1 },
 })
 
+const CONNECTION_ERROR = 'Verbindung zum Server fehlgeschlagen.' // ¯\\_(ツ)_/¯
 const fetchEntries = async (limit = 0) => {
 	if (state.hasLoaded) return
 
@@ -84,8 +85,7 @@ const fetchEntries = async (limit = 0) => {
 		if (!limit) state.hasLoaded = true
 		state.recipes = data
 	} catch (error: any) {
-		const message = error.message ?? 'Verbindung zum Server fehlgeschlagen.'
-		addToast(message) // ¯\\_(ツ)_/¯
+		addToast(error.message ?? CONNECTION_ERROR, false)
 	}
 }
 
@@ -101,10 +101,9 @@ const addEntry = async (formData: RecipeFormData) => {
 		if (error) throw error
 
 		state.recipes.push(formData as Recipe)
-		addToast('Rezept gespeichert', true)
+		addToast('Rezept gespeichert')
 	} catch (error: any) {
-		const message = error.message ?? 'Verbindung zum Server fehlgeschlagen.'
-		addToast(message)
+		addToast(error.message ?? CONNECTION_ERROR, false)
 	}
 }
 
@@ -118,10 +117,9 @@ const updateEntry = async (formData: RecipeFormData) => {
 		if (error) throw error
 		state.recipes[index] = formData as Recipe
 
-		addToast('Rezept aktualisiert', true)
+		addToast('Rezept aktualisiert')
 	} catch (error: any) {
-		const message = error.message ?? 'Verbindung zum Server fehlgeschlagen.'
-		addToast(message)
+		addToast(error.message ?? CONNECTION_ERROR, false)
 	}
 }
 

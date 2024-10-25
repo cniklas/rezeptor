@@ -19,8 +19,7 @@ const onSubmit = async () => {
 		const { error } = await supabase.auth.signInWithPassword({ email: email.value, password: password.value })
 		if (error) throw error
 	} catch (error: any) {
-		const message = error.message ?? 'Anmeldung fehlgeschlagen.'
-		addToast(message, false)
+		addToast(error.message ?? 'Anmeldung fehlgeschlagen.', false)
 		isSubmitLocked.value = false
 	}
 }
