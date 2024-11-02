@@ -1,4 +1,4 @@
-import { reactive, readonly } from 'vue'
+import { ref, readonly } from 'vue'
 
 type Toast = {
 	id: number
@@ -7,19 +7,19 @@ type Toast = {
 }
 
 let tid = 0
-const toasts = reactive<Toast[]>([])
+const toasts = ref<Toast[]>([])
 
 const addToast = (message: string, success = true) => {
-	toasts.push({ id: ++tid, message, class: success ? 'success' : 'danger' })
+	toasts.value.push({ id: ++tid, message, class: success ? 'success' : 'danger' })
 }
 
 const removeToast = (id: number) => {
-	const index = toasts.findIndex(item => item.id === id) // im Fehlerfall `-1`
-	if (index >= 0) toasts.splice(index, 1)
+	const index = toasts.value.findIndex(item => item.id === id) // im Fehlerfall `-1`
+	if (index >= 0) toasts.value.splice(index, 1)
 }
 
 export const useToast = () => ({
-	toasts: readonly(toasts),
+	toasts: readonly(toasts.value),
 	addToast,
 	removeToast,
 })
