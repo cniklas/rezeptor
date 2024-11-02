@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, reactive, computed, defineAsyncComponent } from 'vue'
+import { ref, computed, defineAsyncComponent } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import BackLink from '@/components/BackLink.vue'
 import type { RecipeFormData } from '@/types/Recipe.type'
@@ -25,7 +25,7 @@ const notes = computed(() =>
 	),
 )
 
-const form = reactive<RecipeFormData>({} as RecipeFormData)
+const form = ref<RecipeFormData>({} as RecipeFormData)
 const isFormOpen = ref(false)
 const isLocked = ref(false)
 const setForm = () => {
@@ -47,16 +47,16 @@ const submitForm = async () => {
 	isLocked.value = true
 
 	const formData = {
-		...form,
-		duration: +form.duration,
-		serves: +form.serves,
+		...form.value,
+		duration: +form.value.duration,
+		serves: +form.value.serves,
 	}
 	await updateEntry(formData)
 
 	router.push({ name: 'recipes' })
 }
 
-const headline = computed(() => (!isFormOpen.value ? recipe.value?.name : form.name))
+const headline = computed(() => (!isFormOpen.value ? recipe.value?.name : form.value.name))
 </script>
 
 <template>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import BackLink from '@/components/BackLink.vue'
 import RecipeForm from '@/components/RecipeForm.vue'
@@ -10,16 +10,16 @@ const router = useRouter()
 
 const { addEntry } = useStore()
 
-const form = reactive<RecipeFormData>({
-	name: '',
-	cook_book_id: 1,
+const form = ref<RecipeFormData>({
 	category_id: 0,
+	cook_book_id: 1,
 	complexity: 2,
 	duration: '',
-	leftovers: false,
-	recommended: false,
-	notes: '',
 	ingredients: '',
+	leftovers: false,
+	name: '',
+	notes: '',
+	recommended: false,
 	remarkable_ingredients: '',
 	serves: '',
 })
@@ -28,9 +28,9 @@ const submitForm = async () => {
 	isLocked.value = true
 
 	const formData = {
-		...form,
-		duration: +form.duration,
-		serves: +form.serves,
+		...form.value,
+		duration: +form.value.duration,
+		serves: +form.value.serves,
 	}
 	await addEntry(formData)
 
