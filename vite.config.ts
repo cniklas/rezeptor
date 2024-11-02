@@ -5,16 +5,7 @@ import UnoCSS from 'unocss/vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-	plugins: [
-		vue({
-			template: {
-				compilerOptions: {
-					isCustomElement: tag => tag === 'search',
-				},
-			},
-		}),
-		UnoCSS(),
-	],
+	plugins: [vue(), UnoCSS()],
 	resolve: {
 		alias: {
 			'@': fileURLToPath(new URL('./src', import.meta.url)),
