@@ -35,6 +35,7 @@ const onBeforeEnter = () => {
 const fetchRecipes = async () => {
 	try {
 		await router.isReady()
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	} catch (error) {
 		// console.error(error)
 	}

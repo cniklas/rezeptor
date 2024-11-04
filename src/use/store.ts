@@ -71,7 +71,7 @@ const fetchEntries = async (limit = 0) => {
 	if (state.hasLoaded) return
 
 	try {
-		const { data, error, status } =
+		const { data, error /* , status */ } =
 			limit > 0
 				? await supabase
 						.from('recipes')
@@ -84,6 +84,7 @@ const fetchEntries = async (limit = 0) => {
 
 		if (!limit) state.hasLoaded = true
 		state.recipes = data
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	} catch (error: any) {
 		addToast(error.message ?? CONNECTION_ERROR, false)
 	}
@@ -102,6 +103,7 @@ const addEntry = async (formData: RecipeFormData) => {
 
 		state.recipes.push(formData as Recipe)
 		addToast('Rezept gespeichert')
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	} catch (error: any) {
 		addToast(error.message ?? CONNECTION_ERROR, false)
 	}
@@ -118,6 +120,7 @@ const updateEntry = async (formData: RecipeFormData) => {
 		state.recipes[index] = formData as Recipe
 
 		addToast('Rezept aktualisiert')
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	} catch (error: any) {
 		addToast(error.message ?? CONNECTION_ERROR, false)
 	}
