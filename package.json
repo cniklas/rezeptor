@@ -1,6 +1,6 @@
 {
   "name": "rezeptor",
-  "version": "6.15.0",
+  "version": "6.15.1",
   "type": "module",
   "repository": {
     "type": "git",
@@ -9,7 +9,7 @@
   "author": "Christian Niklas",
   "license": "MIT",
   "scripts": {
-    "dev": "vite --open",
+    "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "build-only": "vite build",

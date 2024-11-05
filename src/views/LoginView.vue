@@ -18,9 +18,8 @@ const onSubmit = async () => {
 	try {
 		const { error } = await supabase.auth.signInWithPassword({ email: email.value, password: password.value })
 		if (error) throw error
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	} catch (error: any) {
-		addToast(error.message ?? 'Anmeldung fehlgeschlagen.', false)
+	} catch (error) {
+		addToast((error as Error).message ?? 'Anmeldung fehlgeschlagen.', false)
 		isSubmitLocked.value = false
 	}
 }
