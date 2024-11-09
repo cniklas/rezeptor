@@ -16,24 +16,22 @@ const RecipeForm = defineAsyncComponent(() => import('@/components/RecipeForm.vu
 const { state, updateEntry } = useStore()
 
 const _id = sqids.decode(route.params.id as string).at(0) as number
-const recipe = computed(() => state.recipes.find(item => item.id === _id))
-const ingredients = computed(() => (recipe.value?.ingredients ? recipe.value.ingredients.split('\n') : []))
-const notes = computed(() =>
-	recipe.value?.notes.replace(
-		/(\b(https?|):\/\/[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])/gi,
-		'<a href="$1" rel="noopener">$1</a>',
-	),
+const recipe = state.recipes.find(item => item.id === _id)
+const ingredients = recipe?.ingredients?.split('\n') ?? []
+const notes = recipe?.notes?.replace(
+	/(\b(https?|):\/\/[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])/gi,
+	'<a href="$1" rel="noopener">$1</a>',
 )
 
-const form = ref<RecipeFormData>({} as RecipeFormData)
+const formData = ref<RecipeFormData>({} as RecipeFormData)
 const isFormOpen = ref(false)
 const isLocked = ref(false)
 const setForm = () => {
-	Object.assign(form, {
-		...recipe.value,
-		duration: recipe.value?.duration || '',
-		serves: recipe.value?.serves || '',
-		leftovers: recipe.value?.leftovers ?? false, // /!\ `leftovers` ist eine neue Property und daher nicht in allen Records enthalten
+	Object.assign(formData.value, {
+		...recipe,
+		duration: recipe?.duration || '',
+		serves: recipe?.serves || '',
+		leftovers: recipe?.leftovers ?? false, // /!\ `leftovers` ist eine neue Property und daher nicht in allen Records enthalten
 	})
 
 	isFormOpen.value = true
@@ -46,17 +44,17 @@ const leaveForm = () => {
 const submitForm = async () => {
 	isLocked.value = true
 
-	const formData = {
-		...form.value,
-		duration: +form.value.duration,
-		serves: +form.value.serves,
+	const _formData = {
+		...formData.value,
+		duration: +formData.value.duration,
+		serves: +formData.value.serves,
 	}
-	await updateEntry(formData)
+	await updateEntry(_formData)
 
 	router.push({ name: 'recipes' })
 }
 
-const headline = computed(() => (!isFormOpen.value ? recipe.value?.name : form.value.name))
+const headline = computed(() => (isFormOpen.value ? formData.value.name : recipe?.name))
 </script>
 
 <template>
@@ -105,7 +103,7 @@ const headline = computed(() => (!isFormOpen.value ? recipe.value?.name : form.v
 			</template>
 
 			<form v-else aria-label="Rezept bearbeiten" @submit.prevent="submitForm">
-				<RecipeForm v-model="form" class="mb-4" />
+				<RecipeForm v-model="formData" class="mb-4" />
 
 				<div class="submit">
 					<button type="submit" class="primary-button" :disabled="isLocked">Speichern</button>
