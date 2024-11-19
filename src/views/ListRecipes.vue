@@ -60,7 +60,7 @@ const filteredList = computed(() => {
 	return filteredList
 })
 
-const inputEl = useTemplateRef<HTMLInputElement | null>('inputEl')
+const inputEl = useTemplateRef('inputEl')
 const resetList = async () => {
 	search.value = ''
 	await nextTick()
@@ -69,7 +69,7 @@ const resetList = async () => {
 
 const encodeId = (id: number) => sqids.encode([id])
 
-const loaderEl = useTemplateRef<HTMLDivElement | null>('loaderEl')
+const loaderEl = useTemplateRef('loaderEl')
 let observer: IntersectionObserver | null = null
 const _startObserver = () => {
 	if (!loaderEl.value) return
