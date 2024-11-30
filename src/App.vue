@@ -3,30 +3,15 @@ import { watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { supabase } from './supabase'
 import AppToast from './components/AppToast.vue'
-import type { Recipe } from './types/Recipe.type'
-import { PROVIDE_SQIDS } from './keys'
 import { useStore } from './use/store'
 import { useToast } from './use/toast'
 import { emitter } from './use/emitter'
-import { injectStrict } from './use/helper'
 
-const sqids = injectStrict(PROVIDE_SQIDS)
 const route = useRoute()
 const router = useRouter()
 
 const { state, fetchEntries, setAuthState } = useStore()
 const { toasts, removeToast } = useToast()
-
-const _getNameById = (data: Readonly<Recipe[]>, id: number) => data.find(item => item.id === id)?.name ?? ''
-const _defaultTitle = document.title
-const _setTitle = () => {
-	document.title =
-		route.params.id && state.recipes.length
-			? _getNameById(state.recipes, sqids.decode(route.params.id as string).at(0) as number)
-			: _defaultTitle
-}
-watch(route, _setTitle)
-watch(() => state.recipes, _setTitle)
 
 const onBeforeEnter = () => {
 	emitter.emit('TriggerScroll')

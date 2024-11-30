@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, defineAsyncComponent } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute, useRouter, onBeforeRouteLeave } from 'vue-router'
 import BackLink from '@/components/BackLink.vue'
 import type { RecipeFormData } from '@/types/Recipe.type'
 import { PROVIDE_SQIDS } from '@/keys'
@@ -15,8 +15,15 @@ const router = useRouter()
 const RecipeForm = defineAsyncComponent(() => import('@/components/RecipeForm.vue'))
 const { state, updateEntry } = useStore()
 
-const _id = sqids.decode(route.params.id as string).at(0) as number
-const recipe = state.recipes.find(item => item.id === _id)
+const decodedId = sqids.decode(route.params.id as string).at(0)
+const recipe = state.recipes.find(item => item.id === decodedId)
+
+const PAGE_TITLE = document.title
+document.title = recipe?.name ?? PAGE_TITLE
+onBeforeRouteLeave(() => {
+	document.title = PAGE_TITLE
+})
+
 const ingredients = recipe?.ingredients?.split('\n') ?? []
 const notes = recipe?.notes?.replace(
 	/(\b(https?|):\/\/[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])/gi,
