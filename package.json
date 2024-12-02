@@ -29,7 +29,7 @@
     "@types/node": "^22.10.1",
     "@unocss/reset": "^0.63.2",
     "@unocss/transformer-directives": "^0.63.2",
-    "@vitejs/plugin-vue": "^5.1.4",
+    "@vitejs/plugin-vue": "^5.2.1",
     "@vue/eslint-config-prettier": "^10.1.0",
     "@vue/eslint-config-typescript": "^14.1.1",
     "@vue/tsconfig": "^0.5.1",
