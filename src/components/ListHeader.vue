@@ -21,7 +21,7 @@ defineProps<{
 					@click="$emit('reset')"
 				>
 					<svg
-						class="icon-clear inline-block h-4 w-4 fill-current stroke-current stroke-0"
+						class="icon-clear inline-block size-4 fill-current stroke-current stroke-0"
 						aria-hidden="true"
 						width="16"
 						height="16"
