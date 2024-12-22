@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { watch } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute, useRouter, type LocationQueryValue } from 'vue-router'
 import { supabase } from './supabase'
 import AppToast from './components/AppToast.vue'
 import { useStore } from './use/store'
@@ -53,7 +53,7 @@ watch(
 		}
 
 		if (val && route.name === 'login') {
-			router.replace((route.query.redirectTo as string) ?? '/')
+			router.replace((route.query.redirectTo as LocationQueryValue) ?? '/')
 			return
 		}
 	},

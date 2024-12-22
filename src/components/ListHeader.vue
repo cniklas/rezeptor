@@ -1,15 +1,23 @@
 <script setup lang="ts">
-defineEmits<{
+import { useTemplateRef } from 'vue'
+
+const emit = defineEmits<{
 	reset: []
 }>()
 defineProps<{
 	isAuthenticated: boolean
 }>()
+
+const searchEl = useTemplateRef<HTMLDivElement>('searchEl')
+const onReset = () => {
+	emit('reset')
+	searchEl.value?.focus()
+}
 </script>
 
 <template>
 	<div class="flex items-end justify-between py-2">
-		<search class="flex-auto sm:max-w-xs">
+		<search ref="searchEl" class="search" tabindex="-1">
 			<label for="search" class="text-label !<md:hidden">Suche nach Rezept oder Zutaten:</label>
 			<div class="relative">
 				<slot />
@@ -18,7 +26,7 @@ defineProps<{
 					type="button"
 					aria-label="Eingabe löschen"
 					class="reset-button absolute bottom-0 right-px top-0 grid place-content-center px-3"
-					@click="$emit('reset')"
+					@click="onReset"
 				>
 					<svg
 						class="icon-clear inline-block size-4 fill-current stroke-current stroke-0"
@@ -38,7 +46,11 @@ defineProps<{
 	</div>
 </template>
 
-<style scoped>
+<style lang="postcss">
+.search {
+	@apply flex-auto outline-transparent sm:max-w-xs;
+}
+
 /* Input field slot */
 :deep(.form-control) {
 	padding-right: 2.875rem;
