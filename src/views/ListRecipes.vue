@@ -102,7 +102,7 @@ onBeforeUnmount(() => {
 			<input
 				ref="inputEl"
 				v-model.trim="search"
-				type="text"
+				type="search"
 				id="search"
 				class="form-control"
 				placeholder="Suche"
