@@ -5,7 +5,7 @@ import BackLink from '@/components/BackLink.vue'
 import type { RecipeFormData } from '@/types/Recipe.type'
 import { PROVIDE_SQIDS } from '@/keys'
 import { injectStrict } from '@/use/helper'
-import { useStore, complexities, cookbooks } from '@/use/store'
+import { useStore, categories, complexities, cookbooks } from '@/use/store'
 
 const sqids = injectStrict(PROVIDE_SQIDS)
 
@@ -63,11 +63,31 @@ const submitForm = async () => {
 }
 
 const headline = computed(() => (isFormOpen.value ? formData.value.name : recipe?.name))
+
+const buildJsonLd = () => {
+	const jsonLd = {
+		'@context': 'https://schema.org',
+		'@type': 'Recipe',
+		inLanguage: 'de',
+		name: recipe?.name,
+		recipeCategory: categories.get(recipe?.category_id ?? 0) ?? '',
+		recipeIngredient: ingredients,
+		recipeInstructions: recipe?.notes ?? '',
+		recipeYield: `${recipe?.serves} servings`,
+		totalTime: `PT${recipe?.duration}M`,
+	}
+
+	return JSON.stringify(jsonLd)
+}
 </script>
 
 <template>
 	<div>
 		<template v-if="recipe">
+			<Teleport to="head">
+				<component :is="'script'" type="application/ld+json">{{ buildJsonLd() }}</component>
+			</Teleport>
+
 			<div class="mb-5 print:hidden">
 				<BackLink />
 			</div>
