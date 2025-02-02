@@ -28,7 +28,7 @@
     "@tsconfig/node20": "^20.1.4",
     "@types/node": "^22.13.0",
     "@unocss/reset": "^0.65.3",
-    "@unocss/transformer-directives": "^0.65.3",
+    "@unocss/transformer-directives": "^65.4.3",
     "@vitejs/plugin-vue": "^5.2.1",
     "@vue/eslint-config-prettier": "^10.2.0",
     "@vue/eslint-config-typescript": "^14.2.0",
