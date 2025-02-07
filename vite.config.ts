@@ -23,5 +23,6 @@ export default defineConfig({
 	// https://vitejs.dev/config/build-options.html#build-target
 	build: {
 		target: 'esnext',
+		assetsInlineLimit: filePath => (filePath.endsWith('.svg') ? false : undefined),
 	},
 })
