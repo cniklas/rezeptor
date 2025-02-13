@@ -46,10 +46,15 @@ summary {
 
 :is(a, .back-link) {
 	color: var(--primary);
+	text-decoration-line: underline;
 
-	&:is(:hover, :focus) {
-		color: var(--primary-hover);
-		text-decoration-line: underline;
+	@media (hover: hover) and (pointer: fine) {
+		text-decoration-line: none;
+
+		&:is(:hover, :focus) {
+			color: var(--primary-hover);
+			text-decoration-line: underline;
+		}
 	}
 }
 
