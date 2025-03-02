@@ -27,7 +27,7 @@
   "devDependencies": {
     "@tsconfig/node20": "^20.1.4",
     "@types/node": "^22.13.8",
-    "@unocss/reset": "^65.4.3",
+    "@unocss/reset": "^66.0.0",
     "@unocss/transformer-directives": "^66.0.0",
     "@vitejs/plugin-vue": "^5.2.1",
     "@vue/eslint-config-prettier": "^10.2.0",
