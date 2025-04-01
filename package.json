@@ -26,7 +26,7 @@
   },
   "devDependencies": {
     "@tsconfig/node22": "^22.0.0",
-    "@types/node": "^22.13.8",
+    "@types/node": "^22.13.17",
     "@unocss/reset": "^66.0.0",
     "@unocss/transformer-directives": "^66.0.0",
     "@vitejs/plugin-vue": "^5.2.1",
