@@ -25,7 +25,7 @@
     "vue-router": "^4.5.0"
   },
   "devDependencies": {
-    "@tsconfig/node22": "^22.0.0",
+    "@tsconfig/node22": "^22.0.1",
     "@types/node": "^22.13.17",
     "@unocss/reset": "^66.0.0",
     "@unocss/transformer-directives": "^66.0.0",
