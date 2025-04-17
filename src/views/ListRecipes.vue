@@ -4,7 +4,7 @@ import ListHeader from '@/components/ListHeader.vue'
 import SortIcons from '@/components/SortIcons.vue'
 import AppLoader from '@/components/AppLoader.vue'
 import { PROVIDE_SQIDS } from '@/keys'
-import { injectStrict } from '@/use/helper'
+import { injectStrict, collator } from '@/use/helper'
 import { useStore, categories, complexities } from '@/use/store'
 
 const sqids = injectStrict(PROVIDE_SQIDS)
@@ -53,7 +53,7 @@ const filteredList = computed(() => {
 			const _b = b[key]
 			return Number.isInteger(_a)
 				? (_a === _b ? 0 : _a > _b ? 1 : -1) * order
-				: (_a as string).localeCompare(_b as string) * order
+				: collator.compare(_a as string, _b as string) * order
 		})
 	}
 

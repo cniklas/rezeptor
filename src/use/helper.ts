@@ -7,4 +7,6 @@ const injectStrict = <T>(key: InjectionKey<T>, fallback?: T) => {
 	return resolved
 }
 
-export { injectStrict }
+const collator = new Intl.Collator('de', { sensitivity: 'base' })
+
+export { injectStrict, collator }
