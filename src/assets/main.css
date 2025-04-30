@@ -51,7 +51,7 @@ summary {
 	@media (hover: hover) and (pointer: fine) {
 		text-decoration-line: none;
 
-		&:is(:hover, :focus) {
+		&:is(:hover, :focus-visible) {
 			color: var(--primary-hover);
 			text-decoration-line: underline;
 		}
@@ -89,14 +89,14 @@ textarea {
 }
 
 :is(.primary-button, .secondary-button) {
-	@apply inline-flex h-9 select-none items-center rounded px-3 text-center hover:no-underline focus:no-underline;
+	@apply inline-flex h-9 select-none items-center rounded px-3 text-center hover:no-underline focus-visible:no-underline;
 }
 
 .primary-button {
 	background-color: var(--primary);
 	color: #fff;
 
-	&:is(:hover, :focus) {
+	&:is(:hover, :focus-visible) {
 		background-color: var(--primary-hover);
 		color: #fff;
 	}
@@ -110,7 +110,7 @@ textarea {
 	background-color: var(--secondary);
 	color: var(--base-text);
 
-	&:is(:hover, :focus) {
+	&:is(:hover, :focus-visible) {
 		background-color: var(--secondary-hover);
 		color: var(--base-text);
 	}
