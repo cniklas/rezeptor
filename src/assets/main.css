@@ -44,6 +44,10 @@ summary {
 	outline-offset: 2px;
 }
 
+:where([tabindex='-1']):focus {
+	outline: none;
+}
+
 :is(a, .back-link) {
 	color: var(--primary);
 	text-decoration-line: underline;

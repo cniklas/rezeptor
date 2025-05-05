@@ -48,7 +48,7 @@ const onReset = () => {
 
 <style lang="postcss">
 .search {
-	@apply flex-auto outline-transparent sm:max-w-xs;
+	@apply flex-auto sm:max-w-xs;
 }
 
 /* Input field slot */
