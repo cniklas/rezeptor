@@ -7,12 +7,10 @@ export default defineConfig({
 
 	// custom CSS
 	// missing in presetMini
-	rules: [
-		['list-disc', { 'list-style-type': 'disc' }],
-	],
+	rules: [['list-disc', { 'list-style-type': 'disc' }]],
 
 	shortcuts: {
-		'inline-list-dt': 'overflow-clip text-ellipsis whitespace-nowrap text-right',
+		'inline-list-dt': 'text-right after:content-[":"]', // overflow-clip text-ellipsis whitespace-nowrap
 	},
 
 	// https://unocss.dev/presets/mini

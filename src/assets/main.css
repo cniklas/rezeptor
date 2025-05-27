@@ -89,7 +89,10 @@ textarea {
 }
 
 .headline {
-	@apply border-b border-b-[oklch(37.17%_0.039_257.29)] pb-2.5 text-2xl font-medium md:text-3xl;
+	@apply pb-2.5 font-serif text-2xl md:text-3xl;
+	border-bottom: 1px solid oklch(37.17% 0.039 257.29);
+	font-weight: 500;
+	text-wrap: balance;
 }
 
 :is(.primary-button, .secondary-button) {
