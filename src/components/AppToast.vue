@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onBeforeUnmount } from 'vue'
+import { onMounted, onUnmounted } from 'vue'
 
 const emit = defineEmits<{
 	removeToast: []
@@ -14,7 +14,7 @@ onMounted(() => {
 })
 
 // https://nolanlawson.com/2020/02/19/fixing-memory-leaks-in-web-applications/
-onBeforeUnmount(() => {
+onUnmounted(() => {
 	if (_timeout) window.clearTimeout(_timeout)
 })
 </script>
