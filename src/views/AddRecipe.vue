@@ -23,9 +23,10 @@ const formData = ref<RecipeFormData>({
 	remarkable_ingredients: '',
 	serves: '',
 })
-const isLocked = ref(false)
+const isSubmitLocked = ref(false)
 const submitForm = async () => {
-	isLocked.value = true
+	if (isSubmitLocked.value) return
+	isSubmitLocked.value = true
 
 	const _formData = {
 		...formData.value,
@@ -47,9 +48,9 @@ const submitForm = async () => {
 		<form aria-labelledby="aria-heading-add-recipe" @submit.prevent="submitForm">
 			<RecipeForm v-model="formData" class="mb-4" />
 
-			<div class="submit">
-				<button type="submit" class="primary-button" :disabled="isLocked">Speichern</button>
-				<RouterLink :to="{ name: 'recipes' }" class="secondary-button ml-2">Abbrechen</RouterLink>
+			<div class="flex gap-x-4">
+				<button type="submit" class="primary-button" :aria-disabled="isSubmitLocked">Speichern</button>
+				<RouterLink :to="{ name: 'recipes' }" class="secondary-button">Abbrechen</RouterLink>
 			</div>
 		</form>
 	</div>

@@ -61,11 +61,6 @@ summary {
 button {
 	-webkit-tap-highlight-color: transparent;
 	background-color: unset; /* https://unocss.dev/guide/style-reset#tailwind */
-
-	&:disabled {
-		cursor: not-allowed;
-		opacity: 0.6;
-	}
 }
 
 :where(button)[aria-disabled='true'] {

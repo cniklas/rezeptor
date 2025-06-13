@@ -12,7 +12,6 @@ const isSubmitLocked = ref(false)
 
 const onSubmit = async () => {
 	if (isSubmitLocked.value) return
-
 	isSubmitLocked.value = true
 
 	try {
@@ -31,29 +30,25 @@ const onSubmit = async () => {
 
 		<h1 id="aria-heading-login" class="headline mb-8 mt-2.5">Anmelden</h1>
 
-		<form novalidate aria-labelledby="aria-heading-login" @submit.prevent="onSubmit">
-			<div class="md:w-6/12 lg:w-5/12 xl:w-4/12">
-				<div class="mb-4">
-					<label for="email" class="text-label">E-Mail</label>
-					<input v-model.trim="email" type="text" class="form-control" id="email" autocomplete="username" />
-				</div>
-
-				<div class="mb-4">
-					<label for="password" class="text-label">Passwort</label>
-					<input
-						v-model.trim="password"
-						type="password"
-						class="form-control"
-						id="password"
-						autocomplete="current-password"
-						enterkeyhint="go"
-					/>
-				</div>
+		<form class="max-w-sm" novalidate aria-labelledby="aria-heading-login" @submit.prevent="onSubmit">
+			<div class="mb-4">
+				<label for="email" class="text-label">E-Mail</label>
+				<input v-model.trim="email" type="text" class="form-control" id="email" autocomplete="username" />
 			</div>
 
-			<div class="submit">
-				<button type="submit" class="primary-button" :disabled="isSubmitLocked">Anmelden</button>
+			<div class="mb-4">
+				<label for="password" class="text-label">Passwort</label>
+				<input
+					v-model.trim="password"
+					type="password"
+					class="form-control"
+					id="password"
+					autocomplete="current-password"
+					enterkeyhint="go"
+				/>
 			</div>
+
+			<button type="submit" class="primary-button" :aria-disabled="isSubmitLocked">Anmelden</button>
 		</form>
 	</div>
 </template>

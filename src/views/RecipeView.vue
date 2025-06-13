@@ -32,7 +32,7 @@ const notes = recipe?.notes?.replace(
 
 const formData = ref<RecipeFormData>({} as RecipeFormData)
 const isFormOpen = ref(false)
-const isLocked = ref(false)
+const isSubmitLocked = ref(false)
 const setForm = () => {
 	Object.assign(formData.value, {
 		...recipe,
@@ -49,7 +49,8 @@ const leaveForm = () => {
 	window.scrollTo(0, 0)
 }
 const submitForm = async () => {
-	isLocked.value = true
+	if (isSubmitLocked.value) return
+	isSubmitLocked.value = true
 
 	const _formData = {
 		...formData.value,
@@ -112,9 +113,9 @@ const headline = computed(() => (isFormOpen.value ? formData.value.name : recipe
 			<form v-else aria-label="Rezept bearbeiten" @submit.prevent="submitForm">
 				<RecipeForm v-model="formData" class="mb-4" />
 
-				<div class="submit">
-					<button type="submit" class="primary-button" :disabled="isLocked">Speichern</button>
-					<button type="button" class="secondary-button ml-2" @click="leaveForm">Abbrechen</button>
+				<div class="flex gap-x-4">
+					<button type="submit" class="primary-button" :aria-disabled="isSubmitLocked">Speichern</button>
+					<button type="button" class="secondary-button" @click="leaveForm">Abbrechen</button>
 				</div>
 			</form>
 		</template>
