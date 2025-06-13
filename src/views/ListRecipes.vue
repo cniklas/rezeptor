@@ -33,12 +33,25 @@ const ariaSorting = (key: 'name' | 'category_id' | 'complexity' | 'duration') =>
 	return sorting.order[key] > 0 ? 'ascending' : 'descending'
 }
 
+const categoryMap = computed(() => {
+	const _categoryMap = new Map<number | null, string>([[null, 'Alle'], ...categories])
+	return new Map([..._categoryMap.entries()].sort((a, b) => collator.compare(a[1], b[1])))
+})
+const categoryId = ref<number | null>(null)
+const selectCategory = (id: number | null) => {
+	categoryId.value = id
+}
+
 const filteredList = computed(() => {
 	// https://vuejs.org/v2/examples/grid-component.html
 	const filterKey = search.value && search.value.toLowerCase()
 	const key = sorting.key
 	const order = sorting.order[key] || 1
 	let filteredList = state.recipes
+
+	if (categoryId.value) {
+		filteredList = filteredList.filter(item => item.category_id === categoryId.value)
+	}
 
 	if (filterKey) {
 		filteredList = filteredList.filter(
@@ -115,6 +128,14 @@ onBeforeUnmount(() => {
 			/>
 		</ListHeader>
 
+		<menu class="-mt-1 mb-5 flex gap-x-3 overflow-x-auto overscroll-x-contain py-1" role="list">
+			<li v-for="[id, name] of categoryMap" :key="`category-${id}`">
+				<button type="button" class="category-button" :aria-disabled="categoryId === id" @click="selectCategory(id)">
+					{{ name }}
+				</button>
+			</li>
+		</menu>
+
 		<table class="table-striped table-stacked w-full text-sm">
 			<thead class="thead select-none whitespace-nowrap">
 				<tr class="tr">
@@ -184,6 +205,27 @@ onBeforeUnmount(() => {
 		</div>
 	</div>
 </template>
+
+<style lang="postcss">
+.category-button {
+	@apply inline-block h-7 select-none whitespace-nowrap rounded-md px-2;
+	background-color: var(--secondary);
+
+	&:is(:focus-visible, [aria-disabled='true']) {
+		background-color: var(--secondary-hover);
+	}
+
+	@media (hover: hover) and (pointer: fine) {
+		&:hover {
+			background-color: var(--secondary-hover);
+		}
+	}
+
+	&[aria-disabled='true'] {
+		cursor: default;
+	}
+}
+</style>
 
 <style>
 :root {
@@ -264,7 +306,6 @@ onBeforeUnmount(() => {
 
 				&::before {
 					content: attr(data-th) ':';
-					/* font-weight: 600; */
 					font-weight: 500;
 					overflow: clip;
 					text-overflow: ellipsis;

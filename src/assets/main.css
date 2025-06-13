@@ -34,12 +34,8 @@ summary {
 	}
 }
 
-/* :any-link {
-	text-decoration: underline;
-} */
-
 :focus-visible,
-:where(.secondary-button, .primary-button, .reset-button):active {
+:where(.primary-button, .secondary-button, .reset-button, .category-button):active {
 	outline: 2px solid currentColor;
 	outline-offset: 2px;
 }
@@ -72,20 +68,25 @@ button {
 	}
 }
 
+:where(button)[aria-disabled='true'] {
+	cursor: not-allowed;
+
+	&:active {
+		outline: none;
+	}
+}
+
+form {
+	accent-color: var(--primary);
+}
+
 input[type='search']::-webkit-search-cancel-button,
 input[type='search']::-webkit-search-decoration {
 	-webkit-appearance: none;
 }
 
-input[type='email'],
-input[type='number'],
-input[type='password'],
-input[type='search'],
-input[type='text'],
-textarea {
-	-webkit-appearance: none;
-	appearance: none;
-	-webkit-tap-highlight-color: transparent;
+input:where([type='checkbox'], [type='radio']) {
+	@apply w-4;
 }
 
 .headline {

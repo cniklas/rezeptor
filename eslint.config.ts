@@ -41,6 +41,13 @@ export default defineConfigWithVueTs(
 					},
 				},
 			],
+			'vuejs-accessibility/no-redundant-roles': [
+				'error',
+				// allowed roles
+				{
+					menu: ['list'],
+				},
+			],
 		},
 	},
 	skipFormatting,

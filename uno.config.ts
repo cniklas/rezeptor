@@ -7,7 +7,10 @@ export default defineConfig({
 
 	// custom CSS
 	// missing in presetMini
-	rules: [['list-disc', { 'list-style-type': 'disc' }]],
+	rules: [
+		['list-disc', { 'list-style-type': 'disc' }],
+		['overscroll-x-contain', { 'overscroll-behavior-x': 'contain' }],
+	],
 
 	shortcuts: {
 		'inline-list-dt': 'text-right after:content-[":"]', // overflow-clip text-ellipsis whitespace-nowrap
