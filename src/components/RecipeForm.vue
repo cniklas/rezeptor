@@ -23,14 +23,14 @@ const form = defineModel<RecipeFormData>({
 				/>
 			</div>
 
-			<div class="mb-3 flex gap-x-2">
+			<div class="mb-3 flex items-center gap-x-2">
 				<input v-model="form.leftovers" type="checkbox" class="shrink-0" id="leftovers" />
-				<label for="leftovers" class="inline-block">Fleischreste-Verwertung</label>
+				<label for="leftovers">Fleischreste-Verwertung</label>
 			</div>
 
-			<div class="-mt-1.5 mb-3 flex gap-x-2">
+			<div class="-mt-1.5 mb-3 flex items-center gap-x-2">
 				<input v-model="form.recommended" type="checkbox" class="shrink-0" id="recommended" />
-				<label for="recommended" class="inline-block">Empfehlung</label>
+				<label for="recommended">Empfehlung</label>
 			</div>
 
 			<div class="grid gap-x-4 md:grid-cols-2">
@@ -52,16 +52,17 @@ const form = defineModel<RecipeFormData>({
 
 			<div class="mb-3">
 				<div class="mb-0.5 font-medium">Schwierigkeit</div>
-				<div class="flex">
+				<div class="flex items-center">
 					<template v-for="[key, complexity] of complexities" :key="`complexity-${key}`">
 						<input
 							v-model.number="form.complexity"
 							type="radio"
-							class="mr-1.5 align-top"
+							class="mr-1.5"
 							:id="`complexity${key}`"
 							name="complexity"
 							:value="key"
-						/><label :for="`complexity${key}`" class="mr-4 inline-block last:mr-0">{{ complexity }}</label>
+						/>
+						<label :for="`complexity${key}`" class="mr-4 last:mr-0">{{ complexity }}</label>
 					</template>
 				</div>
 			</div>

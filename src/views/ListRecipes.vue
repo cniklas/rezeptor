@@ -8,7 +8,7 @@ import { injectStrict, collator } from '@/use/helper'
 import { useStore, categories, complexities } from '@/use/store'
 
 const sqids = injectStrict(PROVIDE_SQIDS)
-const { state, search, sorting, fetchEntries, setHasHistory } = useStore()
+const { state, search, currentCategory, sorting, fetchEntries, setHasHistory } = useStore()
 
 const isLoading = ref(false)
 const fetchRecipes = () => {
@@ -33,18 +33,17 @@ const ariaSorting = (key: 'name' | 'complexity' | 'duration') => {
 	return sorting.order[key] > 0 ? 'ascending' : 'descending'
 }
 
-const categoryMap = computed(() => {
+const categoryList = computed(() => {
 	const _categoryMap = new Map<number | null, string>([[null, 'Alle'], ...categories])
 	return new Map([..._categoryMap.entries()].sort((a, b) => collator.compare(a[1], b[1])))
 })
-const currentCategory = ref<number | null>(null)
 const setCategory = (id: number | null) => {
 	currentCategory.value = id
 }
 
 const filteredList = computed(() => {
 	// https://vuejs.org/v2/examples/grid-component.html
-	const filterKey = search.value && search.value.toLowerCase()
+	const filterKey = search.value.toLowerCase()
 	const key = sorting.key
 	const order = sorting.order[key] || 1
 	let filteredList = state.recipes
@@ -128,8 +127,8 @@ onBeforeUnmount(() => {
 			/>
 		</ListHeader>
 
-		<ul class="-mt-1 mb-5 flex gap-x-3 overflow-x-auto overscroll-x-contain py-1">
-			<li v-for="[id, name] of categoryMap" :key="`category-${id}`">
+		<ul class="category-list">
+			<li v-for="[id, name] of categoryList" :key="`category-${id}`">
 				<button type="button" class="category-button" :aria-disabled="currentCategory === id" @click="setCategory(id)">
 					{{ name }}
 				</button>
@@ -203,11 +202,18 @@ onBeforeUnmount(() => {
 </template>
 
 <style lang="postcss">
+.category-list {
+	@apply -mt-1 mb-5 flex gap-x-3 py-1;
+	overflow-x: auto;
+	overscroll-behavior-x: contain;
+	scrollbar-width: thin;
+}
+
 .category-button {
 	@apply inline-block h-7 select-none whitespace-nowrap rounded-md px-2;
 	background-color: var(--secondary);
 
-	&:is(:focus-visible, [aria-disabled='true']) {
+	&:focus-visible {
 		background-color: var(--secondary-hover);
 	}
 
@@ -218,7 +224,13 @@ onBeforeUnmount(() => {
 	}
 
 	&[aria-disabled='true'] {
+		background-color: var(--primary);
+		color: #fff;
 		cursor: default;
+
+		&:focus-visible {
+			outline-color: var(--primary);
+		}
 	}
 }
 </style>

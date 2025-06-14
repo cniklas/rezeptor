@@ -58,6 +58,7 @@ const state = reactive<{
 })
 
 const search = ref('')
+const currentCategory = ref<number | null>(null)
 const sorting = reactive<{
 	key: 'name' | 'complexity' | 'duration'
 	order: { name: number; complexity: number; duration: number }
@@ -135,6 +136,7 @@ const setAuthState = (isAuthenticated = false) => {
 export const useStore = () => ({
 	state: readonly(state),
 	search, // mutable
+	currentCategory, // mutable
 	sorting, // mutable
 	fetchEntries,
 	addEntry,
