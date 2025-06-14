@@ -33,7 +33,7 @@ const ariaSorting = (key: 'name' | 'complexity' | 'duration') => {
 	return sorting.order[key] > 0 ? 'ascending' : 'descending'
 }
 
-const categoryMap = computed(() => {
+const categoryList = computed(() => {
 	const _categoryMap = new Map<number | null, string>([[null, 'Alle'], ...categories])
 	return new Map([..._categoryMap.entries()].sort((a, b) => collator.compare(a[1], b[1])))
 })
@@ -128,8 +128,8 @@ onBeforeUnmount(() => {
 			/>
 		</ListHeader>
 
-		<ul class="-mt-1 mb-5 flex gap-x-3 overflow-x-auto overscroll-x-contain py-1">
-			<li v-for="[id, name] of categoryMap" :key="`category-${id}`">
+		<ul class="category-list">
+			<li v-for="[id, name] of categoryList" :key="`category-${id}`">
 				<button type="button" class="category-button" :aria-disabled="currentCategory === id" @click="setCategory(id)">
 					{{ name }}
 				</button>
@@ -203,6 +203,13 @@ onBeforeUnmount(() => {
 </template>
 
 <style lang="postcss">
+.category-list {
+	@apply -mt-1 mb-5 flex gap-x-3 py-1;
+	overflow-x: auto;
+	overscroll-behavior-x: contain;
+	scrollbar-width: thin;
+}
+
 .category-button {
 	@apply inline-block h-7 select-none whitespace-nowrap rounded-md px-2;
 	background-color: var(--secondary);
