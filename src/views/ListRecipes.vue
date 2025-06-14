@@ -18,7 +18,7 @@ const fetchRecipes = () => {
 	}
 }
 
-const sortBy = (key: 'name' | 'category_id' | 'complexity' | 'duration') => {
+const sortBy = (key: 'name' | 'complexity' | 'duration') => {
 	fetchRecipes()
 
 	if (key === sorting.key) {
@@ -28,7 +28,7 @@ const sortBy = (key: 'name' | 'category_id' | 'complexity' | 'duration') => {
 		// sorting.order[key] = 1
 	}
 }
-const ariaSorting = (key: 'name' | 'category_id' | 'complexity' | 'duration') => {
+const ariaSorting = (key: 'name' | 'complexity' | 'duration') => {
 	if (sorting.key !== key) return undefined
 	return sorting.order[key] > 0 ? 'ascending' : 'descending'
 }
@@ -37,9 +37,9 @@ const categoryMap = computed(() => {
 	const _categoryMap = new Map<number | null, string>([[null, 'Alle'], ...categories])
 	return new Map([..._categoryMap.entries()].sort((a, b) => collator.compare(a[1], b[1])))
 })
-const categoryId = ref<number | null>(null)
-const selectCategory = (id: number | null) => {
-	categoryId.value = id
+const currentCategory = ref<number | null>(null)
+const setCategory = (id: number | null) => {
+	currentCategory.value = id
 }
 
 const filteredList = computed(() => {
@@ -49,8 +49,8 @@ const filteredList = computed(() => {
 	const order = sorting.order[key] || 1
 	let filteredList = state.recipes
 
-	if (categoryId.value) {
-		filteredList = filteredList.filter(item => item.category_id === categoryId.value)
+	if (currentCategory.value) {
+		filteredList = filteredList.filter(item => item.category_id === currentCategory.value)
 	}
 
 	if (filterKey) {
@@ -128,27 +128,23 @@ onBeforeUnmount(() => {
 			/>
 		</ListHeader>
 
-		<menu class="-mt-1 mb-5 flex gap-x-3 overflow-x-auto overscroll-x-contain py-1" role="list">
+		<ul class="-mt-1 mb-5 flex gap-x-3 overflow-x-auto overscroll-x-contain py-1">
 			<li v-for="[id, name] of categoryMap" :key="`category-${id}`">
-				<button type="button" class="category-button" :aria-disabled="categoryId === id" @click="selectCategory(id)">
+				<button type="button" class="category-button" :aria-disabled="currentCategory === id" @click="setCategory(id)">
 					{{ name }}
 				</button>
 			</li>
-		</menu>
+		</ul>
 
 		<table class="table-striped table-stacked w-full text-sm">
-			<thead class="thead select-none whitespace-nowrap">
+			<thead class="thead select-none">
 				<tr class="tr">
 					<th scope="col" class="th w-1/4" :aria-sort="ariaSorting('name')">
 						<button type="button" class="sort-button" @click="sortBy('name')">
 							Name <SortIcons width="18" height="18" />
 						</button>
 					</th>
-					<th scope="col" class="th" :aria-sort="ariaSorting('category_id')">
-						<button type="button" class="sort-button" @click="sortBy('category_id')">
-							Kategorie <SortIcons width="18" height="18" />
-						</button>
-					</th>
+					<th scope="col" class="th h-9 px-2 text-left">Kategorie</th>
 					<th scope="col" class="th <md:hidden" :aria-sort="ariaSorting('complexity')">
 						<button type="button" class="sort-button" @click="sortBy('complexity')">
 							Schwierigkeit <SortIcons width="18" height="18" />
@@ -159,7 +155,7 @@ onBeforeUnmount(() => {
 							Aufwand <SortIcons width="18" height="18" />
 						</button>
 					</th>
-					<th scope="col" class="th whitespace-nowrap p-2 text-left align-bottom">besondere Zutaten</th>
+					<th scope="col" class="th h-9 px-2 text-left">besondere Zutaten</th>
 				</tr>
 			</thead>
 
@@ -247,6 +243,7 @@ onBeforeUnmount(() => {
 	height: 2.25rem;
 	padding-inline: 0.5rem;
 	text-align: left;
+	white-space: nowrap;
 
 	[aria-sort] > & {
 		background-color: oklch(96.74% 0.001 286.38);

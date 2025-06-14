@@ -59,11 +59,11 @@ const state = reactive<{
 
 const search = ref('')
 const sorting = reactive<{
-	key: 'name' | 'category_id' | 'complexity' | 'duration'
-	order: { name: number; category_id: number; complexity: number; duration: number }
+	key: 'name' | 'complexity' | 'duration'
+	order: { name: number; complexity: number; duration: number }
 }>({
 	key: 'name',
-	order: { name: 1, category_id: 1, complexity: 1, duration: 1 },
+	order: { name: 1, complexity: 1, duration: 1 },
 })
 
 const CONNECTION_ERROR = 'Verbindung zum Server fehlgeschlagen.' // ¯\\_(ツ)_/¯
