@@ -8,7 +8,7 @@ import { injectStrict, collator } from '@/use/helper'
 import { useStore, categories, complexities } from '@/use/store'
 
 const sqids = injectStrict(PROVIDE_SQIDS)
-const { state, search, sorting, fetchEntries, setHasHistory } = useStore()
+const { state, search, currentCategory, sorting, fetchEntries, setHasHistory } = useStore()
 
 const isLoading = ref(false)
 const fetchRecipes = () => {
@@ -37,14 +37,13 @@ const categoryList = computed(() => {
 	const _categoryMap = new Map<number | null, string>([[null, 'Alle'], ...categories])
 	return new Map([..._categoryMap.entries()].sort((a, b) => collator.compare(a[1], b[1])))
 })
-const currentCategory = ref<number | null>(null)
 const setCategory = (id: number | null) => {
 	currentCategory.value = id
 }
 
 const filteredList = computed(() => {
 	// https://vuejs.org/v2/examples/grid-component.html
-	const filterKey = search.value && search.value.toLowerCase()
+	const filterKey = search.value.toLowerCase()
 	const key = sorting.key
 	const order = sorting.order[key] || 1
 	let filteredList = state.recipes
