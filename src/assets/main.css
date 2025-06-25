@@ -6,6 +6,10 @@
 	--secondary-hover: oklch(86.99% 0 0);
 }
 
+html {
+	scrollbar-gutter: stable;
+}
+
 body {
 	background-color: oklch(96.74% 0.001 286.38);
 	color: var(--base-text);
