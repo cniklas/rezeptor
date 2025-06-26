@@ -1,5 +1,6 @@
 import { ref, reactive, readonly } from 'vue'
 import { supabase } from '@/supabase'
+import type { PostgrestSingleResponse } from '@supabase/supabase-js'
 import type { Recipe, RecipeFormData } from '@/types/Recipe.type'
 import { useToast } from './toast'
 
@@ -72,7 +73,7 @@ const fetchEntries = async (limit = 0) => {
 	if (state.hasLoaded) return
 
 	try {
-		const { data, error /* , status */ } =
+		const { data, error /* , status */ }: PostgrestSingleResponse<Recipe[]> =
 			limit > 0
 				? await supabase
 						.from('recipes')
@@ -98,7 +99,8 @@ const addEntry = async (formData: RecipeFormData) => {
 
 	try {
 		formData.id = _getNextId()
-		const { error } = await supabase.from('recipes').insert(formData) /* .select() */
+		const { error } = await supabase.from('recipes').insert(formData)
+		// .select()
 		if (error) throw error
 
 		state.recipes.push(formData as Recipe)
@@ -114,7 +116,8 @@ const updateEntry = async (formData: RecipeFormData) => {
 	const index = state.recipes.findIndex(recipe => recipe.id === formData.id) // im Fehlerfall `-1`
 
 	try {
-		const { error } = await supabase.from('recipes').update(formData).eq('id', formData.id) /* .select() */
+		const { error } = await supabase.from('recipes').update(formData).eq('id', formData.id)
+		// .select()
 		if (error) throw error
 		state.recipes[index] = formData as Recipe
 
