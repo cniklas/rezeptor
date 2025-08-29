@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, computed, defineAsyncComponent } from 'vue'
-import { useRoute, useRouter, onBeforeRouteLeave } from 'vue-router'
+import { useRoute, useRouter, onBeforeRouteLeave, type RouteParamValue } from 'vue-router'
 import BackLink from '@/components/BackLink.vue'
-import type { RecipeFormData } from '@/types/Recipe.type'
+import type { UpdateRecipeData } from '@/types/Recipe.type'
 import { PROVIDE_SQIDS } from '@/keys'
 import { injectStrict } from '@/use/helper'
 import { useStore, complexities, cookbooks } from '@/use/store'
@@ -15,8 +15,8 @@ const router = useRouter()
 const RecipeForm = defineAsyncComponent(() => import('@/components/RecipeForm.vue'))
 const { state, updateEntry } = useStore()
 
-const decodedId = sqids.decode(route.params.id as string).at(0)
-const recipe = state.recipes.find(item => item.id === decodedId)
+const decodedId = sqids.decode(route.params.id as RouteParamValue).at(0)
+const recipe = state.recipes.find(item => item.index === decodedId)
 
 const PAGE_TITLE = document.title
 document.title = recipe?.name ?? PAGE_TITLE
@@ -30,7 +30,7 @@ const notes = recipe?.notes?.replace(
 	'<a href="$1" rel="noopener">$1</a>',
 )
 
-const formData = ref<RecipeFormData>({} as RecipeFormData)
+const formData = ref<UpdateRecipeData>({} as UpdateRecipeData)
 const isFormOpen = ref(false)
 const isSubmitLocked = ref(false)
 const setForm = () => {
@@ -38,7 +38,6 @@ const setForm = () => {
 		...recipe,
 		duration: recipe?.duration || '',
 		serves: recipe?.serves || '',
-		leftovers: recipe?.leftovers ?? false, // /!\ `leftovers` ist eine neue Property und daher nicht in allen Records enthalten
 	})
 
 	isFormOpen.value = true
@@ -52,13 +51,7 @@ const submitForm = async () => {
 	if (isSubmitLocked.value) return
 	isSubmitLocked.value = true
 
-	const _formData = {
-		...formData.value,
-		duration: +formData.value.duration,
-		serves: +formData.value.serves,
-	}
-	await updateEntry(_formData)
-
+	await updateEntry(formData.value)
 	router.push({ name: 'recipes' })
 }
 

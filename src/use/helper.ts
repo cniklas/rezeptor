@@ -1,4 +1,4 @@
-import { inject, type InjectionKey } from 'vue'
+import { inject, unref, type InjectionKey, type Ref } from 'vue'
 
 // https://logaretm.com/blog/type-safe-provide-inject/
 const injectStrict = <T>(key: InjectionKey<T>, fallback?: T) => {
@@ -9,4 +9,6 @@ const injectStrict = <T>(key: InjectionKey<T>, fallback?: T) => {
 
 const collator = new Intl.Collator('de', { sensitivity: 'base' })
 
-export { injectStrict, collator }
+const isEmpty = (...args: (Ref<string> | string)[]) => args.some(val => !unref(val).length)
+
+export { injectStrict, collator, isEmpty }

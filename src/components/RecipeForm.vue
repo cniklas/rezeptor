@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { RecipeFormData } from '@/types/Recipe.type'
+import type { CreateRecipeData, UpdateRecipeData } from '@/types/Recipe.type'
 import { categories, complexities, cookbooks } from '@/use/store'
 
-const form = defineModel<RecipeFormData>({
+const form = defineModel<CreateRecipeData | UpdateRecipeData>({
 	required: true,
 })
 </script>

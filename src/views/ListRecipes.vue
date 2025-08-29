@@ -161,7 +161,7 @@ onBeforeUnmount(() => {
 			<tbody class="tbody">
 				<tr
 					v-for="{
-						id,
+						index,
 						name,
 						leftovers,
 						recommended,
@@ -170,11 +170,11 @@ onBeforeUnmount(() => {
 						duration,
 						remarkable_ingredients,
 					} in filteredList"
-					:key="id"
+					:key="index"
 					class="tr"
 				>
 					<td class="td p-2 align-top">
-						<RouterLink :to="{ name: 'view-recipe', params: { id: encodeId(id) } }" class="nav-link">{{
+						<RouterLink :to="{ name: 'view-recipe', params: { id: encodeId(index) } }" class="nav-link">{{
 							name
 						}}</RouterLink
 						><template v-if="leftovers"> (Reste)</template><template v-if="recommended"> 🥕</template>

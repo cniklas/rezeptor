@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { watch } from 'vue'
 import { useRoute, useRouter, type LocationQueryValue } from 'vue-router'
-import { supabase } from './supabase'
+import { instant } from '@/instant'
 import AppToast from './components/AppToast.vue'
 import { useStore } from './use/store'
 import { useToast } from './use/toast'
@@ -11,7 +11,7 @@ const route = useRoute()
 const router = useRouter()
 
 const { state, fetchEntries, setAuthState } = useStore()
-const { toasts, removeToast } = useToast()
+const { toasts, addToast, removeToast } = useToast()
 
 const onBeforeEnter = () => {
 	emitter.emit('TriggerScroll')
@@ -31,16 +31,17 @@ fetchRecipes()
 
 // const logout = async () => {
 // 	try {
-// 		let { error } = await supabase.auth.signOut()
-// 		if (error) throw error
+// 		await instant.auth.signOut()
 // 	} catch (error) {
 // 		console.error(error)
 // 	}
 // }
 
-supabase.auth.onAuthStateChange((_, session) => {
-	setAuthState(session !== null)
+instant.subscribeAuth(auth => {
+	if (auth.error) addToast(auth.error.message, false)
+	setAuthState(!!auth.user)
 })
+
 watch(
 	() => state.isAuthenticated,
 	async val => {
