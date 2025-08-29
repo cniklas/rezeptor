@@ -1,7 +1,7 @@
 import { ref, reactive, readonly } from 'vue'
-import { supabase } from '@/supabase'
-import type { PostgrestSingleResponse } from '@supabase/supabase-js'
-import type { Recipe, RecipeFormData } from '@/types/Recipe.type'
+import { id as createUuid } from '@instantdb/core'
+import { instant } from '@/instant'
+import type { Recipe, CreateRecipeData, UpdateRecipeData } from '@/types/Recipe.type'
 import { useToast } from './toast'
 
 const { addToast } = useToast()
@@ -68,59 +68,64 @@ const sorting = reactive<{
 	order: { name: 1, complexity: 1, duration: 1 },
 })
 
+type Query = { recipes: { $: { order: { name: 'asc' | 'desc' }; limit?: number } } }
+
 const CONNECTION_ERROR = 'Verbindung zum Server fehlgeschlagen.' // ¯\\_(ツ)_/¯
 const fetchEntries = async (limit = 0) => {
 	if (state.hasLoaded) return
 
 	try {
-		const { data, error /* , status */ }: PostgrestSingleResponse<Recipe[]> =
-			limit > 0
-				? await supabase
-						.from('recipes')
-						.select()
-						.range(0, limit - 1)
-						.order('name', { ascending: true })
-				: await supabase.from('recipes').select()
-		if (error) throw error
+		const query: Query = { recipes: { $: { order: { name: 'asc' } } } }
+		if (limit > 0) query.recipes.$.limit = limit
+
+		// fetch data once. `queryOnce` will throw an error if the user is offline
+		const { data } = await instant.queryOnce(query)
 		if (data === null) throw new Error('Verbindung zur Datenbank fehlgeschlagen.')
 
 		if (!limit) state.hasLoaded = true
-		state.recipes = data
+		state.recipes = data.recipes
 	} catch (error) {
 		addToast((error as Error).message ?? CONNECTION_ERROR, false)
 	}
 }
 
-const _getNextId = () => Math.max(...state.recipes.map(recipe => recipe.id)) + 1
+const _getNextIndex = () => Math.max(...state.recipes.map(recipe => recipe.index)) + 1
 
-const addEntry = async (formData: RecipeFormData) => {
+const addEntry = async (formData: CreateRecipeData) => {
 	if (!state.isAuthenticated) return
 	if (!state.hasLoaded) await fetchEntries()
 
 	try {
-		formData.id = _getNextId()
-		const { error } = await supabase.from('recipes').insert(formData)
-		// .select()
-		if (error) throw error
+		const recipe: Recipe = {
+			...formData,
+			id: createUuid(),
+			index: _getNextIndex(),
+			duration: +formData.duration,
+			serves: +formData.serves,
+		}
+		await instant.transact(instant.tx.recipes[recipe.id].update(recipe))
 
-		state.recipes.push(formData as Recipe)
+		state.recipes.push(recipe)
 		addToast('Rezept gespeichert')
 	} catch (error) {
 		addToast((error as Error).message ?? CONNECTION_ERROR, false)
 	}
 }
 
-const updateEntry = async (formData: RecipeFormData) => {
+const updateEntry = async (formData: UpdateRecipeData) => {
 	if (!state.isAuthenticated) return
 
 	const index = state.recipes.findIndex(recipe => recipe.id === formData.id) // im Fehlerfall `-1`
 
 	try {
-		const { error } = await supabase.from('recipes').update(formData).eq('id', formData.id)
-		// .select()
-		if (error) throw error
-		state.recipes[index] = formData as Recipe
+		const recipe: Recipe = {
+			...formData,
+			duration: +formData.duration,
+			serves: +formData.serves,
+		}
+		await instant.transact(instant.tx.recipes[recipe.id].update(recipe))
 
+		state.recipes[index] = recipe
 		addToast('Rezept aktualisiert')
 	} catch (error) {
 		addToast((error as Error).message ?? CONNECTION_ERROR, false)

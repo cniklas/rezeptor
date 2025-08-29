@@ -3,14 +3,14 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import BackLink from '@/components/BackLink.vue'
 import RecipeForm from '@/components/RecipeForm.vue'
-import type { RecipeFormData } from '@/types/Recipe.type'
+import type { CreateRecipeData } from '@/types/Recipe.type'
 import { useStore } from '@/use/store'
 
 const router = useRouter()
 
 const { addEntry } = useStore()
 
-const formData = ref<RecipeFormData>({
+const formData = ref<CreateRecipeData>({
 	category_id: 0,
 	cook_book_id: 1,
 	complexity: 2,
@@ -28,13 +28,7 @@ const submitForm = async () => {
 	if (isSubmitLocked.value) return
 	isSubmitLocked.value = true
 
-	const _formData = {
-		...formData.value,
-		duration: +formData.value.duration,
-		serves: +formData.value.serves,
-	}
-	await addEntry(_formData)
-
+	await addEntry(formData.value)
 	router.push({ name: 'recipes' })
 }
 </script>

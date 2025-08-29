@@ -1,20 +1,14 @@
-export type Recipe = {
-	category_id: number
-	complexity: number
-	cook_book_id: number
-	duration: number
-	id: number
-	ingredients: string
-	leftovers: boolean
-	name: string
-	notes: string
-	recommended: boolean
-	remarkable_ingredients: string
-	serves: number
+import type { InstaQLEntity } from '@instantdb/core'
+import type { AppSchema } from '@/instant.schema'
+
+export type Recipe = InstaQLEntity<AppSchema, 'recipes', object, undefined, true>
+
+export type CreateRecipeData = Omit<Recipe, 'duration' | 'id' | 'index' | 'serves'> & {
+	duration: string
+	serves: string
 }
 
-export type RecipeFormData = Omit<Recipe, 'duration' | 'id' | 'serves'> & {
+export type UpdateRecipeData = Omit<Recipe, 'duration' | 'serves'> & {
 	duration: number | string
-	id?: number
 	serves: number | string
 }
