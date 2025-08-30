@@ -61,7 +61,10 @@ watch(
 </script>
 
 <template>
-	<main class="mx-auto max-w-7xl bg-white px-3 pb-8 pt-4 lg:px-4 lg:py-8">
+	<main
+		class="mx-auto max-w-7xl bg-white px-3 pb-8 pt-4 lg:px-4 lg:py-8"
+		:class="{ '<lg:min-h-[100dvh] content-center': !state.recipes.length }"
+	>
 		<div v-if="!state.recipes.length" class="text-center text-base font-light md:text-xl">Rezepte laden …</div>
 
 		<RouterView v-else class="has-transition" v-slot="{ Component }">
