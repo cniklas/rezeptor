@@ -103,7 +103,7 @@ const addEntry = async (formData: CreateRecipeData) => {
 			duration: +formData.duration,
 			serves: +formData.serves,
 		}
-		await instant.transact(instant.tx.recipes[recipe.id].update(recipe))
+		await instant.transact(instant.tx.recipes[recipe.id]!.update(recipe))
 
 		state.recipes.push(recipe)
 		addToast('Rezept gespeichert')
@@ -123,7 +123,7 @@ const updateEntry = async (formData: UpdateRecipeData) => {
 			duration: +formData.duration,
 			serves: +formData.serves,
 		}
-		await instant.transact(instant.tx.recipes[recipe.id].update(recipe))
+		await instant.transact(instant.tx.recipes[recipe.id]!.update(recipe))
 
 		state.recipes[index] = recipe
 		addToast('Rezept aktualisiert')

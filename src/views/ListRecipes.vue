@@ -86,7 +86,7 @@ const _startObserver = () => {
 
 	observer = new IntersectionObserver(
 		([entry], self) => {
-			if (entry.isIntersecting) {
+			if (entry?.isIntersecting) {
 				fetchRecipes()
 				self.unobserve(entry.target)
 			}
