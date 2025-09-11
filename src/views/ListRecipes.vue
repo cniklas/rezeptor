@@ -127,13 +127,24 @@ onBeforeUnmount(() => {
 			/>
 		</ListHeader>
 
-		<ul class="category-list">
-			<li v-for="[id, name] of categoryList" :key="`category-${id}`">
-				<button type="button" class="category-button" :aria-disabled="currentCategory === id" @click="setCategory(id)">
-					{{ name }}
-				</button>
-			</li>
-		</ul>
+		<div class="category-list" role="radiogroup" aria-label="Kategorien" tabindex="-1">
+			<label
+				v-for="[id, name] of categoryList"
+				:key="`category-${id}`"
+				:for="`category-${id ?? 'all'}`"
+				class="category-button"
+			>
+				<input
+					type="radio"
+					name="category"
+					class="sr-only"
+					:id="`category-${id ?? 'all'}`"
+					:checked="currentCategory === id"
+					@click="setCategory(id)"
+				/>
+				{{ name }}
+			</label>
+		</div>
 
 		<table class="table-striped table-stacked w-full text-sm">
 			<thead class="thead select-none">
@@ -203,19 +214,25 @@ onBeforeUnmount(() => {
 
 <style lang="postcss">
 .category-list {
-	@apply -mt-1 mb-5 flex gap-x-3 py-1;
+	@apply mb-6 gap-x-3;
+	display: flex;
 	overflow-x: auto;
 	overscroll-behavior-x: contain;
-	scrollbar-width: thin;
+	scrollbar-width: none;
+
+	&::-webkit-scrollbar {
+		display: none;
+	}
 }
 
 .category-button {
-	@apply inline-block h-7 select-none whitespace-nowrap rounded-md px-2;
+	@apply h-7 rounded-md px-2;
+	display: inline-flex;
+	align-items: center;
+	position: relative;
+	white-space: nowrap;
 	background-color: var(--secondary);
-
-	&:focus-visible {
-		background-color: var(--secondary-hover);
-	}
+	cursor: pointer;
 
 	@media (hover: hover) and (pointer: fine) {
 		&:hover {
@@ -223,12 +240,18 @@ onBeforeUnmount(() => {
 		}
 	}
 
-	&[aria-disabled='true'] {
+	&:has(:focus-visible),
+	&:has(:active:where(:not(:checked))) {
+		outline: 2px solid currentColor;
+		outline-offset: 2px;
+	}
+
+	&:has(:checked) {
 		background-color: var(--primary);
 		color: #fff;
 		cursor: default;
 
-		&:focus-visible {
+		&:has(:focus-visible) {
 			outline-color: var(--primary);
 		}
 	}
