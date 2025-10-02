@@ -214,7 +214,7 @@ onBeforeUnmount(() => {
 
 <style lang="postcss">
 .category-list {
-	@apply mb-6 gap-x-3;
+	@apply -mt-1 mb-5 flex gap-x-3 py-1;
 	display: flex;
 	overflow-x: auto;
 	overscroll-behavior-x: contain;
