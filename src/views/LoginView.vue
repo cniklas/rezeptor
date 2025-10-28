@@ -18,7 +18,7 @@ const isSubmitLocked = ref(false)
 const isFirstStep = ref(true)
 watch(isFirstStep, async () => {
 	await nextTick()
-	formEl.value?.querySelector('input')?.focus()
+	formEl.value!.querySelector('input')?.focus()
 	isSubmitLocked.value = false
 })
 

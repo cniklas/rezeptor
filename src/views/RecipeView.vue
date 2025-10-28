@@ -36,8 +36,8 @@ const isSubmitLocked = ref(false)
 const setForm = () => {
 	Object.assign(formData.value, {
 		...recipe,
-		duration: recipe?.duration || '',
-		serves: recipe?.serves || '',
+		duration: recipe!.duration || '',
+		serves: recipe!.serves || '',
 	})
 
 	isFormOpen.value = true

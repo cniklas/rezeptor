@@ -11,7 +11,7 @@ defineProps<{
 const searchEl = useTemplateRef<HTMLDivElement>('searchEl')
 const onReset = () => {
 	emit('reset')
-	searchEl.value?.focus()
+	searchEl.value!.focus()
 }
 </script>
 

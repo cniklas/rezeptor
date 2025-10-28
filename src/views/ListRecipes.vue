@@ -121,7 +121,7 @@ onBeforeUnmount(() => {
 				autocorrect="off"
 				autocomplete="off"
 				enterkeyhint="search"
-				@keydown.enter="inputEl?.blur()"
+				@keydown.enter="inputEl!.blur()"
 				@keyup.esc="resetSearch"
 				@focus.once="fetchRecipes"
 			/>
