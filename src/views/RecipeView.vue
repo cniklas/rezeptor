@@ -27,7 +27,7 @@ onBeforeRouteLeave(() => {
 const ingredients = recipe?.ingredients?.split('\n') ?? []
 const notes = recipe?.notes?.replace(
 	/(\b(https?|):\/\/[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])/gi,
-	'<a href="$1" rel="noopener">$1</a>',
+	'<a href="$1" rel="noopener noreferrer">$1</a>',
 )
 
 const formData = ref<UpdateRecipeData>({} as UpdateRecipeData)
@@ -65,7 +65,7 @@ const headline = computed(() => (isFormOpen.value ? formData.value.name : recipe
 				<BackLink />
 			</div>
 
-			<h1 class="headline mb-5 mt-2.5">{{ headline }}</h1>
+			<h1 class="headline mt-2.5 mb-5">{{ headline }}</h1>
 
 			<template v-if="!isFormOpen">
 				<dl class="md:grid md:grid-cols-[calc(min(38.2%,280px)-0.625rem)_calc(61.8%-0.625rem)] md:gap-x-5">
@@ -73,7 +73,7 @@ const headline = computed(() => (isFormOpen.value ? formData.value.name : recipe
 						Zutaten <template v-if="recipe.serves > 0">für {{ recipe.serves }}</template>
 					</dt>
 					<dd>
-						<ul v-if="ingredients.length" class="ml-5 list-disc">
+						<ul v-if="ingredients.length" class="list-disc pl-5">
 							<li v-for="(ingredient, i) in ingredients" :key="i">{{ ingredient }}</li>
 						</ul>
 					</dd>
@@ -95,7 +95,7 @@ const headline = computed(() => (isFormOpen.value ? formData.value.name : recipe
 					class="mt-4 md:grid md:grid-cols-[calc(min(38.2%,280px)-0.625rem)_calc(61.8%-0.625rem)] md:gap-x-5"
 				>
 					<dt class="md:inline-list-dt font-semibold">Tipps</dt>
-					<dd class="whitespace-pre-line break-words" v-html="notes"></dd>
+					<dd class="break-words whitespace-pre-line" v-html="notes"></dd>
 				</dl>
 
 				<div v-if="state.isAuthenticated" class="mt-8 print:hidden">
