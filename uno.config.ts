@@ -1,10 +1,6 @@
-import { defineConfig, presetMini } from 'unocss'
-import transformerDirectives from '@unocss/transformer-directives'
+import { defineConfig, presetMini, transformerDirectives } from 'unocss'
 
 export default defineConfig({
-	// theme: {
-	// },
-
 	// custom CSS
 	// missing in presetMini
 	rules: [
@@ -18,7 +14,6 @@ export default defineConfig({
 				padding: 0,
 				margin: '-1px',
 				overflow: 'hidden',
-				// clip: 'rect(0, 0, 0, 0)',
 				'clip-path': 'inset(50%)',
 				'white-space': 'nowrap',
 				'border-width': 0,
@@ -27,7 +22,7 @@ export default defineConfig({
 	],
 
 	shortcuts: {
-		'inline-list-dt': 'text-right after:content-[":"]', // overflow-clip text-ellipsis whitespace-nowrap
+		'inline-list-dt': 'text-right after:content-[":"]',
 	},
 
 	// https://unocss.dev/presets/mini
