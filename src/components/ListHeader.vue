@@ -24,12 +24,12 @@ const onReset = () => {
 
 				<button
 					type="button"
+					class="reset-button absolute top-0 right-px bottom-0 grid place-content-center px-3"
 					aria-label="Eingabe löschen"
-					class="reset-button absolute bottom-0 right-px top-0 grid place-content-center px-3"
 					@click="onReset"
 				>
 					<svg
-						class="icon-clear inline-block size-4 fill-current stroke-current stroke-0"
+						class="icon-clear inline-block fill-current stroke-current stroke-0"
 						aria-hidden="true"
 						width="16"
 						height="16"

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, useTemplateRef, computed, onMounted, onBeforeUnmount } from 'vue'
 import ListHeader from '@/components/ListHeader.vue'
-import SortIcons from '@/components/SortIcons.vue'
+import SortIcon from '@/components/SortIcon.vue'
 import AppLoader from '@/components/AppLoader.vue'
 import { PROVIDE_SQIDS } from '@/keys'
 import { injectStrict, collator } from '@/use/helper'
@@ -150,20 +150,14 @@ onBeforeUnmount(() => {
 			<thead class="thead select-none">
 				<tr class="tr">
 					<th scope="col" class="th w-1/4" :aria-sort="ariaSorting('name')">
-						<button type="button" class="sort-button" @click="sortBy('name')">
-							Name <SortIcons width="18" height="18" />
-						</button>
+						<button type="button" class="sort-button" @click="sortBy('name')">Name <SortIcon /></button>
 					</th>
 					<th scope="col" class="th h-9 px-2 text-left">Kategorie</th>
 					<th scope="col" class="th <md:hidden" :aria-sort="ariaSorting('complexity')">
-						<button type="button" class="sort-button" @click="sortBy('complexity')">
-							Schwierigkeit <SortIcons width="18" height="18" />
-						</button>
+						<button type="button" class="sort-button" @click="sortBy('complexity')">Schwierigkeit <SortIcon /></button>
 					</th>
 					<th scope="col" class="th" :aria-sort="ariaSorting('duration')">
-						<button type="button" class="sort-button" @click="sortBy('duration')">
-							Aufwand <SortIcons width="18" height="18" />
-						</button>
+						<button type="button" class="sort-button" @click="sortBy('duration')">Aufwand <SortIcon /></button>
 					</th>
 					<th scope="col" class="th h-9 px-2 text-left">besondere Zutaten</th>
 				</tr>
@@ -197,7 +191,7 @@ onBeforeUnmount(() => {
 						{{ complexities.get(complexity) ?? 'n.a.' }}
 					</td>
 
-					<td class="td whitespace-nowrap p-2 align-top" data-th="Aufwand">
+					<td class="td p-2 align-top whitespace-nowrap" data-th="Aufwand">
 						<template v-if="duration > 0">{{ duration }} Minuten</template>
 					</td>
 
@@ -207,7 +201,7 @@ onBeforeUnmount(() => {
 		</table>
 
 		<div ref="loaderEl" class="mx-auto mt-4 w-7" :class="{ invisible: !isLoading, hidden: state.hasLoaded }">
-			<AppLoader class="aspect-1 w-7" width="28" height="28" />
+			<AppLoader width="28" height="28" />
 		</div>
 	</div>
 </template>
@@ -288,8 +282,6 @@ onBeforeUnmount(() => {
 .sort-icon {
 	display: none;
 	fill: var(--base-text);
-	width: 1.125rem;
-	aspect-ratio: 1;
 	vertical-align: -0.25rem;
 
 	[aria-sort] & {
